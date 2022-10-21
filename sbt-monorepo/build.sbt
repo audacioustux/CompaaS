@@ -43,6 +43,7 @@ lazy val root = project
     libraryDependencies ++= Seq(
       "ch.qos.logback"  % "logback-classic" % "1.4.4",
       "org.scalameta"  %% "munit"           % "0.7.29" % Test,
+      "org.scalatest"  %% "scalatest"       % "3.2.14" % Test,
       "org.graalvm.sdk" % "graal-sdk"       % "22.2.0"
     ),
     nativeImageGraalHome := file(sys.env("GRAALVM_HOME")).toPath
