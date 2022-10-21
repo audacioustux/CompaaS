@@ -1,13 +1,14 @@
+import akka.Done
 import akka.actor.typed.scaladsl.{ActorContext, Behaviors, LoggerOps}
 import akka.actor.typed.{ActorRef, ActorSystem, Behavior, PostStop}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
-import akka.http.scaladsl.model._
+import akka.http.scaladsl.model.*
 import akka.http.scaladsl.model.ws.{BinaryMessage, Message, TextMessage}
-import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.Directives.*
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.WSProbe
-import akka.stream.scaladsl._
+import akka.stream.scaladsl.*
 import akka.util.{ByteString, Timeout}
 
 import scala.concurrent.duration.Duration
@@ -17,19 +18,17 @@ import scala.util.{Failure, Random, Success}
 
 import concurrent.duration.DurationInt
 
-def greeter(using system: ActorSystem[_]): Flow[Message, Message, Any] =
+def greeter(using system: ActorSystem[?]): Flow[Message, Message, Any] =
   Flow[Message].mapConcat {
     case tm: TextMessage =>
-      TextMessage(
-        Source.single("Hello ") ++ tm.textStream ++ Source.single("!")
-      ) :: Nil
+      TextMessage(Source.single("henlo ") ++ tm.textStream ++ Source.single("!!!!!")) :: Nil
     case bm: BinaryMessage =>
       // ignore binary messages but drain content to avoid the stream being clogged
       bm.dataStream.runWith(Sink.ignore)
       Nil
   }
 
-class Routes(using system: ActorSystem[_]) {
+class Routes(using system: ActorSystem[?]) {
   import akka.actor.typed.scaladsl.AskPattern.schedulerFromActorSystem
   import akka.actor.typed.scaladsl.AskPattern.Askable
 
@@ -42,9 +41,9 @@ class Routes(using system: ActorSystem[_]) {
 
 object Server {
   sealed trait Message
-  private final case class StartFailed(cause: Throwable) extends Message
+  private final case class StartFailed(cause: Throwable)   extends Message
   private final case class Started(binding: ServerBinding) extends Message
-  case object Stop extends Message
+  case object Stop                                         extends Message
 
   private def running(
       binding: ServerBinding
@@ -76,33 +75,33 @@ object Server {
           binding.localAddress.getHostString,
           binding.localAddress.getPort
         )
-        if (wasStopped) ctx.self ! Stop
+        if wasStopped then ctx.self ! Stop
         running(binding)
       case Stop =>
-        // we got a stop message but haven't completed starting yet,
-        // we cannot stop until starting has completed
+        // got a stop message but haven't completed starting yet,
+        // cannot stop until starting has completed
         starting(wasStopped = true)
     }
   }
 
-  def apply(host: String, port: Int): Behavior[Message] = Behaviors.setup {
-    ctx =>
-      given ActorSystem[_] = ctx.system
+  def apply(host: String, port: Int): Behavior[Message] = Behaviors.setup { ctx =>
+    given ActorSystem[?] = ctx.system
 
-      val routes = new Routes()
+    val routes = new Routes()
 
-      val serverBinding: Future[Http.ServerBinding] =
-        Http().newServerAt(host, port).bind(routes.theJobRoutes)
-      ctx.pipeToSelf(serverBinding) {
-        case Success(binding) => Started(binding)
-        case Failure(ex)      => StartFailed(ex)
-      }
+    val serverBinding: Future[Http.ServerBinding] =
+      Http().newServerAt(host, port).bind(routes.theJobRoutes)
 
-      starting(wasStopped = false)(using ctx)
+    ctx.pipeToSelf(serverBinding) {
+      case Success(binding) => Started(binding)
+      case Failure(ex)      => StartFailed(ex)
+    }
+
+    starting(wasStopped = false)(using ctx)
   }
 }
 
-@main def main =
+@main def system: Future[Done] =
   given system: ActorSystem[Server.Message] =
     ActorSystem(Server("localhost", 8080), "LessNoiseOrgServer")
 
