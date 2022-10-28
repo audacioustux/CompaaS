@@ -1,18 +1,18 @@
-package com.audacioustux
-
-import akka.Done
+import akka.actor.typed.SpawnProtocol.Spawn
 import akka.actor.typed.scaladsl.AskPattern.{Askable, schedulerFromActorSystem}
-import akka.actor.typed.scaladsl.{ActorContext, Behaviors, LoggerOps}
-import akka.actor.typed.{ActorRef, ActorSystem, Behavior, PostStop}
+import akka.actor.typed.scaladsl.Behaviors.Receive
+import akka.actor.typed.scaladsl.{AbstractBehavior, ActorContext, Behaviors, LoggerOps}
+import akka.actor.typed.{ActorRef, ActorSystem, Behavior, PostStop, Props, Signal, SpawnProtocol}
+import akka.actor.{Actor, ActorLogging}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
 import akka.http.scaladsl.model.*
-import akka.http.scaladsl.model.ws.{BinaryMessage, Message, TextMessage}
 import akka.http.scaladsl.server.Directives.*
 import akka.http.scaladsl.server.Route
-import akka.http.scaladsl.testkit.WSProbe
 import akka.stream.scaladsl.*
+import akka.stream.typed.scaladsl.ActorSink
 import akka.util.{ByteString, Timeout}
+import akka.{Done, NotUsed}
 import com.typesafe.config.ConfigFactory
 
 import scala.concurrent.duration.Duration
@@ -21,22 +21,6 @@ import scala.io.StdIn
 import scala.util.{Failure, Random, Success}
 
 import concurrent.duration.DurationInt
-
-def greeter(using system: ActorSystem[?]): Flow[Message, Message, Any] =
-  Flow[Message].mapConcat {
-    case tm: TextMessage =>
-      TextMessage(Source.single("henlo ") ++ tm.textStream ++ Source.single("!!!")) :: Nil
-    case bm: BinaryMessage =>
-      // ignore binary messages but drain content to avoid the stream being clogged
-      bm.dataStream.runWith(Sink.ignore)
-      Nil
-  }
-
-class Routes(using system: ActorSystem[?]) {
-  lazy val theJobRoutes: Route = pathSingleSlash {
-    handleWebSocketMessages(greeter)
-  }
-}
 
 object Server {
   sealed trait Message
@@ -47,10 +31,13 @@ object Server {
   def apply(host: String, port: Int): Behavior[Message] = Behaviors.setup { ctx =>
     given ActorSystem[?] = ctx.system
 
-    val routes = new Routes()
+    val receptionistActor = ctx.spawnAnonymous(RootReceptionistActor());
+    val routes = pathSingleSlash {
+      handleWebSocketMessages(RootReceptionistFlow(receptionistActor))
+    }
 
     val serverBinding: Future[Http.ServerBinding] =
-      Http().newServerAt(host, port).bind(routes.theJobRoutes)
+      Http().newServerAt(host, port).bind(routes)
 
     ctx.pipeToSelf(serverBinding) {
       case Success(binding) => Started(binding)
