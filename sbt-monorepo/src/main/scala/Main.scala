@@ -9,8 +9,9 @@ import akka.http.scaladsl.Http.ServerBinding
 import akka.http.scaladsl.model.*
 import akka.http.scaladsl.server.Directives.*
 import akka.http.scaladsl.server.Route
+import akka.stream.CompletionStrategy
 import akka.stream.scaladsl.*
-import akka.stream.typed.scaladsl.ActorSink
+import akka.stream.typed.scaladsl.{ActorSink, ActorSource}
 import akka.util.{ByteString, Timeout}
 import akka.{Done, NotUsed}
 import com.typesafe.config.ConfigFactory
@@ -31,9 +32,34 @@ object Server {
   def apply(host: String, port: Int): Behavior[Message] = Behaviors.setup { ctx =>
     given ActorSystem[?] = ctx.system
 
-    val receptionistActor = ctx.spawnAnonymous(RootReceptionistActor());
-    val routes = pathSingleSlash {
-      handleWebSocketMessages(RootReceptionistFlow(receptionistActor))
+    val receptionist = ctx.spawnAnonymous(RootReceptionist());
+
+    val routes = {
+      import RootReceptionist.*
+      val sink = ActorSink.actorRefWithBackpressure(
+        ref = receptionist,
+        messageAdapter = (ackTo: ActorRef[Ack.type], msg) => InMessage(ackTo, msg),
+        onInitMessage = (ackTo: ActorRef[Ack.type]) => Init(ackTo),
+        ackMessage = Ack,
+        onCompleteMessage = Complete,
+        onFailureMessage = (exception) => Fail(exception)
+      )
+      val source = ActorSource
+        .actorRefWithBackpressure(
+          ackTo = receptionist,
+          ackMessage = Ack,
+          completionMatcher = { case Complete => CompletionStrategy.draining },
+          failureMatcher = { case Fail(ex) => ex }
+        )
+        .collect { case OutMessage(msg) => msg }
+
+      val receptionistOutbox = source
+        .to(Sink.foreach(println))
+        .run()
+
+      pathSingleSlash {
+        handleWebSocketMessages(Flow.fromSinkAndSourceCoupled(sink, source))
+      }
     }
 
     val serverBinding: Future[Http.ServerBinding] =

@@ -1,58 +1,49 @@
 import akka.NotUsed
-import akka.actor.typed.ActorRef
-import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
+import akka.actor.typed.scaladsl.{AbstractBehavior, ActorContext, Behaviors}
+import akka.actor.typed.{ActorRef, ActorSystem, Behavior}
 import akka.http.scaladsl.model.*
 import akka.stream.scaladsl.{Flow, Sink, Source}
-import akka.stream.typed.scaladsl.ActorSink
+import akka.stream.typed.scaladsl.{ActorSink, ActorSource}
+import akka.stream.{Attributes, CompletionStrategy}
 
 import concurrent.duration.DurationInt
 
-private object RootReceptionist {
-  sealed trait Ack
-  case object Ack extends Ack
+object RootReceptionist {
+  sealed trait Message
 
-  sealed trait Protocol
-  case class Init(ackTo: ActorRef[Ack])                     extends Protocol
-  case class Message(ackTo: ActorRef[Ack], msg: ws.Message) extends Protocol
-  case object Complete                                      extends Protocol
-  case class Fail(ex: Throwable)                            extends Protocol
-}
+  sealed trait IncommingMessage                                          extends Message
+  sealed trait Response                                                  extends IncommingMessage
+  case class ResponseMsg(msg: ws.Message)                                extends Response
+  sealed trait SinkEvents                                                extends IncommingMessage
+  final case class InMessage(ackTo: ActorRef[Ack.type], msg: ws.Message) extends SinkEvents
+  case class Init(ackTo: ActorRef[Ack.type])                             extends SinkEvents
+  case object Complete                                                   extends SinkEvents
+  case class Fail(ex: Throwable)                                         extends SinkEvents
+  sealed trait SourceEvents                                              extends IncommingMessage
+  case object Ack                                                        extends SourceEvents
 
-object RootReceptionistFlow {
-  import RootReceptionist.*
+  sealed trait OutgoingMessage                 extends Message
+  final case class OutMessage(msg: ws.Message) extends OutgoingMessage
 
-  def apply(receptionistActor: ActorRef[Protocol]): Flow[ws.Message, ws.Message, Any] = {
-    val sink: Sink[ws.Message, NotUsed] = ActorSink.actorRefWithBackpressure(
-      ref = receptionistActor,
-      messageAdapter = (ackTo: ActorRef[Ack], msg) => Message(ackTo, msg),
-      onInitMessage = (ackTo: ActorRef[Ack]) => Init(ackTo),
-      ackMessage = Ack,
-      onCompleteMessage = Complete,
-      onFailureMessage = (exception) => Fail(exception)
-    )
-    val source = Source
-      .tick(1.second, 1.second, "tick")
-      .map(_ => ws.TextMessage(System.currentTimeMillis().toString + "\n"))
-
-    Flow.fromSinkAndSource(sink, source)
-  }
-}
-
-object RootReceptionistActor {
-  import RootReceptionist.*
-
-  def apply() = Behaviors.receive { (ctx, msg) =>
-    msg match
-      case Init(ackTo) =>
-        ackTo ! Ack
-        Behaviors.same
-      case Message(ackTo, msg) =>
-        println(s"Received message: $msg")
-        ackTo ! Ack
-        Behaviors.same
-      case Complete =>
-        Behaviors.stopped
-      case Fail(ex) =>
-        Behaviors.stopped
-  }
+  def apply(forwardTo: ActorRef[OutMessage]): Behavior[IncommingMessage] =
+    Behaviors.withStash(100) { buffer =>
+      Behaviors.setup { ctx =>
+        Behaviors.receiveMessage {
+          // sink events
+          case InMessage(ackTo, msg) =>
+            ctx.log.info("Incomming message: {}", msg)
+            ackTo ! Ack
+            Behaviors.same
+          case Init(ackTo) =>
+            ackTo ! Ack
+            Behaviors.same
+          case Complete =>
+            Behaviors.stopped
+          case Fail(ex) =>
+            throw ex
+          case Ack              => buffer.(Behaviors.same)
+          case ResponseMsg(msg) => buffer.stash(ResponseMsg(msg)); Behaviors.same
+        }
+      }
+    }
 }
