@@ -9,12 +9,10 @@ object ProducerExample {
   private val topicName        = "greetings"
 
   def getProducerConfig(): Properties = {
-    // Specify the configuration for our producer
     var properties = new Properties();
     properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers)
     properties.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, false)
 
-    // Both keys and values in the greetings topic will be serialized as strings
     properties.put(
       ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
       (new StringSerializer).getClass.getName
@@ -27,10 +25,8 @@ object ProducerExample {
   }
 
   def apply(): Unit = {
-
     val producerConfig = getProducerConfig();
 
-    // Get a Producer instance
     Using(new KafkaProducer[String, String](producerConfig)) { producer =>
       val record = new ProducerRecord(topicName, "key1", "Hello World!")
 
