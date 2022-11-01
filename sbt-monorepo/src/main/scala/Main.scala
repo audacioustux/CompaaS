@@ -1,4 +1,5 @@
 import akka.actor.typed.SpawnProtocol.Spawn
+import akka.actor.typed.receptionist.Receptionist
 import akka.actor.typed.scaladsl.AskPattern.{Askable, schedulerFromActorSystem}
 import akka.actor.typed.scaladsl.Behaviors.Receive
 import akka.actor.typed.scaladsl.{AbstractBehavior, ActorContext, Behaviors, LoggerOps}
@@ -9,12 +10,13 @@ import akka.http.scaladsl.Http.ServerBinding
 import akka.http.scaladsl.model.*
 import akka.http.scaladsl.server.Directives.*
 import akka.http.scaladsl.server.Route
-import akka.stream.CompletionStrategy
 import akka.stream.scaladsl.*
 import akka.stream.typed.scaladsl.{ActorSink, ActorSource}
+import akka.stream.{CompletionStrategy, OverflowStrategy}
 import akka.util.{ByteString, Timeout}
 import akka.{Done, NotUsed}
 import com.typesafe.config.ConfigFactory
+import org.reactivestreams.Publisher
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
@@ -30,37 +32,11 @@ object Server {
   case object Stop                                         extends Message
 
   def apply(host: String, port: Int): Behavior[Message] = Behaviors.setup { ctx =>
-    given ActorSystem[?] = ctx.system
+    given system: ActorSystem[?] = ctx.system
 
-    val receptionist = ctx.spawnAnonymous(RootReceptionist());
+    val receptionist = ctx.spawnAnonymous(ServiceReceptionist())
 
-    val routes = {
-      import RootReceptionist.*
-      val sink = ActorSink.actorRefWithBackpressure(
-        ref = receptionist,
-        messageAdapter = (ackTo: ActorRef[Ack.type], msg) => InMessage(ackTo, msg),
-        onInitMessage = (ackTo: ActorRef[Ack.type]) => Init(ackTo),
-        ackMessage = Ack,
-        onCompleteMessage = Complete,
-        onFailureMessage = (exception) => Fail(exception)
-      )
-      val source = ActorSource
-        .actorRefWithBackpressure(
-          ackTo = receptionist,
-          ackMessage = Ack,
-          completionMatcher = { case Complete => CompletionStrategy.draining },
-          failureMatcher = { case Fail(ex) => ex }
-        )
-        .collect { case OutMessage(msg) => msg }
-
-      val receptionistOutbox = source
-        .to(Sink.foreach(println))
-        .run()
-
-      pathSingleSlash {
-        handleWebSocketMessages(Flow.fromSinkAndSourceCoupled(sink, source))
-      }
-    }
+    val routes = Routes(ctx, receptionist)
 
     val serverBinding: Future[Http.ServerBinding] =
       Http().newServerAt(host, port).bind(routes)
@@ -88,8 +64,7 @@ object Server {
 
     def starting(wasStopped: Boolean): Behaviors.Receive[Message] = {
       Behaviors.receiveMessage[Message] {
-        case StartFailed(cause) =>
-          throw new RuntimeException("Server failed to start", cause)
+        case StartFailed(cause) => throw new RuntimeException("Server failed to start", cause)
         case Started(binding) =>
           ctx.log.info(
             "Server online at http://{}:{}/",
@@ -98,10 +73,9 @@ object Server {
           )
           if wasStopped then ctx.self ! Stop
           running(binding)
-        case Stop =>
-          // got a stop message but haven't completed starting yet,
-          // cannot stop until starting has completed
-          starting(wasStopped = true)
+        // got a stop message but haven't completed starting yet,
+        // cannot stop until starting has completed
+        case Stop => starting(wasStopped = true)
       }
     }
 
@@ -113,6 +87,8 @@ object Server {
   val config    = ConfigFactory.load()
   val interface = config.getString("app.interface")
   val port      = config.getInt("app.port")
+
+  val KafkaProducer = ProducerExample()
 
   given system: ActorSystem[Server.Message] =
     ActorSystem(Server(interface, port), "LessNoiseOrgServer")
