@@ -1,6 +1,5 @@
 import akka.actor.typed.SpawnProtocol.Spawn
 import akka.actor.typed.receptionist.Receptionist
-import akka.actor.typed.scaladsl.AskPattern.{Askable, schedulerFromActorSystem}
 import akka.actor.typed.scaladsl.Behaviors.Receive
 import akka.actor.typed.scaladsl.{AbstractBehavior, ActorContext, Behaviors, LoggerOps}
 import akka.actor.typed.{ActorRef, ActorSystem, Behavior, PostStop, Props, Signal, SpawnProtocol}
@@ -88,9 +87,7 @@ object Server {
   val interface = config.getString("app.interface")
   val port      = config.getInt("app.port")
 
-  val KafkaProducer = ProducerExample()
-
   given system: ActorSystem[Server.Message] =
-    ActorSystem(Server(interface, port), "LessNoiseOrgServer")
+    ActorSystem(Server(interface, port), "CompaaS")
 
   Await.ready(system.whenTerminated, Duration.Inf)

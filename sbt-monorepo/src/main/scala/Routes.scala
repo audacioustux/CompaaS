@@ -9,21 +9,23 @@ import akka.stream.scaladsl.{BroadcastHub, Flow, Keep, Sink, Source}
 import akka.stream.typed.scaladsl.{ActorSink, ActorSource}
 
 object Routes {
+
   def apply(ctx: ActorContext[?], receptionist: ActorRef[ServiceReceptionist.Protocol])(using
       ActorSystem[?]
   ): Route = {
+    import ServiceReceptionist.{Ask, Message}
+
     sealed trait Ack
     object Ack extends Ack
 
-    sealed trait Protocol
-    case object Complete           extends Protocol
-    case class Fail(ex: Throwable) extends Protocol
+    sealed trait SourceProtocol
+    case object Complete           extends SourceProtocol
+    case class Fail(ex: Throwable) extends SourceProtocol
 
-    val ackTo = ctx.spawnAnonymous(Behaviors.setup { context =>
-      Behaviors.receiveMessage { case Ack =>
-        Behaviors.same
-      }
-    })
+    val ackTo = ctx.spawnAnonymous(
+      // TODO: handle backpressure properly
+      Behaviors.receiveMessage { case Ack => Behaviors.same }
+    )
 
     val (customer, outgoing: Source[ws.Message, NotUsed]) = ActorSource
       .actorRefWithBackpressure(
@@ -33,26 +35,26 @@ object Routes {
         failureMatcher = { case Fail(ex) => ex }
       )
       .collect {
-        case ServiceReceptionist.Message(msg) => { ws.TextMessage(msg) }
+        case Message(msg) => { ws.TextMessage(msg) }
       }
       .toMat(BroadcastHub.sink[ws.Message](1 << 8))(Keep.both)
       .run()
 
     val incoming: Sink[ws.Message, NotUsed] = {
-      trait Protocol
-      case class Init(ackTo: ActorRef[Ack])                     extends Protocol
-      case class Message(ackTo: ActorRef[Ack], msg: ws.Message) extends Protocol
-      case object Complete                                      extends Protocol
-      case class Fail(ex: Throwable)                            extends Protocol
+      trait SinkProtocol
+      case class Init(ackTo: ActorRef[Ack])                       extends SinkProtocol
+      case class WsMessage(ackTo: ActorRef[Ack], msg: ws.Message) extends SinkProtocol
+      case object Complete                                        extends SinkProtocol
+      case class Fail(ex: Throwable)                              extends SinkProtocol
 
       ActorSink.actorRefWithBackpressure(
         ref = ctx.spawnAnonymous(Behaviors.withStash(10) { buffer =>
           Behaviors.setup { ctx =>
             Behaviors.receiveMessage {
-              case Message(ackTo, msg) =>
+              case WsMessage(ackTo, msg) =>
+                receptionist ! Ask(customer, msg.asTextMessage.getStrictText)
+                // TODO: handle backpressure properly
                 ackTo ! Ack
-                receptionist ! ServiceReceptionist
-                  .Ask(customer, msg.asTextMessage.getStrictText)
                 Behaviors.same
               case Complete    => Behaviors.stopped
               case Fail(ex)    => throw ex
@@ -60,7 +62,7 @@ object Routes {
             }
           }
         }),
-        messageAdapter = (ackTo: ActorRef[Ack], msg) => Message(ackTo, msg),
+        messageAdapter = (ackTo: ActorRef[Ack], msg) => WsMessage(ackTo, msg),
         onInitMessage = (ackTo: ActorRef[Ack]) => Init(ackTo),
         ackMessage = Ack,
         onCompleteMessage = Complete,
