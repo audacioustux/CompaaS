@@ -3,6 +3,7 @@ val AkkaVersion           = "2.6.20"
 val AkkaProjectionVersion = "1.2.5"
 val AkkaHttpVersion       = "10.2.10"
 val GraalVersion          = "22.2.0"
+val AkkaManagementVersion = "1.1.4"
 
 inThisBuild(
   List(
@@ -26,16 +27,21 @@ lazy val root = project
     run / fork     := true,
     publish / skip := true,
     libraryDependencies ++= Seq(
-      "com.typesafe.akka"  %% "akka-actor-typed"            % AkkaVersion,
-      "com.typesafe.akka"  %% "akka-persistence-typed"      % AkkaVersion,
-      "com.typesafe.akka"  %% "akka-stream-typed"           % AkkaVersion,
-      "com.typesafe.akka"  %% "akka-http"                   % AkkaHttpVersion,
-      "com.typesafe.akka"  %% "akka-http-spray-json"        % AkkaHttpVersion,
-      "com.typesafe.akka"  %% "akka-cluster-typed"          % AkkaVersion,
-      "com.typesafe.akka"  %% "akka-cluster-sharding-typed" % AkkaVersion,
-      "com.typesafe.akka"  %% "akka-persistence-query"      % AkkaVersion,
-      "com.typesafe.akka"  %% "akka-discovery"              % AkkaVersion,
-      "com.lightbend.akka" %% "akka-projection-core"        % AkkaProjectionVersion,
+      "com.typesafe.akka"             %% "akka-http"                   % AkkaHttpVersion,
+      "com.typesafe.akka"             %% "akka-http-spray-json"        % AkkaHttpVersion,
+      "com.typesafe.akka"             %% "akka-actor-typed"            % AkkaVersion,
+      "com.typesafe.akka"             %% "akka-persistence-typed"      % AkkaVersion,
+      "com.typesafe.akka"             %% "akka-stream-typed"           % AkkaVersion,
+      "com.typesafe.akka"             %% "akka-cluster-typed"          % AkkaVersion,
+      "com.typesafe.akka"             %% "akka-cluster-sharding-typed" % AkkaVersion,
+      "com.typesafe.akka"             %% "akka-persistence-query"      % AkkaVersion,
+      "com.typesafe.akka"             %% "akka-discovery"              % AkkaVersion,
+      "com.typesafe.akka"             %% "akka-serialization-jackson"  % AkkaVersion,
+      "com.typesafe.akka"             %% "akka-discovery"              % AkkaVersion,
+      "com.lightbend.akka"            %% "akka-projection-core"        % AkkaProjectionVersion,
+      "com.lightbend.akka.management" %% "akka-management"             % AkkaManagementVersion,
+      "com.lightbend.akka.management" %% "akka-management-cluster-bootstrap" % AkkaManagementVersion,
+      "com.lightbend.akka.management" %% "akka-management-cluster-http" % AkkaManagementVersion,
       // Test
       "com.typesafe.akka" %% "akka-actor-testkit-typed" % AkkaVersion     % Test,
       "com.typesafe.akka" %% "akka-http-testkit"        % AkkaHttpVersion % Test,
