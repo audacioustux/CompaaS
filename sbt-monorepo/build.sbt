@@ -65,32 +65,6 @@ lazy val root = project
     Compile / doc / sources                := Seq()
   )
 
-lazy val dev = taskKey[Unit]("Run a multi-node local cluster")
-dev := {
-  // https://github.com/open-cli-tools/concurrently
-  // https://github.com/watchexec/watchexec
-  // TODO: fix colored output
-  def runNodeCommand(hostname: String): String =
-    s"HOSTNAME=${hostname} target/universal/stage/bin/monorepo-sbt -Dconfig.resource=/dev.application.conf -Dlogback.configurationFile=src/main/resources/dev.logback.xml"
-  def watchexecNodeCommand(command: String): String =
-    s"watchexec -r --project-origin=target/universal/stage ${command}"
-
-  "sbt clean stage" !
-
-  Seq(
-    "concurrently",
-    "-n",
-    "sbt-stage,node",
-    """"sbt ~stage"""",
-    s""""${watchexecNodeCommand(
-        s""""${Seq(
-            "concurrently",
-            "-n",
-            "node-1,node-2,node-3",
-            s"""'${runNodeCommand("127.0.0.1")}'""",
-            s"""'${runNodeCommand("127.0.0.2")}'""",
-            s"""'${runNodeCommand("127.0.0.3")}'"""
-          ).mkString(" ")}""""
-      )}""""
-  ) !
-}
+lazy val dev = taskKey[Unit]("Run a multi-node local cluster for development environment")
+// NOTE: execute bin/dev directly for proper colors and formatting
+dev := { "bin/dev" ! }

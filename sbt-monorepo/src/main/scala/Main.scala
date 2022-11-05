@@ -102,6 +102,6 @@ object System {
   given system: ActorSystem[Nothing] = ActorSystem(System(), "CompaaS")
 
   AkkaManagement(system).start()
-  // ClusterBootstrap(system).start()
+  ClusterBootstrap(system).start()
 
   Await.ready(system.whenTerminated, Duration.Inf)

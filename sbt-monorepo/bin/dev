@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+LOGBACK_CONF="src/main/resources/dev.logback.xml"
+CONFIG_RESOURCE="dev.application.conf"
+STAGE_DIR="target/universal/stage"
+
+NODE_RUN_CMD="$STAGE_DIR/bin/monorepo-sbt -Dconfig.resource=/$CONFIG_RESOURCE -Dlogback.configurationFile=$LOGBACK_CONF'"
+
+concurrently -n sbt-stage,cluster -c red,green \
+"sbt ~stage" \
+"watchexec -d 100 -r --project-origin=$STAGE_DIR \
+    \"concurrently -n node-1,node-2,node-3 -c yellow,magenta,cyan \
+    'HOSTNAME=127.0.0.1 $NODE_RUN_CMD \
+    'HOSTNAME=127.0.0.2 $NODE_RUN_CMD \
+    'HOSTNAME=127.0.0.3 $NODE_RUN_CMD\""
