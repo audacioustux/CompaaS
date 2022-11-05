@@ -15,7 +15,8 @@
         <appender-ref ref="STDOUT" />
     </appender>
 
-    <root level="DEBUG">
+    <!-- DEBUG logs a lot of stuff, so enable it only when need it -->
+    <root level="INFO">
         <appender-ref ref="ASYNC_STDOUT" />
     </root>
 </configuration>
