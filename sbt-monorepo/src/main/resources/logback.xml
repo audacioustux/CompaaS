@@ -1,45 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property name="LOGS_HOME" value="./logs" />
+    <import class="ch.qos.logback.core.rolling.RollingFileAppender" />
+    <import class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy" />
+    <import class="ch.qos.logback.classic.AsyncAppender" />
 
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOGS_HOME}/app.log</file>
+    <variable name="LOGS_DIR" value="/var/lib/compaas" />
+
+    <appender name="FILE" class="RollingFileAppender">
+        <file>${LOGS_DIR}/app.log</file>
         <immediateFlush>false</immediateFlush>
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${LOGS_HOME}/archive/app_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+        <rollingPolicy class="SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_DIR}/archive/app_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!-- each archived file, size max 10MB -->
             <maxFileSize>10MB</maxFileSize>
             <!-- total size of all archive files, if total size > 20GB, it will delete old archived file -->
-            <totalSizeCap>20GB</totalSizeCap>
+            <totalSizeCap>10GB</totalSizeCap>
             <!-- 60 days to keep -->
             <maxHistory>60</maxHistory>
         </rollingPolicy>
         <encoder>
-            <!-- use better optimized format -->
+            <!-- TODO: use better optimized format -->
             <pattern>[%date{ISO8601}] [%level] [%logger] [%marker] [%thread] [%msg] [%mdc]%n</pattern>
         </encoder>
     </appender>
 
-    <appender name="ASYNC_FILE" class="ch.qos.logback.classic.AsyncAppender">
+    <appender name="ASYNC_FILE" class="AsyncAppender">
         <queueSize>8192</queueSize>
         <neverBlock>true</neverBlock>
         <appender-ref ref="FILE" />
     </appender>
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>- %m -- %c%n</pattern>
-        </encoder>
-    </appender>
-
-    <appender name="ASYNC_STDOUT" class="ch.qos.logback.classic.AsyncAppender">
-        <queueSize>1024</queueSize>
-        <neverBlock>true</neverBlock>
-        <appender-ref ref="STDOUT" />
-    </appender>
-
-    <root level="DEBUG">
-        <appender-ref ref="ASYNC_STDOUT" />
+    <root level="INFO">
         <appender-ref ref="ASYNC_FILE" />
     </root>
 </configuration>

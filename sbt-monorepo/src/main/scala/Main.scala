@@ -41,11 +41,11 @@ object Server {
 
       val routes = Routes(ctx, receptionist)
 
-      val config    = system.settings.config.getConfig("akka.http.server")
-      val interface = config.getString("interface")
-      val port      = config.getInt("port")
+      val config   = system.settings.config.getConfig("akka.http.server")
+      val hostname = config.getString("hostname")
+      val port     = config.getInt("port")
       val serverBinding = Http()
-        .newServerAt(interface, port)
+        .newServerAt(hostname, port)
         .bind(routes)
         .map(_.addToCoordinatedShutdown(hardTerminationDeadline = 10.seconds))
 
