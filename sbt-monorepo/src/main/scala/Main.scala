@@ -10,6 +10,7 @@ import akka.http.scaladsl.Http.ServerBinding
 import akka.http.scaladsl.model.*
 import akka.http.scaladsl.server.Directives.*
 import akka.http.scaladsl.server.Route
+import akka.management.cluster.bootstrap.ClusterBootstrap
 import akka.management.scaladsl.AkkaManagement
 import akka.stream.scaladsl.*
 import akka.stream.typed.scaladsl.{ActorSink, ActorSource}
@@ -40,9 +41,9 @@ object Server {
 
       val routes = Routes(ctx, receptionist)
 
-      val config    = ConfigFactory.load()
-      val interface = config.getString("akka.http.server.interface")
-      val port      = config.getInt("akka.http.server.port")
+      val config    = system.settings.config.getConfig("akka.http.server")
+      val interface = config.getString("interface")
+      val port      = config.getInt("port")
       val serverBinding = Http()
         .newServerAt(interface, port)
         .bind(routes)
@@ -92,16 +93,15 @@ object Server {
 
 object System {
   def apply() = Behaviors.setup[Nothing] { ctx =>
-    ctx.spawn(Server(), "ApiServer")
-
+    ctx.spawn(Server(), "Server")
     Behaviors.empty
   }
 }
 
-@main def init(): Future[Done] =
-  given system: ActorSystem[Nothing] = ActorSystem(System(), "System")
+@main def Main: Unit =
+  given system: ActorSystem[Nothing] = ActorSystem(System(), "CompaaS")
 
-  // AkkaManagement(system).start()
+  AkkaManagement(system).start()
   // ClusterBootstrap(system).start()
 
   Await.ready(system.whenTerminated, Duration.Inf)
