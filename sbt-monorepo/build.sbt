@@ -53,11 +53,12 @@ lazy val root = project
       "com.typesafe.akka" %% "akka-stream-testkit"      % AkkaVersion     % Test
     ).map(_.cross(CrossVersion.for3Use2_13)),
     libraryDependencies ++= Seq(
-      "ch.qos.logback"   % "logback-classic" % "1.4.4",
-      "org.scalameta"   %% "munit"           % "0.7.29" % Test,
-      "org.scalatest"   %% "scalatest"       % "3.2.14" % Test,
-      "org.graalvm.sdk"  % "graal-sdk"       % GraalVersion,
-      "org.apache.kafka" % "kafka-clients"   % "3.3.1"
+      "ch.qos.logback"   % "logback-classic"            % "1.4.4",
+      "org.scalameta"   %% "munit"                      % "0.7.29" % Test,
+      "org.scalatest"   %% "scalatest"                  % "3.2.14" % Test,
+      "org.graalvm.sdk"  % "graal-sdk"                  % GraalVersion,
+      "org.apache.kafka" % "kafka-clients"              % "3.3.1",
+      "org.msgpack"      % "jackson-dataformat-msgpack" % "0.9.3"
     ),
     nativeImageGraalHome := file(sys.env("GRAALVM_HOME")).toPath,
     // Disable documentation generation

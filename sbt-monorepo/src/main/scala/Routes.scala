@@ -9,7 +9,6 @@ import akka.stream.scaladsl.{BroadcastHub, Flow, Keep, Sink, Source}
 import akka.stream.typed.scaladsl.{ActorSink, ActorSource}
 
 object Routes {
-
   def apply(ctx: ActorContext[?], receptionist: ActorRef[ServiceReceptionist.Protocol])(using
       ActorSystem[?]
   ): Route = {
