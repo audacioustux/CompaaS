@@ -4,24 +4,24 @@ LOGBACK_CONF="src/main/resources/dev.logback.xml"
 CONFIG_RESOURCE="dev.application.conf"
 STAGE_DIR="target/universal/stage"
 
-NODE_RUN_CMD="$STAGE_DIR/bin/monorepo-sbt -Dconfig.resource=/$CONFIG_RESOURCE -Dlogback.configurationFile=$LOGBACK_CONF'"
+NODE_RUN_CMD="$STAGE_DIR/bin/monorepo-sbt -Dconfig.resource=/$CONFIG_RESOURCE -Dlogback.configurationFile=$LOGBACK_CONF -J-Xmx512m"
 
-echo "creating loopback addresses for nodes..."
+echo "[!] creating loopback addresses for nodes..."
 # remove old loopback addresses
-sudo ifconfig lo0 -alias 127.0.0.2 
-sudo ifconfig lo0 -alias 127.0.0.3 
-sudo ifconfig lo0 -alias 127.0.0.4 
+sudo ifconfig lo0 -alias 127.0.0.2 >/dev/null 2>&1
+sudo ifconfig lo0 -alias 127.0.0.3 >/dev/null 2>&1
+sudo ifconfig lo0 -alias 127.0.0.4 >/dev/null 2>&1
 # add new loopback addresses
 sudo ifconfig lo0 alias 127.0.0.2 up
 sudo ifconfig lo0 alias 127.0.0.3 up
 sudo ifconfig lo0 alias 127.0.0.4 up
 
-sbt clean stage
+[ ! -d "$STAGE_DIR" ] && sbt clean stage
 
 concurrently -n sbt-stage,cluster -c red,green \
-"sbt ~stage" \
+"sbt -J-Xmx512m '~stage'" \
 "watchexec -d 100 -r --project-origin=$STAGE_DIR \
     \"concurrently -n node-1,node-2,node-3 -c yellow,magenta,cyan \
-    'HOSTNAME=127.0.0.2 $NODE_RUN_CMD \
-    'HOSTNAME=127.0.0.3 $NODE_RUN_CMD \
-    'HOSTNAME=127.0.0.4 $NODE_RUN_CMD\""
+    'HOSTNAME=127.0.0.2 $NODE_RUN_CMD' \
+    'HOSTNAME=127.0.0.3 $NODE_RUN_CMD' \
+    'HOSTNAME=127.0.0.4 $NODE_RUN_CMD'\""

@@ -1,12 +1,15 @@
-import sys.process.*
-
-val scala3Version         = "3.2.0"
-val AkkaVersion           = "2.6.20"
-val AkkaProjectionVersion = "1.2.5"
-val AkkaHttpVersion       = "10.2.10"
-val GraalVersion          = "22.2.0"
-val AkkaManagementVersion = "1.1.4"
-val AkkaPersistenceR2dbc  = "0.7.7"
+val scala3Version            = "3.2.0"
+val AkkaVersion              = "2.6.20"
+val AkkaProjectionVersion    = "1.2.5"
+val AkkaHttpVersion          = "10.2.10"
+val GraalVersion             = "22.2.0"
+val AkkaManagementVersion    = "1.1.4"
+val AkkaPersistenceCassandra = "1.0.6"
+val DatastaxJavaDriver       = "4.15.0"
+val KafkaClientVersion       = "3.3.1"
+val JsoniterScalaVersion     = "2.17.9"
+val LogbackVersion           = "1.4.4"
+val CatsVersion              = "2.8.0"
 
 inThisBuild(
   List(
@@ -40,10 +43,10 @@ lazy val root = project
       "com.typesafe.akka"             %% "akka-cluster-sharding-typed"  % AkkaVersion,
       "com.typesafe.akka"             %% "akka-persistence-query"       % AkkaVersion,
       "com.typesafe.akka"             %% "akka-discovery"               % AkkaVersion,
-      "com.typesafe.akka"             %% "akka-serialization-jackson"   % AkkaVersion,
       "com.typesafe.akka"             %% "akka-discovery"               % AkkaVersion,
       "com.lightbend.akka"            %% "akka-projection-core"         % AkkaProjectionVersion,
-      "com.lightbend.akka"            %% "akka-persistence-r2dbc"       % AkkaPersistenceR2dbc,
+      "com.typesafe.akka"             %% "akka-persistence-cassandra"   % AkkaPersistenceCassandra,
+      "org.typelevel"                 %% "cats-core"                    % CatsVersion,
       "com.lightbend.akka.management" %% "akka-management"              % AkkaManagementVersion,
       "com.lightbend.akka.management" %% "akka-management-cluster-http" % AkkaManagementVersion,
       "com.lightbend.akka.management" %% "akka-management-cluster-bootstrap" % AkkaManagementVersion,
@@ -53,12 +56,15 @@ lazy val root = project
       "com.typesafe.akka" %% "akka-stream-testkit"      % AkkaVersion     % Test
     ).map(_.cross(CrossVersion.for3Use2_13)),
     libraryDependencies ++= Seq(
-      "ch.qos.logback"   % "logback-classic"            % "1.4.4",
-      "org.scalameta"   %% "munit"                      % "0.7.29" % Test,
-      "org.scalatest"   %% "scalatest"                  % "3.2.14" % Test,
-      "org.graalvm.sdk"  % "graal-sdk"                  % GraalVersion,
-      "org.apache.kafka" % "kafka-clients"              % "3.3.1",
-      "org.msgpack"      % "jackson-dataformat-msgpack" % "0.9.3"
+      "ch.qos.logback"                         % "logback-classic"     % LogbackVersion,
+      "org.graalvm.sdk"                        % "graal-sdk"           % GraalVersion,
+      "org.apache.kafka"                       % "kafka-clients"       % KafkaClientVersion,
+      "com.datastax.oss"                       % "java-driver-core"    % DatastaxJavaDriver,
+      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core" % JsoniterScalaVersion,
+      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % JsoniterScalaVersion % "compile-internal",
+      // Test
+      "org.scalameta" %% "munit"     % "0.7.29" % Test,
+      "org.scalatest" %% "scalatest" % "3.2.14" % Test
     ),
     nativeImageGraalHome := file(sys.env("GRAALVM_HOME")).toPath,
     // Disable documentation generation
@@ -68,4 +74,8 @@ lazy val root = project
 
 lazy val dev = taskKey[Unit]("Run a multi-node local cluster for development environment")
 // NOTE: execute bin/dev directly for proper colors and formatting
-dev := { "bin/dev" ! }
+dev := {
+  import sys.process.*
+
+  "bin/dev" !
+}
