@@ -8,9 +8,9 @@ NODE_RUN_CMD="$STAGE_DIR/bin/monorepo-sbt -Dconfig.resource=/$CONFIG_RESOURCE -D
 
 echo "[!] creating loopback addresses for nodes..."
 # remove old loopback addresses
-sudo ifconfig lo0 -alias 127.0.0.2 >/dev/null 2>&1
-sudo ifconfig lo0 -alias 127.0.0.3 >/dev/null 2>&1
-sudo ifconfig lo0 -alias 127.0.0.4 >/dev/null 2>&1
+sudo ifconfig lo0 alias 127.0.0.2 down >/dev/null 2>&1
+sudo ifconfig lo0 alias 127.0.0.3 down >/dev/null 2>&1
+sudo ifconfig lo0 alias 127.0.0.4 down >/dev/null 2>&1
 # add new loopback addresses
 sudo ifconfig lo0 alias 127.0.0.2 up
 sudo ifconfig lo0 alias 127.0.0.3 up

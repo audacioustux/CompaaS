@@ -10,4 +10,7 @@ object Protocol {
   object Out {
     case class Response(data: String) extends Out
   }
+
+  sealed trait Ack extends Out
+  case object Ack  extends Ack
 }
