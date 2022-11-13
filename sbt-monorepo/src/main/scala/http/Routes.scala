@@ -2,9 +2,8 @@ package http
 
 import akka.NotUsed
 import akka.actor.typed.scaladsl.AskPattern.Askable
-import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
+import akka.actor.typed.scaladsl.{ActorContext, Behaviors, StashBuffer}
 import akka.actor.typed.{ActorRef, ActorSystem, Behavior, Scheduler}
-import akka.event.ActorClassifier
 import akka.http.scaladsl.model.StatusCodes.*
 import akka.http.scaladsl.model.ws.TextMessage.{Streamed, Strict}
 import akka.http.scaladsl.model.ws.{BinaryMessage, Message, TextMessage}
@@ -31,80 +30,87 @@ given JsonValueCodec[Out] = JsonCodecMaker.make
 given JsonValueCodec[In]  = JsonCodecMaker.make
 
 object Session {
-  trait Event
-  case class Init(ackTo: ActorRef[Ack])                         extends Event
-  case class IncomingMessage(message: In, ackTo: ActorRef[Ack]) extends Event
-  case object Completed                                         extends Event
-  case class Failed(cause: Throwable)                           extends Event
+  sealed trait Event
+  case object Ack                                                      extends Event
+  case class IncomingMessage(message: In, ackTo: ActorRef[Ack.type])   extends Event
+  case object Completed                                                extends Event
+  case class Failed(cause: Throwable)                                  extends Event
+  case class Init(ackTo: ActorRef[Ack.type], recipient: ActorRef[Out]) extends Event
 
-  def apply(customer: ActorRef[Out]) = Behaviors.setup[Event] { ctx =>
-    Behaviors.receiveMessage {
-      case IncomingMessage(message, ackTo) =>
-        message match {
-          case In.Request(data) =>
-            customer ! Out.Response(data)
-            ackTo ! Ack
-        }
-        ackTo ! Ack
-        Behaviors.same
-      case Init(ackTo) =>
-        ackTo ! Ack
-        Behaviors.same
-      case Completed =>
-        Behaviors.stopped
-      case Failed(cause) =>
-        throw new RuntimeException("Session failed", cause)
+  def handleIncomming(message: In)(using recipient: ActorRef[Out]): Unit =
+    message match {
+      case In.Ping =>
+        recipient ! Out.Pong
+    }
+
+  private def withRecipient(recipient: ActorRef[Out]): Behavior[Event] =
+    Behaviors.setup { ctx =>
+      Behaviors.receiveMessage {
+        case IncomingMessage(message, ackTo) =>
+          handleIncomming(message)(using recipient)
+          ackTo ! Ack
+          Behaviors.same
+        case Completed =>
+          Behaviors.stopped
+        case Failed(cause) =>
+          ctx.log.error("something went wrong", cause)
+          Behaviors.stopped
+        // TODO: handle backpressure
+        case Ack => Behaviors.same
+        case other =>
+          ctx.log.warn("Unexpected message: {}", other)
+          Behaviors.unhandled
+      }
+    }
+
+  def apply() = Behaviors.setup[Event] { ctx =>
+    Behaviors.withStash(1 << 3) { stash =>
+      Behaviors.receiveMessage {
+        case Init(ackTo, recipient) =>
+          ackTo ! Ack
+          stash.unstashAll(withRecipient(recipient))
+        case other =>
+          stash.stash(other)
+          Behaviors.same
+      }
     }
   }
-}
-
-object PushSource {
-  sealed trait Event
-  case object Completed            extends Event
-  case class Failed(ex: Throwable) extends Event
-
-  def apply()(using
-      ctx: ActorContext[?],
-      mat: Materializer
-  ): (ActorRef[Out], Source[Out, NotUsed]) =
-    val ackTo = ctx.spawnAnonymous(
-      // TODO: handle backpressure properly
-      Behaviors.receiveMessage { case Ack => Behaviors.same }
-    )
-
-    ActorSource
-      .actorRefWithBackpressure(
-        ackTo,
-        ackMessage = Ack,
-        completionMatcher = { case Completed => CompletionStrategy.draining },
-        failureMatcher = { case Failed(ex) => ex }
-      )
-      .collect { case out: Out => out }
-      // TODO: refactor
-      .toMat(BroadcastHub.sink[Out](1 << 8))(Keep.both)
-      .run()
 }
 
 object Receptionist {
   trait Event
   case class AskedForNewSession(who: ActorRef[Flow[Message, Message, ?]]) extends Event
 
-  private def newSessionFlow()(using
-      ctx: ActorContext[?],
-      mat: Materializer
-  ): Flow[Message, Message, ?] = {
+  private def newSessionFlow()(using ctx: ActorContext[?]): Flow[Message, Message, ?] = {
+    given Materializer = Materializer(ctx)
+
     val parallelism = Runtime.getRuntime.availableProcessors() * 2 - 1
 
-    val (customer, source) = PushSource()
-    val session            = ctx.spawn(Session(customer), s"Session-${UUID.randomUUID()}")
+    val sessionId = UUID.randomUUID()
+    val session   = ctx.spawn(Session(), s"Session-${sessionId}")
+
+    val (recipient: ActorRef[Out], source: Source[Out, NotUsed]) = {
+      import Session.*
+
+      ActorSource
+        .actorRefWithBackpressure[Out, Ack.type](
+          ackTo = session,
+          ackMessage = Ack,
+          completionMatcher = { case Out.Completed => CompletionStrategy.draining },
+          failureMatcher = { case Out.Failed(exceptionId, message) =>
+            RuntimeException(s"[$exceptionId] $message")
+          }
+        )
+        .preMaterialize()
+    }
 
     val sink: Sink[In, NotUsed] = {
       import Session.*
 
       ActorSink.actorRefWithBackpressure(
         ref = session,
-        messageAdapter = (ackTo: ActorRef[Ack], msg) => IncomingMessage(msg, ackTo),
-        onInitMessage = (ackTo: ActorRef[Ack]) => Init(ackTo),
+        messageAdapter = (ackTo: ActorRef[Ack.type], msg) => IncomingMessage(msg, ackTo),
+        onInitMessage = (ackTo: ActorRef[Ack.type]) => Init(ackTo, recipient),
         ackMessage = Ack,
         onCompleteMessage = Completed,
         onFailureMessage = (exception) => Failed(exception)
@@ -120,14 +126,10 @@ object Receptionist {
           false
       }
       .collect { case tm: TextMessage => tm }
-      .mapAsync(parallelism)(
-        _.toStrict(5.second)
-      ) // stream better crash if message takes too long to receive
+      .mapAsync(parallelism)(_.toStrict(5.second)) // don't wait too long
       .map(_.text)
       .map(readFromString[In](_))
-      .via(
-        Flow.fromSinkAndSource(sink, source)
-      )
+      .via(Flow.fromSinkAndSource(sink, source)) // sink and source not coupled
       .map(writeToString(_))
       .map[Message](TextMessage(_))
       .withAttributes(ActorAttributes.supervisionStrategy { e =>
@@ -136,7 +138,9 @@ object Receptionist {
       })
   }
 
-  def apply()(using Materializer): Behavior[Event] = Behaviors.setup { ctx =>
+  def apply()(using ctx: ActorContext[?]): Behavior[Event] = Behaviors.setup { ctx =>
+    given Materializer = Materializer(ctx)
+
     Behaviors.receive { (ctx, msg) =>
       msg match {
         case AskedForNewSession(who) =>
@@ -148,9 +152,7 @@ object Receptionist {
 }
 
 object Routes {
-  def apply()(using
-      ctx: ActorContext[?]
-  ): Route = {
+  def apply()(using ctx: ActorContext[?]): Route = {
     given ActorSystem[?] = ctx.system
 
     val gateway = ctx.spawn(Receptionist(), "Receptionist")
