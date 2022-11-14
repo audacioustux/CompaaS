@@ -20,7 +20,7 @@ object Server {
   def apply(): Behavior[Event] =
     Behaviors.setup { ctx =>
       given system: ActorSystem[?] = ctx.system
-      given ExecutionContext       = system.executionContext
+      given ExecutionContext       = ctx.executionContext
 
       val routes = Routes()(using ctx)
 
