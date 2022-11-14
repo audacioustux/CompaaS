@@ -10,9 +10,7 @@ object Protocol {
 
   sealed trait Out
   object Out {
-    case object Pong extends Out
-
-    case object Completed                                 extends Out
-    case class Failed(exceptionId: UUID, message: String) extends Out
+    case object Pong                  extends Out
+    case class Error(message: String) extends Out
   }
 }
