@@ -30,7 +30,10 @@ object Routes {
 
         onComplete(flow) {
           // TODO: Do not expose error message, log it instead with an Id, and return to the client
-          case Failure(ex) => complete(InternalServerError, s"An error occurred: ${ex.getMessage}")
+          case Failure(ex) =>
+            val errMsg = "Failed to create a new session"
+            ctx.log.error(errMsg, ex)
+            complete(InternalServerError, errMsg)
           case Success(flow) => handleWebSocketMessages(flow)
         }
       }

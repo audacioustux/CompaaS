@@ -68,8 +68,8 @@ private object Session {
     given ExecutionContext = ctx.executionContext
 
     val (recipient, source) = Recipient()
-    val receptionist        = ctx.spawnAnonymous(Receptionist(recipient))
 
+    val receptionist = ctx.spawnAnonymous(Receptionist(recipient))
     val sink: Sink[Either[Throwable, In], NotUsed] = {
       import Receptionist.*
 
