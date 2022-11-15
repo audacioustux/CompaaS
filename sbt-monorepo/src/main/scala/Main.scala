@@ -19,6 +19,4 @@ object System {
   AkkaManagement(system).start()
   ClusterBootstrap(system).start()
 
-  sys.addShutdownHook { system.terminate() }
-
   Await.ready(system.whenTerminated, Duration.Inf)

@@ -10,7 +10,8 @@ object Protocol {
 
   sealed trait Out
   object Out {
-    case object Pong                  extends Out
+    case object Pong extends Out
+    // TODO: add traceId
     case class Error(message: String) extends Out
   }
 }

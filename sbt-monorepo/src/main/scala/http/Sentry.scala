@@ -6,7 +6,13 @@ import akka.actor.typed.{ActorRef, Behavior}
 import akka.http.scaladsl.model.ws.{BinaryMessage, Message, TextMessage}
 import akka.stream.scaladsl.{Flow, Sink, Source}
 import akka.stream.typed.scaladsl.{ActorSink, ActorSource}
-import akka.stream.{ActorAttributes, Materializer, OverflowStrategy, Supervision}
+import akka.stream.{
+  ActorAttributes,
+  CompletionStrategy,
+  Materializer,
+  OverflowStrategy,
+  Supervision
+}
 import com.github.plokhotnyuk.jsoniter_scala.core.*
 import com.github.plokhotnyuk.jsoniter_scala.macros.*
 
@@ -44,7 +50,6 @@ private object Receptionist {
         Behaviors.stopped
       case Failed(cause) =>
         ctx.log.error("something went wrong", cause)
-        // TODO: restart?
         Behaviors.stopped
     }
   }
@@ -56,8 +61,9 @@ private object Recipient {
       .actorRef[Out](
         completionMatcher = PartialFunction.empty,
         failureMatcher = PartialFunction.empty,
-        bufferSize = 1 << 4,
-        overflowStrategy = OverflowStrategy.dropHead // TODO: ensure exactly-once delivery
+        bufferSize = 1 << 8,
+        // potential self-inflicted DDoS
+        overflowStrategy = OverflowStrategy.fail
       )
       .preMaterialize()
 }
@@ -97,9 +103,9 @@ private object Session {
         case TextMessage.Strict(text) => Future.successful(text)
         case TextMessage.Streamed(textStream) =>
           textStream.runFold(new StringBuilder())(_.append(_)).map(_.toString)
-      })
-      .map(in => Try(readFromString[In](in)).toEither) // parse to JSON
-      .via(Flow.fromSinkAndSource(sink, source))       // sink and source not coupled
+      }) // TODO: add protection against too large messages
+      .map(in => Try(readFromString[In](in)).toEither)  // parse to JSON
+      .via(Flow.fromSinkAndSourceCoupled(sink, source)) // sink and source not coupled
       .map(writeToString(_))
       .map[Message](TextMessage(_))
       .withAttributes(ActorAttributes.supervisionStrategy { e =>

@@ -15,7 +15,7 @@ sudo ifconfig lo0 alias 127.0.0.4 up
 
 concurrently -n sbt-stage,cluster -c red,green \
 "sbt -J-Xmx512m '~stage'" \
-"watchexec -d 100 -r --project-origin=$STAGE_DIR \
+"watchexec -d=1000 --on-busy-update=signal -s=SIGTERM --project-origin=$STAGE_DIR \
     \"concurrently -n node-1,node-2,node-3 -c yellow,magenta,cyan \
     'HOSTNAME=127.0.0.2 $NODE_RUN_CMD' \
     'HOSTNAME=127.0.0.3 $NODE_RUN_CMD' \

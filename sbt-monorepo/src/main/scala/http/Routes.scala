@@ -29,7 +29,6 @@ object Routes {
         val flow      = sentry.ask[Flow[Message, Message, ?]](AskedForNewSession(_))
 
         onComplete(flow) {
-          // TODO: Do not expose error message, log it instead with an Id, and return to the client
           case Failure(ex) =>
             val errMsg = "Failed to create a new session"
             ctx.log.error(errMsg, ex)
