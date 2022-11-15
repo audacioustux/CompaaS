@@ -6,9 +6,11 @@ import org.graalvm.polyglot.{Context, Engine, Source, Value}
 
 object ComponentAgent {
   sealed trait Event
-  case object Parse               extends Event
-  case object Init                extends Event
-  case class Send(portId: String) extends Event
+
+  sealed trait Command            extends Event
+  case object Parse               extends Command
+  case object Init                extends Command
+  case class Send(portId: String) extends Command
 
   private lazy val engine = Engine.newBuilder().build()
 
@@ -26,16 +28,15 @@ object ComponentAgent {
 class ComponentAgent()(using ctx: Context) {
   import ComponentAgent.*
 
-  def initialized(evaledVal: Value): Behavior[Event] = Behaviors.receiveMessagePartial {
-    case Send(portId) =>
-      Behaviors.same
+  def initialized(evaledVal: Value) = Behaviors.receiveMessagePartial[Event] { case Send(portId) =>
+    Behaviors.same
   }
 
-  def parsed(parsedAST: Value): Behavior[Event] = Behaviors.receiveMessagePartial { case Init =>
+  def parsed(parsedAST: Value) = Behaviors.receiveMessagePartial[Event] { case Init =>
     initialized(parsedAST.execute())
   }
 
-  def idle(source: Source): Behavior[Event] = Behaviors.receiveMessagePartial { case Parse =>
+  def idle(source: Source) = Behaviors.receiveMessagePartial[Event] { case Parse =>
     parsed(ctx.parse(source))
   }
 }
