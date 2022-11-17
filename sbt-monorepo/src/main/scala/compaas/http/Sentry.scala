@@ -1,4 +1,4 @@
-package http
+package compaas.http
 
 import akka.NotUsed
 import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
@@ -20,6 +20,7 @@ import java.util.UUID
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 
+import concurrent.duration.DurationInt
 import Helper.JsoniterScalaSupport.*
 import Protocol.*
 
@@ -33,13 +34,14 @@ private object Receptionist {
   case object Completed                                      extends Event
   case class Failed(cause: Throwable)                        extends Event
 
+  def handle(msg: In)(using recipient: ActorRef[Out]) = msg match {
+    case In.Echo(msg) => recipient ! Out.Echo(msg)
+  }
+
   def apply(recipient: ActorRef[Out]) = Behaviors.setup[Event] { ctx =>
     Behaviors.receiveMessage {
       case IncomingMessage(Right(message)) =>
-        message match {
-          case In.Ping =>
-            recipient ! Out.Pong
-        }
+        handle(message)(using recipient)
         Behaviors.same
       case IncomingMessage(Left(e)) =>
         val errMsg = s"failed to parse message"
@@ -61,13 +63,14 @@ private object Recipient {
       .actorRef[Out](
         completionMatcher = PartialFunction.empty,
         failureMatcher = PartialFunction.empty,
-        bufferSize = 1 << 8,
-        // potential self-inflicted DDoS
-        overflowStrategy = OverflowStrategy.fail
+        bufferSize = 1 << 6,
+        // at-most-once delivery
+        overflowStrategy = OverflowStrategy.dropHead
       )
       .preMaterialize()
 }
 
+// TODO: refactor to persistent actor
 private object Session {
   def apply()(using ctx: ActorContext[?]): Flow[Message, Message, ?] = {
     given Materializer     = Materializer(ctx)
@@ -99,11 +102,8 @@ private object Session {
           false
       }
       .collect { case tm: TextMessage => tm }
-      .mapAsync(parallelism)(_ match {
-        case TextMessage.Strict(text) => Future.successful(text)
-        case TextMessage.Streamed(textStream) =>
-          textStream.runFold(new StringBuilder())(_.append(_)).map(_.toString)
-      }) // TODO: add protection against too large messages
+      // at-most-once, unordered delivery
+      .mapAsyncUnordered(parallelism)(_.toStrict(1.second).map(_.text))
       .map(in => Try(readFromString[In](in)).toEither)  // parse to JSON
       .via(Flow.fromSinkAndSourceCoupled(sink, source)) // sink and source not coupled
       .map(writeToString(_))
@@ -119,7 +119,7 @@ object Sentry {
   trait Event
   case class AskedForNewSession(who: ActorRef[Flow[Message, Message, ?]]) extends Event
 
-  def apply()(using ctx: ActorContext[?]): Behavior[Event] = Behaviors.setup { ctx =>
+  def apply(): Behavior[Event] = Behaviors.setup { ctx =>
     given Materializer = Materializer(ctx)
 
     Behaviors.receive { (ctx, msg) =>

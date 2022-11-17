@@ -6,7 +6,19 @@
 
 run `bin/dev` or `sbt dev`
 
-prerequisites:
+#### prerequisites
 
 * concurrently: `npm install -g concurrently`
 * watchexec: `brew install watchexec`
+
+##### Install GraalVM
+
+``` bash
+bash <(curl -sL <https://get.graalvm.org/ee-token>)
+bash <(curl -sL <https://get.graalvm.org/jdk>)
+```
+
+#### todos
+
+* [ ] better logging
+* [ ] tracing

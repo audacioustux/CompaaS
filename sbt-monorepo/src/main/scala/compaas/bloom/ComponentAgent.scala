@@ -1,4 +1,4 @@
-package bloom
+package compaas.bloom
 
 import akka.actor.typed.Behavior
 import akka.actor.typed.scaladsl.Behaviors

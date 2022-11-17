@@ -1,4 +1,4 @@
-package bloom
+package compaas.bloom
 
 import org.graalvm.polyglot.Source
 
@@ -20,7 +20,7 @@ case class Component(
 object Component {
   def apply(name: String, description: Option[String], rawSource: String, languageId: String) = {
     val language = SupportedLanguage.values.find(_.languageId.equals(languageId)).get
-    val source   = Source.newBuilder(language.languageId, rawSource, name).build()
+    val source   = Source.newBuilder(languageId, rawSource, name).build()
 
     new Component(UUID.randomUUID(), language, source, name, description)
   }

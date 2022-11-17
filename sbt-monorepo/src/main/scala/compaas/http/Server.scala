@@ -1,10 +1,15 @@
-package http
+package compaas.http
 
-import akka.actor.ActorContext
-import akka.actor.typed.scaladsl.Behaviors
+import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
 import akka.actor.typed.{ActorSystem, Behavior, PostStop}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
+import akka.http.scaladsl.model.StatusCodes.InternalServerError
+import akka.http.scaladsl.model.ws.Message
+import akka.http.scaladsl.server.Directives.*
+import akka.http.scaladsl.server.Route
+import akka.stream.scaladsl.Flow
+import akka.util.Timeout
 
 import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
@@ -17,19 +22,40 @@ object Server {
   private final case class Started(binding: ServerBinding) extends Event
   case object Stop                                         extends Event
 
+  private def routes(ctx: ActorContext[?])(using system: ActorSystem[?]) = {
+    val sentry = ctx.spawn(Sentry(), "Sentry")
+
+    pathPrefix("@") {
+      pathEndOrSingleSlash {
+        import akka.actor.typed.scaladsl.AskPattern.*
+        import Sentry.AskedForNewSession
+
+        // drop request if it takes too long to create a session actor
+        given Timeout = Timeout(3.seconds)
+        val flow      = sentry.ask[Flow[Message, Message, ?]](AskedForNewSession(_))
+
+        onComplete(flow) {
+          case Failure(ex) =>
+            val errMsg = "Failed to create a new session, took to long"
+            ctx.log.error(errMsg, ex)
+            complete(InternalServerError, errMsg)
+          case Success(flow) => handleWebSocketMessages(flow)
+        }
+      }
+    }
+  }
+
   def apply(): Behavior[Event] =
     Behaviors.setup { ctx =>
       given system: ActorSystem[?] = ctx.system
       given ExecutionContext       = ctx.executionContext
-
-      val routes = Routes()(using ctx)
 
       val config   = system.settings.config.getConfig("akka.http.server")
       val hostname = config.getString("hostname")
       val port     = config.getInt("port")
       val serverBinding = Http()
         .newServerAt(hostname, port)
-        .bind(routes)
+        .bind(routes(ctx))
         .map(_.addToCoordinatedShutdown(hardTerminationDeadline = 10.seconds))
 
       ctx.pipeToSelf(serverBinding) {

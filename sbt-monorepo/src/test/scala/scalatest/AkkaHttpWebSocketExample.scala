@@ -1,3 +1,5 @@
+package scalatest
+
 import akka.actor.testkit.typed.scaladsl.TestProbe
 import akka.actor.typed.scaladsl.AskPattern.*
 import akka.actor.typed.{ActorRef, Scheduler}
@@ -51,6 +53,7 @@ class AkkaHttpWebSocketExample extends AnyWordSpec with Matchers with ScalatestR
         bm.dataStream.runWith(Sink.ignore)
         Nil
     }
+
   val websocketRoute =
     path("greeter") {
       handleWebSocketMessages(greeter)

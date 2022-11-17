@@ -1,4 +1,4 @@
-package http.Helper
+package compaas.http.Helper
 
 // "de.heikoseeberger" %% "akka-http-jsoniter-scala" % "1.39.2"
 // NOTE: ask heikoseeberger to add cross build for Scala 3

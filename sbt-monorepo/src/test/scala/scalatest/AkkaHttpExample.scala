@@ -1,3 +1,5 @@
+package scalatest
+
 import akka.actor.testkit.typed.scaladsl.TestProbe
 import akka.actor.typed.scaladsl.AskPattern.*
 import akka.actor.typed.{ActorRef, Scheduler}
