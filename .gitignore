@@ -1,12 +1,5 @@
-3rd-party/
+*
 
-target/
-.bsp
-.vscode/
-.bloop/
-.metals/
-metals.sbt
-.idea
-.idea_modules
-/.worksheet/
-*.log%
+!mix_monorepo
+!sbt-monorepo
+!turbo-monorepo
