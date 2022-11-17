@@ -28,7 +28,7 @@ private object Receptionist {
   sealed trait Event
   // TODO: add traceId
   final case class IncomingMessage(message: Either[Throwable, In]) extends Event
-  case object Completed                                      extends Event
+  case object Completed                                            extends Event
   final case class Failed(cause: Throwable)                        extends Event
 
   def handle(msg: In)(using recipient: ActorRef[Out]) = msg match {
