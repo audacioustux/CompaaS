@@ -6,7 +6,7 @@
 
 run `bin/dev` or `sbt dev`
 
-### prerequisites
+### Prerequisites
 
 * concurrently: `npm install -g concurrently`
 * watchexec: `brew install watchexec`
@@ -26,7 +26,7 @@ export PATH="/path/to/graalvm-ee-java17-22.3.0/Contents/Home/bin:$PATH"
 export JAVA_HOME="/path/to/graalvm-ee-java17-22.3.0/Contents/Home"
 ```
 
-### todos
+### Todos
 
 * [ ] better logging
 * [ ] tracing
