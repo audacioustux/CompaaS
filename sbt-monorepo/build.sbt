@@ -55,9 +55,9 @@ lazy val root = project
       "com.lightbend.akka.management" %% "akka-management-cluster-http" % versions.AkkaManagement,
       "com.lightbend.akka.management" %% "akka-management-cluster-bootstrap" % versions.AkkaManagement,
       // Test
-      "com.typesafe.akka" %% "akka-actor-testkit-typed" % versions.Akka     % Test,
       "com.typesafe.akka" %% "akka-http-testkit"        % versions.AkkaHttp % Test,
-      "com.typesafe.akka" %% "akka-stream-testkit"      % versions.Akka     % Test
+      "com.typesafe.akka" %% "akka-stream-testkit"      % versions.Akka     % Test,
+      "com.typesafe.akka" %% "akka-actor-testkit-typed" % versions.Akka     % Test
     ).map(_.cross(CrossVersion.for3Use2_13)),
     libraryDependencies ++= Seq(
       "ch.qos.logback"   % "logback-classic" % versions.Logback,

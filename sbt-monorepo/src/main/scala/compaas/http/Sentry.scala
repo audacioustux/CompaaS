@@ -24,15 +24,12 @@ import concurrent.duration.DurationInt
 import Helper.JsoniterScalaSupport.*
 import Protocol.*
 
-private given JsonValueCodec[Out] = JsonCodecMaker.make
-private given JsonValueCodec[In]  = JsonCodecMaker.make
-
 private object Receptionist {
   sealed trait Event
   // TODO: add traceId
-  case class IncomingMessage(message: Either[Throwable, In]) extends Event
+  final case class IncomingMessage(message: Either[Throwable, In]) extends Event
   case object Completed                                      extends Event
-  case class Failed(cause: Throwable)                        extends Event
+  final case class Failed(cause: Throwable)                        extends Event
 
   def handle(msg: In)(using recipient: ActorRef[Out]) = msg match {
     case In.Echo(msg) => recipient ! Out.Echo(msg)
@@ -72,6 +69,11 @@ private object Recipient {
 
 // TODO: refactor to persistent actor
 private object Session {
+  private val parallelism = Runtime.getRuntime.availableProcessors() * 2 - 1
+
+  private given JsonValueCodec[Out] = JsonCodecMaker.make
+  private given JsonValueCodec[In]  = JsonCodecMaker.make
+
   def apply()(using ctx: ActorContext[?]): Flow[Message, Message, ?] = {
     given Materializer     = Materializer(ctx)
     given ExecutionContext = ctx.executionContext
@@ -90,8 +92,6 @@ private object Session {
         )
         .contramap(IncomingMessage(_))
     }
-
-    val parallelism = Runtime.getRuntime.availableProcessors() * 2 - 1
 
     Flow[Message]
       .filter {

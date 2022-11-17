@@ -4,24 +4,24 @@ import org.graalvm.polyglot.Source
 
 import java.util.UUID
 
-enum SupportedLanguage(val languageId: String) {
-  case Js   extends SupportedLanguage("js")
-  case Wasm extends SupportedLanguage("Wasm")
+enum Language(val languageId: String) {
+  case Js   extends Language("js")
+  case Wasm extends Language("Wasm")
 }
 
-case class Component(
+final case class Component(
     id: UUID,
-    language: SupportedLanguage,
+    language: Language,
     source: Source,
     name: String,
-    description: Option[String]
+    desc: Option[String]
 )
 
 object Component {
-  def apply(name: String, description: Option[String], rawSource: String, languageId: String) = {
-    val language = SupportedLanguage.values.find(_.languageId.equals(languageId)).get
+  def apply(languageId: String, rawSource: String, name: String, desc: Option[String] = None) = {
+    val language = Language.values.find(_.languageId.equals(languageId)).get
     val source   = Source.newBuilder(languageId, rawSource, name).build()
 
-    new Component(UUID.randomUUID(), language, source, name, description)
+    new Component(UUID.randomUUID(), language, source, name, desc)
   }
 }
