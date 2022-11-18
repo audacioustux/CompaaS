@@ -8,12 +8,11 @@ import akka.management.scaladsl.AkkaManagement
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 
-object System {
+object System:
   def apply() = Behaviors.setup[Nothing] { ctx =>
     ctx.spawn(http.Server(), "HttpServer")
     Behaviors.empty
   }
-}
 
 @main def Main: Unit =
   given system: ActorSystem[Nothing] = ActorSystem(System(), "CompaaS")

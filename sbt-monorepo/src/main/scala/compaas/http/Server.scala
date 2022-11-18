@@ -16,13 +16,13 @@ import scala.util.{Failure, Success}
 
 import concurrent.duration.DurationInt
 
-object Server {
+object Server:
   sealed trait Event
   private final case class StartFailed(cause: Throwable)   extends Event
   private final case class Started(binding: ServerBinding) extends Event
   case object Stop                                         extends Event
 
-  private def routes(ctx: ActorContext[?])(using system: ActorSystem[?]) = {
+  private def routes(ctx: ActorContext[?])(using system: ActorSystem[?]) =
     val sentry = ctx.spawn(Sentry(), "Sentry")
 
     pathPrefix("@") {
@@ -31,7 +31,7 @@ object Server {
         import Sentry.AskedForNewSession
 
         // drop request if it takes too long to create a session actor
-        given Timeout = Timeout(3.seconds)
+        given Timeout = Timeout(2.seconds)
         val flow      = sentry.ask[Flow[Message, Message, ?]](AskedForNewSession(_))
 
         onComplete(flow) {
@@ -43,7 +43,6 @@ object Server {
         }
       }
     }
-  }
 
   def apply(): Behavior[Event] =
     Behaviors.setup { ctx =>
@@ -63,7 +62,7 @@ object Server {
         case Failure(ex)      => StartFailed(ex)
       }
 
-      def running(binding: ServerBinding): Behavior[Event] = {
+      def running(binding: ServerBinding): Behavior[Event] =
         Behaviors
           .receiveMessagePartial[Event] { case Stop =>
             ctx.log.info(
@@ -77,9 +76,8 @@ object Server {
             binding.unbind() // stop accepting new connections
             Behaviors.same
           }
-      }
 
-      def starting(wasStopped: Boolean): Behaviors.Receive[Event] = {
+      def starting(wasStopped: Boolean): Behaviors.Receive[Event] =
         Behaviors.receiveMessage[Event] {
           case StartFailed(cause) => throw new RuntimeException("Server failed to start", cause)
           case Started(binding) =>
@@ -94,8 +92,6 @@ object Server {
           // cannot stop until starting has completed
           case Stop => starting(wasStopped = true)
         }
-      }
 
       starting(wasStopped = false)
     }
-}

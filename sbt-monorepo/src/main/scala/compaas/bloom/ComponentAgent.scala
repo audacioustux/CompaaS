@@ -6,7 +6,7 @@ import org.graalvm.polyglot.{Context, Engine, PolyglotException, Source, Value}
 
 import scala.util.{Failure, Success, Try}
 
-object ComponentAgent {
+object ComponentAgent:
   sealed trait Event
 
   sealed trait ParseEvent                                 extends Event
@@ -20,18 +20,16 @@ object ComponentAgent {
 
   private lazy val engine = Engine.newBuilder().build()
 
-  def apply(component: Component): Behavior[Event] = {
+  def apply(component: Component): Behavior[Event] =
     import component.*
-    given context: Context = Context
+    given ctx: Context = Context
       .newBuilder(language.languageId)
       .engine(engine)
       .build()
 
     (new ComponentAgent).idle(source)
-  }
-}
 
-class ComponentAgent()(using ctx: Context) {
+class ComponentAgent()(using ctx: Context):
   import ComponentAgent.*
 
   def initialized(evaledVal: Value) = Behaviors.receiveMessagePartial[Event] { case Send(portId) =>
@@ -43,7 +41,7 @@ class ComponentAgent()(using ctx: Context) {
   }
 
   def idle(source: Source) = Behaviors.receiveMessagePartial[Event] { case Parse(replyTo) =>
-    Try(ctx.parse(source)) match {
+    Try(ctx.parse(source)) match
       case Success(parsedAST: Value) =>
         replyTo ! Parsed
         parsed(parsedAST)
@@ -51,6 +49,4 @@ class ComponentAgent()(using ctx: Context) {
         replyTo ! ParseFailed(exception)
         Behaviors.same
       case Failure(exception) => throw exception
-    }
   }
-}

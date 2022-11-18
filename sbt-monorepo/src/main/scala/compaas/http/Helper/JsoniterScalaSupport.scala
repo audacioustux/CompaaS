@@ -29,15 +29,14 @@ import scala.util.control.NonFatal
 /** Automatic to and from JSON marshalling/unmarshalling using an in-scope instance of
   * JsonValueCodec
   */
-object JsoniterScalaSupport extends JsoniterScalaSupport {
+object JsoniterScalaSupport extends JsoniterScalaSupport:
   val defaultReaderConfig: ReaderConfig =
     ReaderConfig.withPreferredBufSize(100 * 1024).withPreferredCharBufSize(10 * 1024)
   val defaultWriterConfig: WriterConfig = WriterConfig.withPreferredBufSize(100 * 1024)
-}
 
 /** JSON marshalling/unmarshalling using an in-scope instance of JsonValueCodec
   */
-trait JsoniterScalaSupport {
+trait JsoniterScalaSupport:
   type SourceOf[A] = Source[A, ?]
 
   import JsoniterScalaSupport.*
@@ -59,9 +58,8 @@ trait JsoniterScalaSupport {
             () => HttpEntity(contentType = mediaType, data = value)
           ) :: Nil
         }
-      catch {
+      catch
         case NonFatal(e) => FastFuture.failed(e)
-      }
     }
 
   private val jsonSourceStringMarshaller =
@@ -97,13 +95,12 @@ trait JsoniterScalaSupport {
   implicit def marshaller[A](implicit
       codec: JsonValueCodec[A],
       config: WriterConfig = defaultWriterConfig
-  ): ToEntityMarshaller[A] = {
+  ): ToEntityMarshaller[A] =
     val mediaType   = mediaTypes.head
     val contentType = ContentType.WithFixedCharset(mediaType)
     Marshaller.withFixedContentType(contentType) { obj =>
       HttpEntity.Strict(contentType, ByteString.fromArrayUnsafe(writeToArray(obj, config)))
     }
-  }
 
   /** `ByteString` => `A`
     *
@@ -161,4 +158,3 @@ trait JsoniterScalaSupport {
       support: JsonEntityStreamingSupport = EntityStreamingSupport.json()
   ): ToEntityMarshaller[SourceOf[A]] =
     jsonSourceStringMarshaller.compose(jsonSource[A])
-}

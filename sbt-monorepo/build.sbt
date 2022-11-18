@@ -76,6 +76,20 @@ lazy val root = project
     Compile / doc / sources                := Seq()
   )
 
+scalacOptions ++= Seq(
+  "-explain",
+  "-indent",
+  "-rewrite",
+  "-print-lines",
+  "-deprecation",
+  "-explain-types",
+  "-feature",
+  "-unchecked",
+  "-Ykind-projector",
+  "-Xfatal-warnings",
+  "-Xmigration"
+)
+
 lazy val dev = taskKey[Unit]("Run a multi-node local cluster for development environment")
 // NOTE: execute bin/dev directly for proper colors and formatting
 dev := {

@@ -24,16 +24,15 @@ import concurrent.duration.DurationInt
 import Helper.JsoniterScalaSupport.*
 import Protocol.*
 
-private object Receptionist {
+private object Receptionist:
   sealed trait Event
   // TODO: add traceId
   final case class IncomingMessage(message: Either[Throwable, In]) extends Event
   case object Completed                                            extends Event
   final case class Failed(cause: Throwable)                        extends Event
 
-  def handle(msg: In)(using recipient: ActorRef[Out]) = msg match {
+  private def handle(msg: In)(using recipient: ActorRef[Out]) = msg match
     case In.Echo(msg) => recipient ! Out.Echo(msg)
-  }
 
   def apply(recipient: ActorRef[Out]) = Behaviors.setup[Event] { ctx =>
     Behaviors.receiveMessage {
@@ -52,9 +51,8 @@ private object Receptionist {
         Behaviors.stopped
     }
   }
-}
 
-private object Recipient {
+private object Recipient:
   def apply()(using Materializer): (ActorRef[Out], Source[Out, NotUsed]) =
     ActorSource
       .actorRef[Out](
@@ -65,23 +63,22 @@ private object Recipient {
         overflowStrategy = OverflowStrategy.dropHead
       )
       .preMaterialize()
-}
 
 // TODO: refactor to persistent actor
-private object Session {
+private object Session:
   private val parallelism = Runtime.getRuntime.availableProcessors() * 2 - 1
 
   private given JsonValueCodec[Out] = JsonCodecMaker.make
   private given JsonValueCodec[In]  = JsonCodecMaker.make
 
-  def apply()(using ctx: ActorContext[?]): Flow[Message, Message, ?] = {
+  def apply()(using ctx: ActorContext[?]): Flow[Message, Message, ?] =
     given Materializer     = Materializer(ctx)
     given ExecutionContext = ctx.executionContext
 
     val (recipient, source) = Recipient()
 
     val receptionist = ctx.spawnAnonymous(Receptionist(recipient))
-    val sink: Sink[Either[Throwable, In], NotUsed] = {
+    val sink: Sink[Either[Throwable, In], NotUsed] =
       import Receptionist.*
 
       ActorSink
@@ -91,7 +88,6 @@ private object Session {
           onFailureMessage = (exception) => Failed(exception)
         )
         .contramap(IncomingMessage(_))
-    }
 
     Flow[Message]
       .filter {
@@ -104,18 +100,16 @@ private object Session {
       .collect { case tm: TextMessage => tm }
       // at-most-once, unordered delivery
       .mapAsyncUnordered(parallelism)(_.toStrict(1.second).map(_.text))
-      .map(in => Try(readFromString[In](in)).toEither)  // parse to JSON
-      .via(Flow.fromSinkAndSourceCoupled(sink, source)) // sink and source not coupled
+      .map(in => Try(readFromString[In](in)).toEither) // parse to JSON
+      .via(Flow.fromSinkAndSourceCoupled(sink, source))
       .map(writeToString(_))
       .map[Message](TextMessage(_))
       .withAttributes(ActorAttributes.supervisionStrategy { e =>
         ctx.log.error("something went wrong", e)
         Supervision.Stop
       })
-  }
-}
 
-object Sentry {
+object Sentry:
   trait Event
   case class AskedForNewSession(who: ActorRef[Flow[Message, Message, ?]]) extends Event
 
@@ -123,11 +117,9 @@ object Sentry {
     given Materializer = Materializer(ctx)
 
     Behaviors.receive { (ctx, msg) =>
-      msg match {
+      msg match
         case AskedForNewSession(who) =>
           who ! Session()(using ctx)
           Behaviors.same
-      }
     }
   }
-}
