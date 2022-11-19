@@ -8,9 +8,6 @@ run `bin/dev` or `sbt dev`
 
 ### Prerequisites
 
-* concurrently: `npm install -g concurrently`
-* watchexec: `brew install watchexec`
-
 #### Install GraalVM
 
 ``` bash

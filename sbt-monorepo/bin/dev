@@ -1,22 +1,14 @@
 #!/usr/bin/env bash
 
-LOGBACK_CONF="src/main/resources/dev.logback.xml"
-CONFIG_RESOURCE="dev.application.conf"
-STAGE_DIR="target/universal/stage"
+COMPAAS_BIN="target/universal/stage/bin/compaas"
+COMPAAS_OPTS="-Dconfig.resource=/dev.application.conf -Dlogback.configurationFile=src/main/resources/dev.logback.xml"
 
-NODE_RUN_CMD="$STAGE_DIR/bin/monorepo-sbt -Dconfig.resource=/$CONFIG_RESOURCE -Dlogback.configurationFile=$LOGBACK_CONF"
+[ ! -d "$COMPAAS_BIN" ] && sbt clean stage
 
-echo "[!] creating loopback addresses for nodes..."
-sudo ifconfig lo0 alias 127.0.0.2 up
-sudo ifconfig lo0 alias 127.0.0.3 up
-sudo ifconfig lo0 alias 127.0.0.4 up
-
-[ ! -d "$STAGE_DIR" ] && sbt clean stage
-
-concurrently -n sbt-stage,cluster -c red,green \
+npx concurrently -n sbt-stage,cluster -c red,green \
 "sbt -J-Xmx1024m '~stage'" \
-"watchexec -d=1000 --delay-run=5 -r --project-origin=$STAGE_DIR \
-    \"concurrently -n node-1,node-2,node-3 -c yellow,magenta,cyan \
-    'HOSTNAME=127.0.0.2 $NODE_RUN_CMD' \
-    'HOSTNAME=127.0.0.3 $NODE_RUN_CMD' \
-    'HOSTNAME=127.0.0.4 $NODE_RUN_CMD'\""
+"npx nodemon --delay 1 --watch target/universal/stage/lib \
+    --exec \"npx concurrently -n node-1,node-2,node-3 -c yellow,magenta,cyan \
+    'HOSTNAME=127.0.0.1 $COMPAAS_BIN $COMPAAS_OPTS' \
+    'HOSTNAME=127.0.0.2 $COMPAAS_BIN $COMPAAS_OPTS' \
+    'HOSTNAME=127.0.0.3 $COMPAAS_BIN $COMPAAS_OPTS'\""

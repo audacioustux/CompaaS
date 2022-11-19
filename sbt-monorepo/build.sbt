@@ -3,7 +3,7 @@ lazy val versions = new {
   val Akka                     = "2.6.20"
   val AkkaProjection           = "1.2.5"
   val AkkaHttp                 = "10.2.10"
-  val GraalSDK                 = "22.2.0"
+  val GraalSDK                 = "22.3.0"
   val AkkaManagement           = "1.1.4"
   val AkkaPersistenceCassandra = "1.0.6"
   val DatastaxJavaDriver       = "4.15.0"
@@ -34,7 +34,7 @@ lazy val root = project
   .enablePlugins(NativeImagePlugin)
   .enablePlugins(JavaAppPackaging)
   .settings(
-    name           := "monorepo-sbt",
+    name           := "compaas",
     run / fork     := true,
     publish / skip := true,
     libraryDependencies ++= Seq(
