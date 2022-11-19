@@ -5,7 +5,7 @@ import org.scalatest.BeforeAndAfterAll
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-class ComponentAgentSpec extends AnyWordSpec with BeforeAndAfterAll with Matchers {
+class ComponentAgentSpec extends AnyWordSpec with BeforeAndAfterAll with Matchers:
   val testKit = ActorTestKit()
   import testKit.*
 
@@ -35,4 +35,3 @@ class ComponentAgentSpec extends AnyWordSpec with BeforeAndAfterAll with Matcher
   }
 
   override def afterAll(): Unit = testKit.shutdownTestKit()
-}

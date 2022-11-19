@@ -8,6 +8,8 @@ run `bin/dev` or `sbt dev`
 
 ### Prerequisites
 
+- [Scala 3](https://www.scala-lang.org/download/)
+
 #### Install GraalVM
 
 ``` bash
@@ -25,5 +27,5 @@ export JAVA_HOME="/path/to/graalvm-ee-java17-22.3.0/Contents/Home"
 
 ### Todos
 
-* [ ] better logging
-* [ ] tracing
+- [ ] better logging
+- [ ] tracing

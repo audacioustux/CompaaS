@@ -16,7 +16,7 @@ import org.scalatest.wordspec.AnyWordSpec
 import scala.concurrent.duration.*
 import scala.util.{Failure, Success}
 
-class AkkaHttpExample extends AnyWordSpec with Matchers with ScalatestRouteTest {
+class AkkaHttpExample extends AnyWordSpec with Matchers with ScalatestRouteTest:
   val smallRoute =
     get {
       concat(
@@ -57,4 +57,3 @@ class AkkaHttpExample extends AnyWordSpec with Matchers with ScalatestRouteTest 
       }
     }
   }
-}

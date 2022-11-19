@@ -4,6 +4,8 @@ import akka.NotUsed
 import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
 import akka.actor.typed.{ActorRef, Behavior}
 import akka.http.scaladsl.model.ws.{BinaryMessage, Message, TextMessage}
+import akka.http.scaladsl.server.Directives.*
+import akka.http.scaladsl.server.Route
 import akka.stream.scaladsl.{Flow, Sink, Source}
 import akka.stream.typed.scaladsl.{ActorSink, ActorSource}
 import akka.stream.{
@@ -13,6 +15,7 @@ import akka.stream.{
   OverflowStrategy,
   Supervision
 }
+import akka.util.Timeout
 import com.github.plokhotnyuk.jsoniter_scala.core.*
 import com.github.plokhotnyuk.jsoniter_scala.macros.*
 
@@ -110,16 +113,23 @@ private object Session:
       })
 
 object Sentry:
-  trait Event
-  case class AskedForNewSession(who: ActorRef[Flow[Message, Message, ?]]) extends Event
+  sealed trait Event
+  case class AskedForRoute(who: ActorRef[Route]) extends Event
+
+  private def route()(using ctx: ActorContext[?]): Route =
+    pathPrefix("@") {
+      pathEndOrSingleSlash {
+        handleWebSocketMessages(Session())
+      }
+    }
 
   def apply(): Behavior[Event] = Behaviors.setup { ctx =>
     given Materializer = Materializer(ctx)
 
     Behaviors.receive { (ctx, msg) =>
       msg match
-        case AskedForNewSession(who) =>
-          who ! Session()(using ctx)
+        case AskedForRoute(who) =>
+          // who ! route()(using ctx)
           Behaviors.same
     }
   }

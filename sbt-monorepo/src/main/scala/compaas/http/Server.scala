@@ -1,7 +1,7 @@
 package compaas.http
 
 import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
-import akka.actor.typed.{ActorSystem, Behavior, PostStop}
+import akka.actor.typed.{ActorSystem, Behavior, PostStop, Scheduler}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
 import akka.http.scaladsl.model.StatusCodes.InternalServerError
@@ -11,7 +11,7 @@ import akka.http.scaladsl.server.Route
 import akka.stream.scaladsl.Flow
 import akka.util.Timeout
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{Await, ExecutionContext}
 import scala.util.{Failure, Success}
 
 import concurrent.duration.DurationInt
@@ -22,44 +22,35 @@ object Server:
   private final case class Started(binding: ServerBinding) extends Event
   case object Stop                                         extends Event
 
-  private def routes(ctx: ActorContext[?])(using system: ActorSystem[?]) =
-    val sentry = ctx.spawn(Sentry(), "Sentry")
-
-    pathPrefix("@") {
-      pathEndOrSingleSlash {
-        import akka.actor.typed.scaladsl.AskPattern.*
-        import Sentry.AskedForNewSession
-
-        // drop request if it takes too long to create a session actor
-        given Timeout = Timeout(2.seconds)
-        val flow      = sentry.ask[Flow[Message, Message, ?]](AskedForNewSession(_))
-
-        onComplete(flow) {
-          case Failure(ex) =>
-            val errMsg = "Failed to create a new session, took to long"
-            ctx.log.error(errMsg, ex)
-            complete(InternalServerError, errMsg)
-          case Success(flow) => handleWebSocketMessages(flow)
-        }
-      }
-    }
-
   def apply(): Behavior[Event] =
     Behaviors.setup { ctx =>
       given system: ActorSystem[?] = ctx.system
       given ExecutionContext       = ctx.executionContext
+      given Scheduler              = system.scheduler
+
+      val sentry = ctx.spawn(Sentry(), "Sentry")
+
+      import akka.actor.typed.scaladsl.AskPattern.*
+      given Timeout = 2.seconds
+      val route     = sentry.ask[Route](Sentry.AskedForRoute(_))
 
       val config   = system.settings.config.getConfig("akka.http.server")
       val hostname = config.getString("hostname")
       val port     = config.getInt("port")
-      val serverBinding = Http()
-        .newServerAt(hostname, port)
-        .bind(routes(ctx))
-        .map(_.addToCoordinatedShutdown(hardTerminationDeadline = 10.seconds))
 
-      ctx.pipeToSelf(serverBinding) {
-        case Success(binding) => Started(binding)
-        case Failure(ex)      => StartFailed(ex)
+      route.onComplete {
+        case Success(route) =>
+          val serverBinding = Http()
+            .newServerAt(hostname, port)
+            .bind(route)
+            .map(_.addToCoordinatedShutdown(hardTerminationDeadline = 10.seconds))
+
+          ctx.pipeToSelf(serverBinding) {
+            case Success(binding) => Started(binding)
+            case Failure(ex)      => StartFailed(ex)
+          }
+        case Failure(cause) =>
+          ctx.self ! StartFailed(cause)
       }
 
       def running(binding: ServerBinding): Behavior[Event] =

@@ -16,7 +16,7 @@ import org.scalatest.wordspec.AnyWordSpec
 import scala.concurrent.duration.*
 import scala.util.{Failure, Success}
 
-class AkkaHttpWebSocketExample extends AnyWordSpec with Matchers with ScalatestRouteTest {
+class AkkaHttpWebSocketExample extends AnyWordSpec with Matchers with ScalatestRouteTest:
   val wsClient = WSProbe()
 
   "The service" should {
@@ -56,4 +56,3 @@ class AkkaHttpWebSocketExample extends AnyWordSpec with Matchers with ScalatestR
     path("greeter") {
       handleWebSocketMessages(greeter)
     }
-}
