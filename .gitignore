@@ -1,6 +1,6 @@
-*
+/*
 
-!.gitignore
-!mix_monorepo
-!sbt-monorepo
-!turbo-monorepo
+!/.gitignore
+!/mix_monorepo/
+!/sbt-monorepo/
+!/turbo-monorepo/
