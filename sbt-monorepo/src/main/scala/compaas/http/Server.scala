@@ -1,62 +1,55 @@
 package compaas.http
 
 import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
-import akka.actor.typed.{ActorSystem, Behavior, PostStop, Scheduler}
+import akka.actor.typed.{ActorSystem, Behavior, PostStop}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
-import akka.http.scaladsl.model.StatusCodes.InternalServerError
-import akka.http.scaladsl.model.ws.Message
 import akka.http.scaladsl.server.Directives.*
 import akka.http.scaladsl.server.Route
-import akka.stream.scaladsl.Flow
-import akka.util.Timeout
+import akka.stream.Materializer
 
-import java.util.UUID
-import scala.concurrent.{Await, ExecutionContext}
+import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
 import concurrent.duration.DurationInt
 
 object Server:
-  sealed trait Event
+  sealed trait Message
+
+  sealed trait Event                                       extends Message
   private final case class StartFailed(cause: Throwable)   extends Event
   private final case class Started(binding: ServerBinding) extends Event
-  case object Stop                                         extends Event
 
-  def apply(): Behavior[Event] =
+  sealed trait Command extends Message
+  case object Stop     extends Command
+
+  def apply(): Behavior[Message] =
     Behaviors.setup { ctx =>
       given system: ActorSystem[?] = ctx.system
-      given ExecutionContext       = ctx.executionContext
-      given Scheduler              = system.scheduler
+      given ec: ExecutionContext   = ctx.executionContext
+      given mat: Materializer      = Materializer(ctx)
 
-      val sentry = ctx.spawn(Sentry(), "Sentry")
+      val sentry = ctx.spawn(Sentry(), "sentry")
 
-      import akka.actor.typed.scaladsl.AskPattern.*
-      given Timeout = 2.seconds
-      val route     = sentry.ask[Route](Sentry.AskedForRoute(_))
+      val routes = Routes(sentry)(using ctx, mat, ec)
 
       val config   = system.settings.config.getConfig("akka.http.server")
       val hostname = config.getString("hostname")
       val port     = config.getInt("port")
 
-      route.onComplete {
-        case Success(route) =>
-          val serverBinding = Http()
-            .newServerAt(hostname, port)
-            .bind(route)
-            .map(_.addToCoordinatedShutdown(hardTerminationDeadline = 10.seconds))
+      val serverBinding = Http()
+        .newServerAt(hostname, port)
+        .bind(routes)
+        .map(_.addToCoordinatedShutdown(hardTerminationDeadline = 10.seconds))
 
-          ctx.pipeToSelf(serverBinding) {
-            case Success(binding) => Started(binding)
-            case Failure(ex)      => StartFailed(ex)
-          }
-        case Failure(cause) =>
-          ctx.self ! StartFailed(cause)
+      ctx.pipeToSelf(serverBinding) {
+        case Success(binding) => Started(binding)
+        case Failure(ex)      => StartFailed(ex)
       }
 
-      def running(binding: ServerBinding): Behavior[Event] =
+      def running(binding: ServerBinding) =
         Behaviors
-          .receiveMessagePartial[Event] { case Stop =>
+          .receiveMessagePartial[Message] { case Stop =>
             ctx.log.info(
               "Stopping server http://{}:{}/",
               binding.localAddress.getHostString,
@@ -69,8 +62,8 @@ object Server:
             Behaviors.same
           }
 
-      def starting(wasStopped: Boolean): Behaviors.Receive[Event] =
-        Behaviors.receiveMessage[Event] {
+      def starting(wasStopped: Boolean): Behaviors.Receive[Message] =
+        Behaviors.receiveMessage {
           case StartFailed(cause) => throw new RuntimeException("Server failed to start", cause)
           case Started(binding) =>
             ctx.log.info(

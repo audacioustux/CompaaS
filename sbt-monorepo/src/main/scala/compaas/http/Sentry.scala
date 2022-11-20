@@ -1,123 +1,77 @@
 package compaas.http
 
-import akka.NotUsed
-import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
+import akka.actor.typed.scaladsl.Behaviors
 import akka.actor.typed.{ActorRef, Behavior}
-import akka.http.scaladsl.model.ws.{BinaryMessage, Message, TextMessage}
-import akka.http.scaladsl.server.Directives.*
-import akka.http.scaladsl.server.Route
-import akka.stream.scaladsl.{Flow, Sink, Source}
+import akka.stream.scaladsl.Flow
 import akka.stream.typed.scaladsl.{ActorSink, ActorSource}
-import akka.stream.{
-  ActorAttributes,
-  CompletionStrategy,
-  Materializer,
-  OverflowStrategy,
-  Supervision
-}
-import akka.util.Timeout
-import com.github.plokhotnyuk.jsoniter_scala.core.*
-import com.github.plokhotnyuk.jsoniter_scala.macros.*
+import akka.stream.{Materializer, OverflowStrategy}
+import compaas.http.Protocol.*
 
-import java.util.UUID
-import scala.concurrent.{ExecutionContext, Future}
-import scala.util.Try
-
-import concurrent.duration.DurationInt
-import Helper.JsoniterScalaSupport.*
-import Protocol.*
+import scala.concurrent.ExecutionContext
 
 private object Receptionist:
-  sealed trait Event
+  sealed trait Command
   // TODO: add traceId
-  final case class IncomingMessage(message: Either[Throwable, In]) extends Event
-  case object Completed                                            extends Event
-  final case class Failed(cause: Throwable)                        extends Event
+  final case class HandleMessage(msg: Either[Throwable, In]) extends Command
+  case object Complete                                       extends Command
+  final case class Fail(cause: Throwable)                    extends Command
 
   private def handle(msg: In)(using recipient: ActorRef[Out]) = msg match
     case In.Echo(msg) => recipient ! Out.Echo(msg)
 
-  def apply(recipient: ActorRef[Out]) = Behaviors.setup[Event] { ctx =>
+  def apply(recipient: ActorRef[Out]) = Behaviors.setup[Command] { ctx =>
     Behaviors.receiveMessage {
-      case IncomingMessage(Right(message)) =>
-        handle(message)(using recipient)
+      case HandleMessage(Right(msg)) =>
+        handle(msg)(using recipient)
         Behaviors.same
-      case IncomingMessage(Left(e)) =>
+      case HandleMessage(Left(e)) =>
         val errMsg = s"failed to parse message"
         ctx.log.error(errMsg, e)
         recipient ! Out.Error(errMsg)
         Behaviors.same
-      case Completed =>
+      case Complete =>
         Behaviors.stopped
-      case Failed(cause) =>
+      case Fail(cause) =>
         ctx.log.error("something went wrong", cause)
         Behaviors.stopped
     }
   }
 
 object Sentry:
-  sealed trait Event
-  case class AskedForRoute(who: ActorRef[Route]) extends Event
+  sealed trait Command
+  final case class SendNewSessionFlow(to: ActorRef[Flow[Either[Throwable, In], Out, ?]]) extends Command
 
-  private val parallelism = Runtime.getRuntime.availableProcessors() * 2 - 1
-
-  private given JsonValueCodec[Out] = JsonCodecMaker.make
-  private given JsonValueCodec[In]  = JsonCodecMaker.make
-
-  def apply(): Behavior[Event] = Behaviors.setup { ctx =>
+  def apply(): Behavior[Command] = Behaviors.setup { ctx =>
     given Materializer     = Materializer(ctx)
     given ExecutionContext = ctx.executionContext
 
-    val (recipient, source) = ActorSource
-      .actorRef[Out](
-        completionMatcher = PartialFunction.empty,
-        failureMatcher = PartialFunction.empty,
-        bufferSize = 1 << 6,
-        // at-most-once delivery
-        overflowStrategy = OverflowStrategy.dropHead
-      )
-      .preMaterialize()
-
-    val receptionist = ctx.spawnAnonymous(Receptionist(recipient))
-    val sink: Sink[Either[Throwable, In], NotUsed] =
-      import Receptionist.*
-
-      ActorSink
-        .actorRef(
-          ref = receptionist,
-          onCompleteMessage = Completed,
-          onFailureMessage = (exception) => Failed(exception)
-        )
-        .contramap(IncomingMessage(_))
-
     Behaviors.receiveMessage { msg =>
       msg match
-        case AskedForRoute(who) =>
-          who ! pathPrefix("@") {
-            pathEndOrSingleSlash {
-              val flow = Flow[Message]
-                .filter {
-                  case _: TextMessage    => true
-                  case bm: BinaryMessage =>
-                    // Ignore binary messages, but drain data stream
-                    bm.dataStream.runWith(Sink.ignore)
-                    false
-                }
-                .collect { case tm: TextMessage => tm }
-                // at-most-once, unordered delivery
-                .mapAsyncUnordered(parallelism)(_.toStrict(1.second).map(_.text))
-                .map(in => Try(readFromString[In](in)).toEither) // parse to JSON
-                .via(Flow.fromSinkAndSourceCoupled(sink, source))
-                .map(writeToString(_))
-                .map[Message](TextMessage(_))
-                .withAttributes(ActorAttributes.supervisionStrategy { e =>
-                  ctx.log.error("something went wrong", e)
-                  Supervision.Stop
-                })
+        case SendNewSessionFlow(to) =>
+          val (recipient, source) = ActorSource
+            .actorRef[Out](
+              completionMatcher = PartialFunction.empty,
+              failureMatcher = PartialFunction.empty,
+              bufferSize = 1 << 6,
+              // at-most-once delivery
+              overflowStrategy = OverflowStrategy.dropHead
+            )
+            .preMaterialize()
 
-              handleWebSocketMessages(flow)
-            }
-          }
+          val receptionist = ctx.spawnAnonymous(Receptionist(recipient))
+          val sink =
+            import Receptionist.*
+
+            ActorSink
+              .actorRef(
+                ref = receptionist,
+                onCompleteMessage = Complete,
+                onFailureMessage = (exception) => Fail(exception)
+              )
+              .contramap(HandleMessage(_))
+
+          to ! Flow.fromSinkAndSourceCoupled(sink, source)
+
           Behaviors.same
     }
   }
