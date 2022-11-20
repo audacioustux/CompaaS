@@ -9,6 +9,7 @@ object Protocol:
 
   sealed trait Out
   object Out:
+    final case class Session(id: UUID) extends Out
     final case class Echo(msg: String) extends Out
     // TODO: add traceId
     final case class Error(message: String) extends Out

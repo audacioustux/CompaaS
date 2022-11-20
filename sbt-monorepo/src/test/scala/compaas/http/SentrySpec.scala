@@ -36,17 +36,19 @@ class ServerRoutesSpec extends AnyWordSpec with Matchers with ScalatestRouteTest
   import testKit.*
   given typedSystem: ActorSystem[?] = testKit.system
 
-  val router = Router()
-
   val wsClient = WSProbe()
 
   "The server" should {
     "handle ws request at /@" in {
-      WS("/@", wsClient.flow) ~> routes ~>
-        check {
-          // check response for WS Upgrade headers
-          isWebSocketUpgrade shouldEqual true
-        }
+      val sentry = spawn(Sentry(), "Sentry")
+      val probe  = createTestProbe[Route]()
+
+      sentry ! Sentry.AskedForRoute(probe.ref)
+      val route = probe.expectMessageType[Route]
+
+      WS("/@", wsClient.flow) ~> route ~> check {
+        isWebSocketUpgrade shouldEqual true
+      }
     }
   }
 

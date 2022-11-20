@@ -55,9 +55,20 @@ private object Receptionist:
     }
   }
 
-private object Recipient:
-  def apply()(using Materializer): (ActorRef[Out], Source[Out, NotUsed]) =
-    ActorSource
+object Sentry:
+  sealed trait Event
+  case class AskedForRoute(who: ActorRef[Route]) extends Event
+
+  private val parallelism = Runtime.getRuntime.availableProcessors() * 2 - 1
+
+  private given JsonValueCodec[Out] = JsonCodecMaker.make
+  private given JsonValueCodec[In]  = JsonCodecMaker.make
+
+  def apply(): Behavior[Event] = Behaviors.setup { ctx =>
+    given Materializer     = Materializer(ctx)
+    given ExecutionContext = ctx.executionContext
+
+    val (recipient, source) = ActorSource
       .actorRef[Out](
         completionMatcher = PartialFunction.empty,
         failureMatcher = PartialFunction.empty,
@@ -66,19 +77,6 @@ private object Recipient:
         overflowStrategy = OverflowStrategy.dropHead
       )
       .preMaterialize()
-
-// TODO: refactor to persistent actor
-private object Session:
-  private val parallelism = Runtime.getRuntime.availableProcessors() * 2 - 1
-
-  private given JsonValueCodec[Out] = JsonCodecMaker.make
-  private given JsonValueCodec[In]  = JsonCodecMaker.make
-
-  def apply()(using ctx: ActorContext[?]): Flow[Message, Message, ?] =
-    given Materializer     = Materializer(ctx)
-    given ExecutionContext = ctx.executionContext
-
-    val (recipient, source) = Recipient()
 
     val receptionist = ctx.spawnAnonymous(Receptionist(recipient))
     val sink: Sink[Either[Throwable, In], NotUsed] =
@@ -92,44 +90,34 @@ private object Session:
         )
         .contramap(IncomingMessage(_))
 
-    Flow[Message]
-      .filter {
-        case _: TextMessage    => true
-        case bm: BinaryMessage =>
-          // Ignore binary messages, but drain data stream
-          bm.dataStream.runWith(Sink.ignore)
-          false
-      }
-      .collect { case tm: TextMessage => tm }
-      // at-most-once, unordered delivery
-      .mapAsyncUnordered(parallelism)(_.toStrict(1.second).map(_.text))
-      .map(in => Try(readFromString[In](in)).toEither) // parse to JSON
-      .via(Flow.fromSinkAndSourceCoupled(sink, source))
-      .map(writeToString(_))
-      .map[Message](TextMessage(_))
-      .withAttributes(ActorAttributes.supervisionStrategy { e =>
-        ctx.log.error("something went wrong", e)
-        Supervision.Stop
-      })
-
-object Sentry:
-  sealed trait Event
-  case class AskedForRoute(who: ActorRef[Route]) extends Event
-
-  private def route()(using ctx: ActorContext[?]): Route =
-    pathPrefix("@") {
-      pathEndOrSingleSlash {
-        handleWebSocketMessages(Session())
-      }
-    }
-
-  def apply(): Behavior[Event] = Behaviors.setup { ctx =>
-    given Materializer = Materializer(ctx)
-
-    Behaviors.receive { (ctx, msg) =>
+    Behaviors.receiveMessage { msg =>
       msg match
         case AskedForRoute(who) =>
-          // who ! route()(using ctx)
+          who ! pathPrefix("@") {
+            pathEndOrSingleSlash {
+              val flow = Flow[Message]
+                .filter {
+                  case _: TextMessage    => true
+                  case bm: BinaryMessage =>
+                    // Ignore binary messages, but drain data stream
+                    bm.dataStream.runWith(Sink.ignore)
+                    false
+                }
+                .collect { case tm: TextMessage => tm }
+                // at-most-once, unordered delivery
+                .mapAsyncUnordered(parallelism)(_.toStrict(1.second).map(_.text))
+                .map(in => Try(readFromString[In](in)).toEither) // parse to JSON
+                .via(Flow.fromSinkAndSourceCoupled(sink, source))
+                .map(writeToString(_))
+                .map[Message](TextMessage(_))
+                .withAttributes(ActorAttributes.supervisionStrategy { e =>
+                  ctx.log.error("something went wrong", e)
+                  Supervision.Stop
+                })
+
+              handleWebSocketMessages(flow)
+            }
+          }
           Behaviors.same
     }
   }
