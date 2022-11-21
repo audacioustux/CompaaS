@@ -29,7 +29,7 @@ object Server:
       given ec: ExecutionContext   = ctx.executionContext
       given mat: Materializer      = Materializer(ctx)
 
-      val sentry = ctx.spawn(Sentry(), "sentry")
+      val sentry = ctx.spawn(Sentry(), "Sentry")
 
       val routes = Routes(sentry)(using ctx, mat, ec)
 

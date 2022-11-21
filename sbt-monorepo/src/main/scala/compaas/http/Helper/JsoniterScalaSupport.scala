@@ -58,8 +58,7 @@ trait JsoniterScalaSupport:
             () => HttpEntity(contentType = mediaType, data = value)
           ) :: Nil
         }
-      catch
-        case NonFatal(e) => FastFuture.failed(e)
+      catch case NonFatal(e) => FastFuture.failed(e)
     }
 
   private val jsonSourceStringMarshaller =

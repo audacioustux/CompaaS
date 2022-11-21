@@ -29,3 +29,4 @@ export JAVA_HOME="/path/to/graalvm-ee-java17-22.3.0/Contents/Home"
 
 - [ ] better logging
 - [ ] tracing
+- [ ] message delivery gurantee
