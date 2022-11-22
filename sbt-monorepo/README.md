@@ -8,21 +8,17 @@ run `bin/dev` or `sbt dev`
 
 ### Prerequisites
 
-- [Scala 3](https://www.scala-lang.org/download/)
-
-#### Install GraalVM
-
-``` bash
-bash <(curl -sL <https://get.graalvm.org/ee-token>)
-bash <(curl -sL <https://get.graalvm.org/jdk>)
-```
+- [scala 3](https://www.scala-lang.org/download/)
+- [concurrently](https://github.com/open-cli-tools/concurrently)
+- [nodemon](https://github.com/remy/nodemon)
+- [graalvm](https://graalvm.org)
 
 #### Set environment variables
 
 ``` bash
-export GRAALVM_HOME="/path/to/graalvm-ee-java17-22.3.0/Contents/Home"
-export PATH="/path/to/graalvm-ee-java17-22.3.0/Contents/Home/bin:$PATH"
-export JAVA_HOME="/path/to/graalvm-ee-java17-22.3.0/Contents/Home"
+export GRAALVM_HOME="/path/to/graalvm/Contents/Home"
+export PATH="/path/to/graalvm/Contents/Home/bin:$PATH"
+export JAVA_HOME="/path/to/graalvm/Contents/Home"
 ```
 
 ### Todos

@@ -13,7 +13,7 @@ COMPAAS_OPTS="-Dconfig.resource=/dev.application.conf -Dlogback.configurationFil
 
 npx concurrently -n sbt-stage,cluster -c red,green \
 "sbt --client -J-Xmx1024m '~stage'" \
-"npx nodemon --watch $COMPAAS_DIR \
+"npx nodemon --watch '$COMPAAS_DIR/**/com.audacioustux.compaas-*.jar' -e jar \
     --exec \"npx concurrently -n node-1,node-2,node-3 -c yellow,magenta,cyan \
     'HOSTNAME=127.0.0.2 $COMPAAS_DIR/bin/compaas $COMPAAS_OPTS' \
     'HOSTNAME=127.0.0.3 $COMPAAS_DIR/bin/compaas $COMPAAS_OPTS' \
