@@ -3,10 +3,13 @@
 COMPAAS_DIR="target/universal/stage"
 COMPAAS_OPTS="-Dconfig.resource=/dev.application.conf -Dlogback.configurationFile=src/main/resources/dev.logback.xml"
 
-# uncomment this if `BindException: [/127.0.0.*:<PORT>] Can't assign requested address` is thrown
-# sudo ifconfig lo0 alias 127.0.0.2 up   
-# sudo ifconfig lo0 alias 127.0.0.3 up
-# sudo ifconfig lo0 alias 127.0.0.4 up
+# create loopback interfaces
+if [[ $OSTYPE == 'darwin'* ]]; then
+    echo "Creating loopback interfaces for Mac"
+    for i in {2..5}; do
+        sudo ifconfig lo0 alias 127.0.0.$i
+    done
+fi
 
 # `--client`: sbt native thin client *experimental*
 [ ! -d "$COMPAAS_DIR" ] && sbt --client ";clean;stage"
@@ -14,7 +17,7 @@ COMPAAS_OPTS="-Dconfig.resource=/dev.application.conf -Dlogback.configurationFil
 npx concurrently -n sbt-stage,cluster -c red,green \
 "sbt --client -J-Xmx1024m '~stage'" \
 "npx nodemon --watch '$COMPAAS_DIR/**/com.audacioustux.compaas-*.jar' -e jar \
-    --exec \"npx concurrently -n node-1,node-2,node-3 -c yellow,magenta,cyan \
+    --exec \"npx concurrently -n node-1,node-2,node-3 -c auto \
     'HOSTNAME=127.0.0.2 $COMPAAS_DIR/bin/compaas $COMPAAS_OPTS' \
     'HOSTNAME=127.0.0.3 $COMPAAS_DIR/bin/compaas $COMPAAS_OPTS' \
     'HOSTNAME=127.0.0.4 $COMPAAS_DIR/bin/compaas $COMPAAS_OPTS'\""
