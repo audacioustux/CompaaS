@@ -39,7 +39,8 @@ private object Receptionist:
 
 object Sentry:
   sealed trait Command
-  final case class SendNewSessionFlow(to: ActorRef[Flow[Either[Throwable, In], Out, ?]]) extends Command
+  final case class SendNewSessionFlow(to: ActorRef[Flow[Either[Throwable, In], Out, ?]])
+      extends Command
 
   def apply(): Behavior[Command] = Behaviors.setup { ctx =>
     given Materializer     = Materializer(ctx)

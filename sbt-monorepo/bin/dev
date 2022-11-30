@@ -13,6 +13,8 @@ fi
 
 # `--client`: sbt native thin client *experimental*
 [ ! -d "$COMPAAS_DIR" ] && sbt --client ";clean;stage"
+# TODO: change jvm crash log directory
+rm *.log # remove old logs
 
 npx concurrently -n sbt-stage,cluster -c red,green \
 "sbt --client -J-Xmx1024m '~stage'" \

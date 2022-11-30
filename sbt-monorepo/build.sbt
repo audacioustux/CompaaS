@@ -57,13 +57,14 @@ lazy val root = project
       // Test
       "com.typesafe.akka" %% "akka-http-testkit"        % versions.AkkaHttp % Test,
       "com.typesafe.akka" %% "akka-stream-testkit"      % versions.Akka     % Test,
-      "com.typesafe.akka" %% "akka-actor-testkit-typed" % versions.Akka     % Test
+      "com.typesafe.akka" %% "akka-actor-testkit-typed" % versions.Akka     % Test,
+      "com.typesafe.akka" %% "akka-persistence-testkit" % versions.Akka     % Test
     ).map(_.cross(CrossVersion.for3Use2_13)),
     libraryDependencies ++= Seq(
-      "ch.qos.logback"   % "logback-classic" % versions.Logback,
-      "org.graalvm.sdk"  % "graal-sdk"       % versions.GraalSDK,
-      "org.apache.kafka" % "kafka-clients"   % versions.KafkaClient,
-      // "com.datastax.oss" % "java-driver-core" % versions.DatastaxJavaDriver,
+      "ch.qos.logback"   % "logback-classic"  % versions.Logback,
+      "org.graalvm.sdk"  % "graal-sdk"        % versions.GraalSDK,
+      "org.apache.kafka" % "kafka-clients"    % versions.KafkaClient,
+      "com.datastax.oss" % "java-driver-core" % versions.DatastaxJavaDriver,
       "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core" % versions.JsoniterScala,
       "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % versions.JsoniterScala % "compile-internal",
       // Test

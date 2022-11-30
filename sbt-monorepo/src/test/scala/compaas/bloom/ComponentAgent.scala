@@ -10,7 +10,7 @@ class ComponentAgentSpec extends AnyWordSpec with BeforeAndAfterAll with Matcher
   import testKit.*
 
   "Component" when {
-    "source is valid" should {
+    "source(js) is valid" should {
       "parse" in {
         val component = Component("js", "console.log('hello world')", "main")
         val agent     = spawn(ComponentAgent(component))
@@ -19,7 +19,7 @@ class ComponentAgentSpec extends AnyWordSpec with BeforeAndAfterAll with Matcher
         probe.expectMessage(ComponentAgent.Parsed)
       }
     }
-    "source is invalid" should {
+    "source(js) is invalid" should {
       "send ParseFailed(reason)" in {
         val component = Component("js", "console.log 'hello world')", "main")
         val agent     = spawn(ComponentAgent(component))

@@ -33,7 +33,7 @@ object Routes:
         import akka.actor.typed.scaladsl.AskPattern.Askable
 
         given Scheduler = ctx.system.scheduler
-        given Timeout   = 2.seconds
+        given Timeout   = 3.seconds
         onComplete(
           sentry.ask[Flow[Either[Throwable, In], Out, ?]](Sentry.SendNewSessionFlow(_))
         ) {
@@ -48,8 +48,7 @@ object Routes:
                     false
                 }
                 .collect { case tm: TextMessage => tm }
-                // at-most-once, unordered delivery
-                .mapAsyncUnordered(parallelism)(_.toStrict(1.second).map(_.text))
+                .mapAsync(parallelism)(_.toStrict(3.second).map(_.text))
                 .map(in => Try(readFromString[In](in)).toEither) // parse to JSON
                 .via(flow)
                 .map(writeToString(_))
