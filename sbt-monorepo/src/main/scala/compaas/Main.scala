@@ -29,5 +29,3 @@ object System:
 
   AkkaManagement(system).start()
   ClusterBootstrap(system).start()
-
-  Await.ready(system.whenTerminated, Duration.Inf)
