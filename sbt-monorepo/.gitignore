@@ -30,3 +30,6 @@ metals.sbt
 
 # logs
 *.log
+
+# core dump
+core.*
