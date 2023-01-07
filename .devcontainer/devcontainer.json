@@ -16,6 +16,5 @@
 				"GitHub.copilot"
 			]
 		}
-	},
-	"postCreateCommand": "git clone https://github.com/audacioustux/CompaaS.git /workspace"
+	}
 }
