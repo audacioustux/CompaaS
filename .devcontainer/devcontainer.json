@@ -1,7 +1,7 @@
 {
 	"name": "CompaaS Dev Container",
 	"dockerComposeFile": "Compose.yml",
-	"service": "compaas",
+	"service": "app",
 	"workspaceFolder": "/workspace",
 	"features": {
 		"ghcr.io/devcontainers/features/common-utils:2": {
@@ -9,5 +9,12 @@
 		},
 		"ghcr.io/devcontainers/features/github-cli:1": {}
 	},
-	"remoteUser": "compaas"
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"scalameta.metals",
+				"GitHub.copilot"
+			]
+		}
+	}
 }

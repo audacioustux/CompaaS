@@ -1,4 +1,0 @@
-# MixMonorepo
-
-**TODO: Add description**
-
