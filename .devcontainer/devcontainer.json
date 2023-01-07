@@ -17,5 +17,5 @@
 			]
 		}
 	},
-	"postCreateCommand": "git clone https://github.com/audacioustux/CompaaS.git ."
+	"postCreateCommand": "git clone https://github.com/audacioustux/CompaaS.git /workspace"
 }
