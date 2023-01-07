@@ -5,7 +5,7 @@ COMPAAS_OPTS="-Dconfig.resource=/dev.application.conf -Dlogback.configurationFil
 
 # create loopback interfaces
 if [[ $OSTYPE == 'darwin'* ]]; then
-    echo "Creating loopback interfaces for Mac"
+    echo "Creating loopback interfaces"
     for i in {2..5}; do
         sudo ifconfig lo0 alias 127.0.0.$i
     done
@@ -16,7 +16,7 @@ fi
 # TODO: change jvm crash log directory
 rm *.log >/dev/null 2>&1 # remove old logs
 
-npx concurrently -n sbt-stage,cluster -c red,green \
+npx --yes concurrently -n sbt-stage,cluster -c red,green \
 "sbt --client -J-Xmx1024m '~stage'" \
 "npx nodemon --watch '$COMPAAS_DIR/**/com.audacioustux.compaas-*.jar' -e jar \
     --exec \"npx concurrently -n node-1,node-2,node-3 -c auto \

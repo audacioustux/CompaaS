@@ -20,7 +20,7 @@
 				"ms-playwright.playwright",
 				"DavidAnson.vscode-markdownlint",
 				"Gruntfuggly.todo-tree",
-				"oracle-labs-graalvm.graalvm"
+				"GitHub.copilot"
 			]
 		}
 	},

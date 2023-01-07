@@ -22,3 +22,6 @@ ENV PATH="${HOME}/graalvm-ce-${GRAALVM_VERSION}/bin:$PATH"
 ENV JAVA_HOME="${HOME}/graalvm-ce-${GRAALVM_VERSION}"
 
 USER vscode
+
+RUN curl -s "https://get.sdkman.io" | bash
+RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk install sbt"
