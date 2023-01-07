@@ -13,7 +13,8 @@
 		"vscode": {
 			"extensions": [
 				"scalameta.metals",
-				"GitHub.copilot"
+				"Gruntfuggly.todo-tree",
+				"oracle-labs-graalvm.graalvm"
 			]
 		}
 	},
