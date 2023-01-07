@@ -2,7 +2,7 @@
 	"name": "CompaaS Dev Container",
 	"dockerComposeFile": "Compose.yml",
 	"service": "app",
-	"workspaceFolder": "/workspace",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 	"features": {
 		"ghcr.io/devcontainers/features/common-utils:2": {
 			"configureZshAsDefaultShell": true
@@ -13,10 +13,23 @@
 		"vscode": {
 			"extensions": [
 				"scalameta.metals",
+				"bradlc.vscode-tailwindcss",
+				"svelte.svelte-vscode",
+				"sleistner.vscode-fileutils",
+				"bierner.markdown-mermaid",
+				"ms-playwright.playwright",
+				"DavidAnson.vscode-markdownlint",
 				"Gruntfuggly.todo-tree",
 				"oracle-labs-graalvm.graalvm"
 			]
 		}
 	},
-	"postCreateCommand": "git clone https://github.com/audacioustux/CompaaS.git ."
+	"settings": {
+		"git.autofetch": true,
+		"files.autoSave": "onFocusChange",
+		"editor.formatOnSave": true,
+		"files.associations": {
+			"*.postcss": "css"
+		}
+	}
 }
