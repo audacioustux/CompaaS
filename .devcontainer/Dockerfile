@@ -1,8 +1,6 @@
 ARG VARIANT="ubuntu-22.04"
 FROM mcr.microsoft.com/devcontainers/base:${VARIANT}
 
-WORKDIR /workspace
-
 ENV DEBIAN_FRONTEND="noninteractive"
 RUN apt-get update
 RUN apt-get upgrade -y
@@ -24,6 +22,10 @@ ENV GRAALVM_HOME="${HOME}/graalvm-ce-${GRAALVM_VERSION}"
 ENV PATH="${HOME}/graalvm-ce-${GRAALVM_VERSION}/bin:$PATH"
 ENV JAVA_HOME="${HOME}/graalvm-ce-${GRAALVM_VERSION}"
 
+### Initialize Workspace
+WORKDIR /workspace
+RUN chown vscode:vscode /workspace
+RUN chmod 755 /workspace
+
 USER vscode
-RUN sudo chown -R vscode /workspace
 RUN git clone https://github.com/audacioustux/CompaaS.git .
