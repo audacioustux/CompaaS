@@ -4,6 +4,9 @@ services:
   app:
     build: .
     volumes:
-      - ..:/workspace:cached
+      - workspace:/workspace:cached
 
     command: sleep infinity
+
+volumes:
+  workspace:
