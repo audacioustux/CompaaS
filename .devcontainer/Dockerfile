@@ -28,4 +28,3 @@ RUN chown vscode:vscode /workspace
 RUN chmod 755 /workspace
 
 USER vscode
-RUN git clone https://github.com/audacioustux/CompaaS.git .
