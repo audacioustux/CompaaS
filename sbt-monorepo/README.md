@@ -4,4 +4,9 @@
 
 ### Usage
 
-run `bin/dev` or `sbt dev` to start the development environment
+`$ scripts/dev`
+
+### TODO
+
+[ ] - Add production setup
+[ ] - Unify Dev and Prod setup

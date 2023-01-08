@@ -90,11 +90,3 @@ scalacOptions ++= Seq(
   "-Xfatal-warnings",
   "-Xmigration"
 )
-
-lazy val dev = taskKey[Unit]("Run a multi-node local cluster for development environment")
-// NOTE: execute bin/dev directly for proper colors and formatting
-dev := {
-  import sys.process.*
-
-  "bin/dev" !
-}
