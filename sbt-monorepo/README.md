@@ -8,5 +8,5 @@
 
 ### TODO
 
-[ ] - Add production setup
-[ ] - Unify Dev and Prod setup
+[ ] - Add production setup  
+[ ] - Unify Dev and Prod setup  
