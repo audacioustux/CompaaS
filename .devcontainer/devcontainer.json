@@ -12,24 +12,18 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"scalameta.metals",
-				"bradlc.vscode-tailwindcss",
-				"svelte.svelte-vscode",
 				"sleistner.vscode-fileutils",
 				"bierner.markdown-mermaid",
 				"ms-playwright.playwright",
 				"DavidAnson.vscode-markdownlint",
 				"Gruntfuggly.todo-tree",
 				"GitHub.copilot"
-			]
-		}
-	},
-	"settings": {
-		"git.autofetch": true,
-		"files.autoSave": "onFocusChange",
-		"editor.formatOnSave": true,
-		"files.associations": {
-			"*.postcss": "css"
+			],
+			"settings": {
+				"git.autofetch": true,
+				"files.autoSave": "onFocusChange",
+				"editor.formatOnSave": true
+			}
 		}
 	}
 }

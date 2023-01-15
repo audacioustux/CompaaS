@@ -1,8 +1,0 @@
-/*
-
-!/.devcontainer
-!/.gitignore
-!/mix_monorepo/
-!/sbt-monorepo/
-!/turbo-monorepo/
-!/.vscode/
