@@ -17,7 +17,8 @@
 				"ms-playwright.playwright",
 				"DavidAnson.vscode-markdownlint",
 				"Gruntfuggly.todo-tree",
-				"GitHub.copilot"
+				"GitHub.copilot",
+				"scalameta.metals"
 			],
 			"settings": {
 				"git.autofetch": true,
