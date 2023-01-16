@@ -1,11 +1,12 @@
 package compaas.core
 
-import org.graalvm.polyglot.Source
-
-import com.github.plokhotnyuk.jsoniter_scala.macros.*
 import com.github.plokhotnyuk.jsoniter_scala.core.*
+import com.github.plokhotnyuk.jsoniter_scala.macros.*
+import org.graalvm.polyglot.{Context, Source}
 
 import java.util.UUID
+
+import shared.Graal
 
 enum Language(val languageId: String):
   case Js   extends Language("js")
@@ -36,5 +37,12 @@ object Component:
     import componentJson.*
     val language = Language.values.find(_.languageId.equals(languageId)).get
     val source   = Source.newBuilder(languageId, code, name).build()
+
+    val graalCtx = Context
+      .newBuilder(languageId)
+      .engine(Graal.engine)
+      .build()
+
+    graalCtx.parse(source)
 
     Component(language, source, name, description)

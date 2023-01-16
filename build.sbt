@@ -71,6 +71,7 @@ lazy val projects: Seq[ProjectReference] = Seq(core)
 
 lazy val root = project
   .in(file("."))
+  .settings(name := "compaas")
   .aggregate(projects*)
   .dependsOn(projects.map(_ % "compile->compile")*)
 
