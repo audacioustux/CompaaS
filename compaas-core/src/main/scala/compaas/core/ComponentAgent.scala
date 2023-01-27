@@ -1,52 +1,55 @@
 package compaas.core
 
-import akka.actor.typed.pubsub.Topic.Publish
 import akka.actor.typed.scaladsl.Behaviors
 import akka.actor.typed.{ActorRef, Behavior}
 import org.graalvm.polyglot.{Context, Engine, PolyglotException, Source, Value}
-import scala.collection.mutable
-import java.util.LinkedList
+import scala.collection.mutable.HashSet
 import scala.util.{Failure, Success, Try}
-
 import shared.Graal
 import akka.actor.typed.Signal
 import akka.actor.typed.PostStop
-import java.util.HashSet
-import akka.actor.typed.pubsub.Topic.Subscribe
+import scala.collection.mutable.HashMap
+import scala.collection.JavaConverters.*
 
 object ComponentAgent:
   sealed trait Message
   protected final case class Dispatch(port: String, payload: String) extends Message
 
-  def apply(component: Component): Behavior[Message] =
+  def apply(component: Component): Behavior[Message] = Behaviors.setup { ctx =>
     import component.*
-
-    val builder = Context.newBuilder(language.languageId).engine(Graal.engine)
 
     language match {
       case Language.Js => {
-        given graalCtx: Context = builder
+        given graalCtx: Context = Context
+          .newBuilder(language.languageId)
+          .engine(Graal.engine)
           .allowExperimentalOptions(true)
           .option("js.esm-eval-returns-exports", "true")
           .build()
+
         val exports = graalCtx.eval(source)
+        val ports = exports.getMemberKeys.asScala
+          .map { port =>
+            ctx.spawn(
+              Behaviors.receiveMessage[String] { payload =>
+                ctx.self ! Dispatch(port, payload)
+                Behaviors.same
+              },
+              port
+            )
+          }
+          .to(HashSet)
 
-        (new ComponentAgent).js(exports)
+        (new ComponentAgent).dispatcher(exports)
       }
-      case Language.Wasm => {
-        given graalCtx: Context = builder.build()
-        graalCtx.eval(source)
-        val exports = graalCtx.getBindings("wasm").getMemberKeys()
-        ???
-      }
+      case _ => ???
     }
+  }
 
-class ComponentAgent()(using graalCtx: Context):
+class ComponentAgent(using graalCtx: Context):
   import ComponentAgent.*
 
-  val ports = mutable.HashSet[ActorRef[?]]()
-
-  def js(exports: Value): Behavior[Message] = Behaviors.setup { ctx =>
+  def dispatcher(exports: Value): Behavior[Message] = Behaviors.setup { ctx =>
     Behaviors
       .receiveMessage { case Dispatch(port, payload) =>
         val result = Try(exports.getMember(port).execute(payload))

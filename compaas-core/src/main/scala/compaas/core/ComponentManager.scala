@@ -15,16 +15,17 @@ object ComponentManager:
 
       Behaviors.receiveMessage {
         case CreateComponent(component) =>
-          val componentAgent = ctx.spawn(ComponentAgent(component), component.id.toString)
+          val agentId        = UUID.randomUUID()
+          val componentAgent = ctx.spawn(ComponentAgent(component), agentId.toString)
 
           // TODO: remove this
           // componentAgent ! ComponentAgent.Dispatch("greet", "world")
 
           ctx.watch(componentAgent)
-          ctx.log.info("ComponentAgent created for component {}", component.id)
+          ctx.log.info("ComponentAgent({}) created for Component({})", agentId, component.id)
           Behaviors.same
         case Terminated(componentAgent) =>
-          ctx.log.info("ComponentAgent terminated for component {}", componentAgent.path.name)
+          ctx.log.info("ComponentAgent({}) terminated", componentAgent.path.name)
           Behaviors.same
       }
     }
