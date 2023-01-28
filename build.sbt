@@ -27,10 +27,21 @@ inThisBuild(
   )
 )
 
-lazy val core = project
-  .in(file("./compaas-core"))
+lazy val benchmarks = project
+  .in(file("benchmarks"))
+  .enablePlugins(JmhPlugin)
   .settings(
-    name := "compaas-core",
+    libraryDependencies ++= Seq(
+      "com.typesafe.akka" %% "akka-actor-typed" % versions.Akka
+    ).map(_.cross(CrossVersion.for3Use2_13)),
+    libraryDependencies ++= Seq(
+      "org.graalvm.sdk" % "graal-sdk" % versions.GraalSDK
+    )
+  )
+
+lazy val `compaas-core` = project
+  .in(file("compaas-core"))
+  .settings(
     libraryDependencies ++= Seq(
       "com.typesafe.akka"  %% "akka-http"                   % versions.AkkaHttp,
       "com.typesafe.akka"  %% "akka-http-spray-json"        % versions.AkkaHttp,
@@ -67,7 +78,7 @@ lazy val core = project
     )
   )
 
-lazy val projects: Seq[ProjectReference] = Seq(core)
+lazy val projects: Seq[ProjectReference] = Seq(`compaas-core`)
 
 lazy val root = project
   .in(file("."))

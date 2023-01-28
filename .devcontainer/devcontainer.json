@@ -26,5 +26,6 @@
 				"editor.formatOnSave": true
 			}
 		}
-	}
+	},
+	"remoteUser": "root"
 }

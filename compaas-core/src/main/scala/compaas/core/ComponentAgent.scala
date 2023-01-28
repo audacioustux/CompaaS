@@ -1,15 +1,14 @@
 package compaas.core
 
 import akka.actor.typed.scaladsl.Behaviors
-import akka.actor.typed.{ActorRef, Behavior}
+import akka.actor.typed.{ActorRef, Behavior, PostStop, Signal}
 import org.graalvm.polyglot.{Context, Engine, PolyglotException, Source, Value}
-import scala.collection.mutable.HashSet
-import scala.util.{Failure, Success, Try}
-import shared.Graal
-import akka.actor.typed.Signal
-import akka.actor.typed.PostStop
-import scala.collection.mutable.HashMap
+
 import scala.collection.JavaConverters.*
+import scala.collection.mutable.{HashMap, HashSet}
+import scala.util.{Failure, Success, Try}
+
+import shared.Graal
 
 object ComponentAgent:
   sealed trait Message
