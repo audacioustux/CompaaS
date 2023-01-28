@@ -2,6 +2,7 @@ ARG VARIANT="ubuntu-22.04"
 FROM mcr.microsoft.com/devcontainers/base:${VARIANT}
 
 ENV DEBIAN_FRONTEND="noninteractive"
+RUN unminimize
 RUN apt update
 RUN apt upgrade -y
 RUN apt install -y --no-install-recommends \
