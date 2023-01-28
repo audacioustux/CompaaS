@@ -27,8 +27,8 @@ inThisBuild(
   )
 )
 
-lazy val benchmarks = project
-  .in(file("benchmarks"))
+lazy val `compaas-bench` = project
+  .in(file("compaas-bench"))
   .enablePlugins(JmhPlugin)
   .settings(
     libraryDependencies ++= Seq(

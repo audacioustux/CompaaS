@@ -6,7 +6,7 @@ import org.graalvm.polyglot.{Context, Source}
 
 import java.util.UUID
 
-import shared.Graal
+import compaas.core.shared.Graal
 
 enum Language(val languageId: String):
   case Js   extends Language("js")

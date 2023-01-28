@@ -1,13 +1,14 @@
-package akka.actor.typed
+package compaas.bench.akka.actor.typed
 
+import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.AskPattern.*
 import com.typesafe.config.ConfigFactory
+import compaas.bench.akka.actor.typed.TypedBenchmarkActors
 import org.openjdk.jmh.annotations.*
 
 import java.util.concurrent.TimeUnit
 import scala.concurrent.Await
 import scala.concurrent.duration.*
-
 object TypedActorBenchmark {
   // Constants because they are used in annotations
   final val threads                 = 4       // update according to cpu
@@ -35,11 +36,13 @@ class TypedActorBenchmark {
   var batchSize = 0
 
   @Param(
-    Array("akka.dispatch.SingleConsumerOnlyUnboundedMailbox", "akka.dispatch.UnboundedMailbox")
+    // Array("akka.dispatch.SingleConsumerOnlyUnboundedMailbox", "akka.dispatch.UnboundedMailbox")
+    Array("akka.dispatch.UnboundedMailbox")
   )
   var mailbox = ""
 
-  @Param(Array("fjp-dispatcher")) //  @Param(Array("fjp-dispatcher", "affinity-dispatcher"))
+  // @Param(Array("fjp-dispatcher", "affinity-dispatcher"))
+  @Param(Array("fjp-dispatcher"))
   var dispatcher = ""
 
   implicit var system: ActorSystem[Start] = _

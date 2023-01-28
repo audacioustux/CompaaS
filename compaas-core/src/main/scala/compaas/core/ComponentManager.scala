@@ -5,6 +5,7 @@ import akka.actor.typed.{Behavior, Terminated}
 
 import java.util.UUID
 
+import compaas.core.Component
 object ComponentManager:
   sealed trait Message
   final case class CreateComponent(component: Component) extends Message

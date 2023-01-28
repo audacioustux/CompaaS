@@ -1,5 +1,6 @@
 package compaas.core
 
+import compaas.core.Component
 import akka.actor.typed.scaladsl.Behaviors
 import akka.actor.typed.{ActorSystem, Behavior, DeathPactException, SupervisorStrategy}
 import akka.management.cluster.bootstrap.ClusterBootstrap
@@ -13,6 +14,7 @@ import scala.concurrent.duration.Duration
 
 import concurrent.duration.DurationInt
 
+import compaas.core.{Language, Component}
 object ComponentSystem:
   def apply(): Unit =
     given system: ActorSystem[ComponentManager.Message] = ActorSystem(ComponentManager(), "CompaaS")

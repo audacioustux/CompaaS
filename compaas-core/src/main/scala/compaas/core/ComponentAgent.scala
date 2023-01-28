@@ -10,6 +10,7 @@ import scala.util.{Failure, Success, Try}
 
 import shared.Graal
 
+import compaas.core.{Language, Component}
 object ComponentAgent:
   sealed trait Message
   protected final case class Dispatch(port: String, payload: String) extends Message

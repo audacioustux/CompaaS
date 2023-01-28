@@ -18,7 +18,12 @@
 				"DavidAnson.vscode-markdownlint",
 				"Gruntfuggly.todo-tree",
 				"GitHub.copilot",
-				"scalameta.metals"
+				"scalameta.metals",
+				"vadimcn.vscode-lldb",
+				"mutantdino.resourcemonitor",
+				"rust-lang.rust-analyzer",
+				"tamasfe.even-better-toml",
+				"serayuzgur.crates"
 			],
 			"settings": {
 				"git.autofetch": true,

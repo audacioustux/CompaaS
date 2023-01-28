@@ -1,7 +1,8 @@
-package akka.actor.typed
+package compaas.bench.akka.actor.typed
 
 import akka.Done
 import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
+import akka.actor.typed.{ActorRef, Behavior, Props}
 
 import java.util.concurrent.CountDownLatch
 import scala.concurrent.duration.*
