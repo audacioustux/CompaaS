@@ -90,7 +90,7 @@ class SingleModuleInvokeBenchmark {
     executable = language match {
       case "js" =>
         val foo = context.eval(source).getMember("foo")
-        @tailrec () => foo.execute(10_000)
+        () => foo.execute(10_000)
       case "wasm" =>
         context.eval(source)
         val foo = context.getBindings("wasm").getMember("main").getMember("foo")
