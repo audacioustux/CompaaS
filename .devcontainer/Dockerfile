@@ -5,8 +5,6 @@ RUN chsh -s $(which zsh)
 
 SHELL ["zsh", "-c"]
 
-WORKDIR /
-
 ARG DEBIAN_FRONTEND="noninteractive"
 RUN apt update
 RUN apt upgrade -y
@@ -32,9 +30,10 @@ ARG JAVA_VERSION=java17
 ENV GRAALVM_NAME=graalvm-${GRAALVM_EDITION}-${JAVA_VERSION}-${GRAALVM_VERSION}
 
 RUN curl -sL https://get.graalvm.org/jdk | bash -s -- $GRAALVM_NAME \
+    --to /opt \
     -c native-image,nodejs,wasm
 
-ENV GRAALVM_HOME="/${GRAALVM_NAME}"
+ENV GRAALVM_HOME="/opt/${GRAALVM_NAME}"
 RUN source ~/.zshrc && sdk install java ${GRAALVM_VERSION:0:6}.r${JAVA_VERSION:4:2}-grl${GRAALVM_EDITION:0:1} ${GRAALVM_HOME}
 
 ENV PATH "${GRAALVM_HOME}/bin:$PATH"
