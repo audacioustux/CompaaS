@@ -7,7 +7,6 @@ import org.openjdk.jmh.infra.Blackhole
 
 import java.nio.file.{Files, Path, Paths}
 import java.util.concurrent.TimeUnit
-import scala.collection.mutable.Map
 
 object SingleModuleInvokeBenchmark {
   final val opPerInvoke = 1_000
@@ -22,30 +21,27 @@ object SingleModuleInvokeBenchmark {
         "js",
         Files.readString(
           Paths.get(
-            "../compaas-bench/modules/js/slugify.mjs"
+            "../examples/sources/js/slugify.mjs"
           )
         ),
         "slugify.mjs"
       )
       .mimeType("application/javascript+module")
-      .build()
-  )
-
-  modules += {
+      .build(),
     "nth-prime-wasm" -> Source
       .newBuilder(
         "wasm",
         ByteSequence.create(
           Files.readAllBytes(
             Paths.get(
-              "../compaas-bench/modules/wasm/target/wasm32-unknown-unknown/release/nth_prime.wasm"
+              "../examples/sources/wasm/target/wasm32-unknown-unknown/release/nth_prime.wasm"
             )
           )
         ),
         "nth-prime.wasm"
       )
       .build()
-  }
+  )
 }
 
 @State(Scope.Thread)
@@ -67,7 +63,7 @@ class SingleModuleInvokeBenchmark {
 
   var context: Context = _
 
-  var executable: Value = _
+  var executable: () => Value = _
 
   @Setup(Level.Iteration)
   def setup(): Unit = {
@@ -93,10 +89,12 @@ class SingleModuleInvokeBenchmark {
 
     executable = language match {
       case "js" =>
-        context.eval(source).getMember("foo")
+        val foo = context.eval(source).getMember("foo")
+        @tailrec () => foo.execute(10_000)
       case "wasm" =>
         context.eval(source)
-        context.getBindings("wasm").getMember("main").getMember("foo")
+        val foo = context.getBindings("wasm").getMember("main").getMember("foo")
+        () => foo.execute(10_000)
     }
   }
 
@@ -107,13 +105,8 @@ class SingleModuleInvokeBenchmark {
   }
 
   @Benchmark
-  @OperationsPerInvocation(opPerInvoke)
   def invoke(blackhole: Blackhole): Unit = {
-    var i: Int = executable.execute(0).asInt()
-    for _ <- 1 until opPerInvoke do {
-      i = executable.execute(i).asInt() % 10000
-    }
-
+    val i = executable()
     blackhole.consume(i)
   }
 }

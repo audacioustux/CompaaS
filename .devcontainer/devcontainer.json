@@ -28,7 +28,8 @@
 			"settings": {
 				"git.autofetch": true,
 				"files.autoSave": "onFocusChange",
-				"editor.formatOnSave": true
+				"editor.formatOnSave": true,
+				"resmon.show.cpufreq": false
 			}
 		}
 	},
