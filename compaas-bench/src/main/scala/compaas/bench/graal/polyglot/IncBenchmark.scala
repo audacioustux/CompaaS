@@ -30,6 +30,7 @@ object IncBenchmark {
   )
 }
 
+@State(Scope.Thread)
 @BenchmarkMode(Array(Mode.AverageTime))
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Fork(1, jvmArgsAppend = Array("-Xmx16G"))
