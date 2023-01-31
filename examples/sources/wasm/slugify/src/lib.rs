@@ -1,7 +1,7 @@
 use unidecode::unidecode;
 
 #[no_mangle]
-pub extern "C" fn foo(max_length: i32) -> i32 {
+pub extern "C" fn slugify(max_length: i32) -> i32 {
     let string = "Nín hǎo. Wǒ shì zhōng guó rén";
     let stop_words = "";
     let sep = "-";
@@ -46,7 +46,6 @@ pub extern "C" fn foo(max_length: i32) -> i32 {
 
     let mut s = String::from_utf8(slug).unwrap();
 
-    
     s.truncate(max_length);
     s = s.trim_end_matches(char_vec[0]).to_string();
 

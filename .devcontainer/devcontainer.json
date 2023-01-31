@@ -3,12 +3,6 @@
 	"dockerComposeFile": "Compose.yml",
 	"service": "app",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-	"features": {
-		"ghcr.io/devcontainers/features/common-utils:2": {
-			"configureZshAsDefaultShell": true
-		},
-		"ghcr.io/devcontainers/features/github-cli:1": {}
-	},
 	"customizations": {
 		"vscode": {
 			"extensions": [

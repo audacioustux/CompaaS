@@ -56,7 +56,7 @@ replace.extend = function (customMap) {
   Object.assign(charMap, customMap);
 };
 
-export const foo = (n) => {
+export const slugify = (n) => {
   const slugified = replace("Nín hǎo. Wǒ shì zhōng guó rén").slice(0, n)
   // add ascii values of characters in slugified to get a number
   return slugified.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0)

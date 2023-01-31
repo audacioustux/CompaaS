@@ -8,27 +8,21 @@ import org.openjdk.jmh.infra.Blackhole
 import java.nio.file.{Files, Path, Paths}
 import java.util.concurrent.TimeUnit
 
-object SingleModuleInvokeBenchmark {
-  final val opPerInvoke = 1_000
-
+object NthPrimeBenchmark {
   val modules = Map(
-    "noop-js" -> Source
-      .newBuilder("js", "export const foo = (n) => n + 1", "noop.js")
-      .mimeType("application/javascript+module")
-      .build(),
-    "slugify-js" -> Source
+    "js" -> Source
       .newBuilder(
         "js",
         Files.readString(
           Paths.get(
-            "../examples/sources/js/slugify.mjs"
+            "../examples/sources/js/nth-prime.mjs"
           )
         ),
-        "slugify.mjs"
+        "nth-prime.mjs"
       )
       .mimeType("application/javascript+module")
       .build(),
-    "nth-prime-wasm" -> Source
+    "wasm" -> Source
       .newBuilder(
         "wasm",
         ByteSequence.create(
@@ -51,23 +45,26 @@ object SingleModuleInvokeBenchmark {
 @Threads(Threads.MAX)
 @Warmup(iterations = 10)
 @Measurement(iterations = 5)
-class SingleModuleInvokeBenchmark {
-  import SingleModuleInvokeBenchmark.*
+class NthPrimeBenchmark {
+  import NthPrimeBenchmark.*
 
   var engine: Engine = _
 
-  // @Param(Array("noop-js", "slugify-js", "noop-wasm", "slugify-wasm", "nth-prime-wasm"))
-  @Param(Array("nth-prime-wasm"))
+  @Param(Array("js", "wasm"))
   var module: String = _
   var source: Source = _
 
   var context: Context = _
 
-  var executable: () => Value = _
+  var executable: Value = _
+
+  @Setup(Level.Trial)
+  def setupEngine(): Unit = {
+    engine = Engine.create()
+  }
 
   @Setup(Level.Iteration)
   def setup(): Unit = {
-    engine = Engine.create()
     source = modules(module)
 
     val language = source.getLanguage()
@@ -82,31 +79,32 @@ class SingleModuleInvokeBenchmark {
             .build()
         case "wasm" =>
           builder.build()
-        case _ =>
-          throw new IllegalArgumentException(s"Unsupported language: ${source.getLanguage()}")
       }
     }
 
     executable = language match {
       case "js" =>
-        val foo = context.eval(source).getMember("foo")
-        () => foo.execute(10_000)
+        context.eval(source).getMember("nth_prime")
       case "wasm" =>
         context.eval(source)
-        val foo = context.getBindings("wasm").getMember("main").getMember("foo")
-        () => foo.execute(10_000)
+        context.getBindings("wasm").getMember("main").getMember("nth_prime")
     }
   }
 
   @TearDown(Level.Iteration)
   def closeContext(): Unit = {
     context.close()
+  }
+
+  @TearDown(Level.Trial)
+  def closeEngine(): Unit = {
     engine.close()
   }
 
+  private val n = Value.asValue(10_000)
+
   @Benchmark
-  def invoke(blackhole: Blackhole): Unit = {
-    val i = executable()
-    blackhole.consume(i)
+  def invoke(): Value = {
+    executable.execute(n)
   }
 }

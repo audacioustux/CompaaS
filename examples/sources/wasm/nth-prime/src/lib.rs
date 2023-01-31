@@ -1,5 +1,5 @@
 #[no_mangle]
-pub extern "C" fn foo(n: i32) -> i32 {
+pub extern "C" fn nth_prime(n: i32) -> i32 {
     let n = n + 1;
     let limit = sieve_upper_bound(n.try_into().unwrap());
 

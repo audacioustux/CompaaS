@@ -1,0 +1,229 @@
+[info] welcome to sbt 1.8.2 (Oracle Corporation Java 17.0.6)
+[info] loading settings for project compaas-build-build-build from metals.sbt ...
+[info] loading project definition from /workspaces/CompaaS/project/project/project
+[info] loading settings for project compaas-build-build from metals.sbt ...
+[info] loading project definition from /workspaces/CompaaS/project/project
+[success] Generated .bloop/compaas-build-build.json
+[success] Total time: 0 s, completed Jan 31, 2023, 3:54:50 PM
+[info] loading settings for project compaas-build from metals.sbt,plugins.sbt ...
+[info] loading project definition from /workspaces/CompaaS/project
+[success] Generated .bloop/compaas-build.json
+[success] Total time: 0 s, completed Jan 31, 2023, 3:54:50 PM
+[info] loading settings for project root from build.sbt ...
+[info] set current project to compaas (in build file:/workspaces/CompaaS/)
+[info] compiling 20 Java sources to /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/classes ...
+[info] done compiling
+[info] running (fork) org.openjdk.jmh.Main compaas.bench.graal.polyglot.*
+[info] # Detecting actual CPU count: 4 detected
+[info] # JMH version: 1.32
+[info] # VM version: JDK 17.0.6, Java HotSpot(TM) 64-Bit Server VM, 17.0.6+9-LTS-jvmci-22.3-b11
+[info] # VM invoker: /opt/graalvm-ee-java17-22.3.1/bin/java
+[info] # VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:JVMCIThreadsPerNativeLibraryRuntime=1 -XX:-UnlockExperimentalVMOptions -Xmx16G
+[info] # Blackhole mode: full + dont-inline hint
+[info] # Warmup: 10 iterations, 10 s each
+[info] # Measurement: 5 iterations, 10 s each
+[info] # Timeout: 10 min per iteration
+[info] # Threads: 4 threads, will synchronize iterations
+[info] # Benchmark mode: Average time, time/op
+[info] # Benchmark: compaas.bench.graal.polyglot.IncBenchmark.invoke
+[info] # Parameters: (module = js)
+[info] # Run progress: 0.00% complete, ETA 00:15:00
+[info] # Fork: 1 of 1
+[info] # Warmup Iteration   1: 93.561 ±(99.9%) 9.308 ns/op
+[info] # Warmup Iteration   2: 85.961 ±(99.9%) 5.200 ns/op
+[info] # Warmup Iteration   3: 85.576 ±(99.9%) 4.710 ns/op
+[info] # Warmup Iteration   4: 86.039 ±(99.9%) 3.068 ns/op
+[info] # Warmup Iteration   5: 85.656 ±(99.9%) 8.951 ns/op
+[info] # Warmup Iteration   6: 85.848 ±(99.9%) 4.487 ns/op
+[info] # Warmup Iteration   7: 84.355 ±(99.9%) 4.059 ns/op
+[info] # Warmup Iteration   8: 86.540 ±(99.9%) 8.799 ns/op
+[info] # Warmup Iteration   9: 86.215 ±(99.9%) 9.839 ns/op
+[info] # Warmup Iteration  10: 84.209 ±(99.9%) 2.699 ns/op
+[info] Iteration   1: 86.328 ±(99.9%) 4.648 ns/op
+[info] Iteration   2: 84.207 ±(99.9%) 3.962 ns/op
+[info] Iteration   3: 85.806 ±(99.9%) 7.064 ns/op
+[info] Iteration   4: 84.239 ±(99.9%) 1.869 ns/op
+[info] Iteration   5: 85.763 ±(99.9%) 6.345 ns/op
+[info] Result "compaas.bench.graal.polyglot.IncBenchmark.invoke":
+[info]   85.269 ±(99.9%) 3.775 ns/op [Average]
+[info]   (min, avg, max) = (84.207, 85.269, 86.328), stdev = 0.980
+[info]   CI (99.9%): [81.494, 89.043] (assumes normal distribution)
+[info] # JMH version: 1.32
+[info] # VM version: JDK 17.0.6, Java HotSpot(TM) 64-Bit Server VM, 17.0.6+9-LTS-jvmci-22.3-b11
+[info] # VM invoker: /opt/graalvm-ee-java17-22.3.1/bin/java
+[info] # VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:JVMCIThreadsPerNativeLibraryRuntime=1 -XX:-UnlockExperimentalVMOptions -Xmx16G
+[info] # Blackhole mode: full + dont-inline hint
+[info] # Warmup: 10 iterations, 10 s each
+[info] # Measurement: 5 iterations, 10 s each
+[info] # Timeout: 10 min per iteration
+[info] # Threads: 4 threads, will synchronize iterations
+[info] # Benchmark mode: Average time, time/op
+[info] # Benchmark: compaas.bench.graal.polyglot.IncBenchmark.invoke
+[info] # Parameters: (module = wasm)
+[info] # Run progress: 16.67% complete, ETA 00:12:37
+[info] # Fork: 1 of 1
+[info] # Warmup Iteration   1: 211.638 ±(99.9%) 139.407 ns/op
+[info] # Warmup Iteration   2: 194.127 ±(99.9%) 21.983 ns/op
+[info] # Warmup Iteration   3: 189.473 ±(99.9%) 15.541 ns/op
+[info] # Warmup Iteration   4: 185.618 ±(99.9%) 15.161 ns/op
+[info] # Warmup Iteration   5: 189.300 ±(99.9%) 13.906 ns/op
+[info] # Warmup Iteration   6: 184.920 ±(99.9%) 17.478 ns/op
+[info] # Warmup Iteration   7: 189.125 ±(99.9%) 32.564 ns/op
+[info] # Warmup Iteration   8: 186.410 ±(99.9%) 28.348 ns/op
+[info] # Warmup Iteration   9: 189.311 ±(99.9%) 19.718 ns/op
+[info] # Warmup Iteration  10: 187.118 ±(99.9%) 14.474 ns/op
+[info] Iteration   1: 186.481 ±(99.9%) 13.752 ns/op
+[info] Iteration   2: 188.296 ±(99.9%) 20.579 ns/op
+[info] Iteration   3: 185.092 ±(99.9%) 17.659 ns/op
+[info] Iteration   4: 188.559 ±(99.9%) 16.476 ns/op
+[info] Iteration   5: 184.358 ±(99.9%) 18.745 ns/op
+[info] Result "compaas.bench.graal.polyglot.IncBenchmark.invoke":
+[info]   186.557 ±(99.9%) 7.209 ns/op [Average]
+[info]   (min, avg, max) = (184.358, 186.557, 188.559), stdev = 1.872
+[info]   CI (99.9%): [179.348, 193.767] (assumes normal distribution)
+[info] # JMH version: 1.32
+[info] # VM version: JDK 17.0.6, Java HotSpot(TM) 64-Bit Server VM, 17.0.6+9-LTS-jvmci-22.3-b11
+[info] # VM invoker: /opt/graalvm-ee-java17-22.3.1/bin/java
+[info] # VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:JVMCIThreadsPerNativeLibraryRuntime=1 -XX:-UnlockExperimentalVMOptions -Xmx16G
+[info] # Blackhole mode: full + dont-inline hint
+[info] # Warmup: 10 iterations, 10 s each
+[info] # Measurement: 5 iterations, 10 s each
+[info] # Timeout: 10 min per iteration
+[info] # Threads: 4 threads, will synchronize iterations
+[info] # Benchmark mode: Average time, time/op
+[info] # Benchmark: compaas.bench.graal.polyglot.NthPrimeBenchmark.invoke
+[info] # Parameters: (module = js)
+[info] # Run progress: 33.33% complete, ETA 00:10:05
+[info] # Fork: 1 of 1
+[info] # Warmup Iteration   1: 2160971.980 ±(99.9%) 765176.719 ns/op
+[info] # Warmup Iteration   2: 1808202.815 ±(99.9%) 71684.141 ns/op
+[info] # Warmup Iteration   3: 1834306.769 ±(99.9%) 76292.802 ns/op
+[info] # Warmup Iteration   4: 1808626.820 ±(99.9%) 39606.313 ns/op
+[info] # Warmup Iteration   5: 1851631.665 ±(99.9%) 95351.241 ns/op
+[info] # Warmup Iteration   6: 1805182.126 ±(99.9%) 83372.301 ns/op
+[info] # Warmup Iteration   7: 1846814.980 ±(99.9%) 74518.721 ns/op
+[info] # Warmup Iteration   8: 1802051.073 ±(99.9%) 22420.494 ns/op
+[info] # Warmup Iteration   9: 1840236.294 ±(99.9%) 96581.359 ns/op
+[info] # Warmup Iteration  10: 1814703.953 ±(99.9%) 24825.166 ns/op
+[info] Iteration   1: 1819834.146 ±(99.9%) 73555.326 ns/op
+[info] Iteration   2: 1835972.163 ±(99.9%) 128411.270 ns/op
+[info] Iteration   3: 1810689.861 ±(99.9%) 17446.078 ns/op
+[info] Iteration   4: 1834575.183 ±(99.9%) 49381.495 ns/op
+[info] Iteration   5: 1799438.021 ±(99.9%) 23319.157 ns/op
+[info] Result "compaas.bench.graal.polyglot.NthPrimeBenchmark.invoke":
+[info]   1820101.875 ±(99.9%) 60179.640 ns/op [Average]
+[info]   (min, avg, max) = (1799438.021, 1820101.875, 1835972.163), stdev = 15628.461
+[info]   CI (99.9%): [1759922.235, 1880281.515] (assumes normal distribution)
+[info] # JMH version: 1.32
+[info] # VM version: JDK 17.0.6, Java HotSpot(TM) 64-Bit Server VM, 17.0.6+9-LTS-jvmci-22.3-b11
+[info] # VM invoker: /opt/graalvm-ee-java17-22.3.1/bin/java
+[info] # VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:JVMCIThreadsPerNativeLibraryRuntime=1 -XX:-UnlockExperimentalVMOptions -Xmx16G
+[info] # Blackhole mode: full + dont-inline hint
+[info] # Warmup: 10 iterations, 10 s each
+[info] # Measurement: 5 iterations, 10 s each
+[info] # Timeout: 10 min per iteration
+[info] # Threads: 4 threads, will synchronize iterations
+[info] # Benchmark mode: Average time, time/op
+[info] # Benchmark: compaas.bench.graal.polyglot.NthPrimeBenchmark.invoke
+[info] # Parameters: (module = wasm)
+[info] # Run progress: 50.00% complete, ETA 00:07:34
+[info] # Fork: 1 of 1
+[info] # Warmup Iteration   1: 710454.923 ±(99.9%) 412092.841 ns/op
+[info] # Warmup Iteration   2: 611598.616 ±(99.9%) 59044.719 ns/op
+[info] # Warmup Iteration   3: 612062.508 ±(99.9%) 50216.489 ns/op
+[info] # Warmup Iteration   4: 603220.148 ±(99.9%) 41952.682 ns/op
+[info] # Warmup Iteration   5: 615618.502 ±(99.9%) 71904.204 ns/op
+[info] # Warmup Iteration   6: 596677.413 ±(99.9%) 31504.058 ns/op
+[info] # Warmup Iteration   7: 635045.658 ±(99.9%) 101273.697 ns/op
+[info] # Warmup Iteration   8: 603798.318 ±(99.9%) 84881.505 ns/op
+[info] # Warmup Iteration   9: 622266.682 ±(99.9%) 76286.031 ns/op
+[info] # Warmup Iteration  10: 603972.718 ±(99.9%) 38378.703 ns/op
+[info] Iteration   1: 615660.392 ±(99.9%) 18787.196 ns/op
+[info] Iteration   2: 598932.274 ±(99.9%) 48132.024 ns/op
+[info] Iteration   3: 606901.953 ±(99.9%) 85466.204 ns/op
+[info] Iteration   4: 605032.728 ±(99.9%) 22518.265 ns/op
+[info] Iteration   5: 609653.080 ±(99.9%) 65012.888 ns/op
+[info] Result "compaas.bench.graal.polyglot.NthPrimeBenchmark.invoke":
+[info]   607236.085 ±(99.9%) 23637.632 ns/op [Average]
+[info]   (min, avg, max) = (598932.274, 607236.085, 615660.392), stdev = 6138.618
+[info]   CI (99.9%): [583598.454, 630873.717] (assumes normal distribution)
+[info] # JMH version: 1.32
+[info] # VM version: JDK 17.0.6, Java HotSpot(TM) 64-Bit Server VM, 17.0.6+9-LTS-jvmci-22.3-b11
+[info] # VM invoker: /opt/graalvm-ee-java17-22.3.1/bin/java
+[info] # VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:JVMCIThreadsPerNativeLibraryRuntime=1 -XX:-UnlockExperimentalVMOptions -Xmx16G
+[info] # Blackhole mode: full + dont-inline hint
+[info] # Warmup: 10 iterations, 10 s each
+[info] # Measurement: 5 iterations, 10 s each
+[info] # Timeout: 10 min per iteration
+[info] # Threads: 4 threads, will synchronize iterations
+[info] # Benchmark mode: Average time, time/op
+[info] # Benchmark: compaas.bench.graal.polyglot.SlugifyBenchmark.invoke
+[info] # Parameters: (module = js)
+[info] # Run progress: 66.67% complete, ETA 00:05:02
+[info] # Fork: 1 of 1
+[info] # Warmup Iteration   1: 22196.103 ±(99.9%) 18963.700 ns/op
+[info] # Warmup Iteration   2: 11377.235 ±(99.9%) 1632.764 ns/op
+[info] # Warmup Iteration   3: 9962.888 ±(99.9%) 2919.848 ns/op
+[info] # Warmup Iteration   4: 10241.589 ±(99.9%) 3450.775 ns/op
+[info] # Warmup Iteration   5: 9980.305 ±(99.9%) 3250.114 ns/op
+[info] # Warmup Iteration   6: 10181.066 ±(99.9%) 3459.309 ns/op
+[info] # Warmup Iteration   7: 10048.742 ±(99.9%) 2965.017 ns/op
+[info] # Warmup Iteration   8: 10137.949 ±(99.9%) 3183.160 ns/op
+[info] # Warmup Iteration   9: 9983.458 ±(99.9%) 3058.242 ns/op
+[info] # Warmup Iteration  10: 10222.518 ±(99.9%) 3204.736 ns/op
+[info] Iteration   1: 9916.066 ±(99.9%) 2843.746 ns/op
+[info] Iteration   2: 10111.315 ±(99.9%) 2507.113 ns/op
+[info] Iteration   3: 9999.460 ±(99.9%) 3116.016 ns/op
+[info] Iteration   4: 10147.112 ±(99.9%) 2950.142 ns/op
+[info] Iteration   5: 9931.009 ±(99.9%) 2802.387 ns/op
+[info] Result "compaas.bench.graal.polyglot.SlugifyBenchmark.invoke":
+[info]   10020.993 ±(99.9%) 402.178 ns/op [Average]
+[info]   (min, avg, max) = (9916.066, 10020.993, 10147.112), stdev = 104.444
+[info]   CI (99.9%): [9618.815, 10423.170] (assumes normal distribution)
+[info] # JMH version: 1.32
+[info] # VM version: JDK 17.0.6, Java HotSpot(TM) 64-Bit Server VM, 17.0.6+9-LTS-jvmci-22.3-b11
+[info] # VM invoker: /opt/graalvm-ee-java17-22.3.1/bin/java
+[info] # VM options: -XX:ThreadPriorityPolicy=1 -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCIProduct -XX:JVMCIThreadsPerNativeLibraryRuntime=1 -XX:-UnlockExperimentalVMOptions -Xmx16G
+[info] # Blackhole mode: full + dont-inline hint
+[info] # Warmup: 10 iterations, 10 s each
+[info] # Measurement: 5 iterations, 10 s each
+[info] # Timeout: 10 min per iteration
+[info] # Threads: 4 threads, will synchronize iterations
+[info] # Benchmark mode: Average time, time/op
+[info] # Benchmark: compaas.bench.graal.polyglot.SlugifyBenchmark.invoke
+[info] # Parameters: (module = wasm)
+[info] # Run progress: 83.33% complete, ETA 00:02:31
+[info] # Fork: 1 of 1
+[info] # Warmup Iteration   1: 2595.581 ±(99.9%) 4025.586 ns/op
+[info] # Warmup Iteration   2: 2339.386 ±(99.9%) 2302.175 ns/op
+[info] # Warmup Iteration   3: 2197.549 ±(99.9%) 1502.143 ns/op
+[info] # Warmup Iteration   4: 2168.803 ±(99.9%) 2093.119 ns/op
+[info] # Warmup Iteration   5: 2242.443 ±(99.9%) 2184.832 ns/op
+[info] # Warmup Iteration   6: 2176.859 ±(99.9%) 1941.567 ns/op
+[info] # Warmup Iteration   7: 2510.910 ±(99.9%) 1960.636 ns/op
+[info] # Warmup Iteration   8: 1982.102 ±(99.9%) 753.758 ns/op
+[info] # Warmup Iteration   9: 2191.109 ±(99.9%) 1403.715 ns/op
+[info] # Warmup Iteration  10: 2178.556 ±(99.9%) 1638.024 ns/op
+[info] Iteration   1: 2192.725 ±(99.9%) 2534.862 ns/op
+[info] Iteration   2: 2134.306 ±(99.9%) 1094.405 ns/op
+[info] Iteration   3: 2527.530 ±(99.9%) 1797.553 ns/op
+[info] Iteration   4: 2148.028 ±(99.9%) 2692.222 ns/op
+[info] Iteration   5: 2376.403 ±(99.9%) 1639.405 ns/op
+[info] Result "compaas.bench.graal.polyglot.SlugifyBenchmark.invoke":
+[info]   2275.798 ±(99.9%) 657.818 ns/op [Average]
+[info]   (min, avg, max) = (2134.306, 2275.798, 2527.530), stdev = 170.833
+[info]   CI (99.9%): [1617.980, 2933.617] (assumes normal distribution)
+[info] # Run complete. Total time: 00:15:08
+[info] REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+[info] why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+[info] experiments, perform baseline and negative tests that provide experimental control, make sure
+[info] the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+[info] Do not assume the numbers tell you what you want them to tell.
+[info] Benchmark                 (module)  Mode  Cnt        Score       Error  Units
+[info] IncBenchmark.invoke             js  avgt    5       85.269 ±     3.775  ns/op
+[info] IncBenchmark.invoke           wasm  avgt    5      186.557 ±     7.209  ns/op
+[info] NthPrimeBenchmark.invoke        js  avgt    5  1820101.875 ± 60179.640  ns/op
+[info] NthPrimeBenchmark.invoke      wasm  avgt    5   607236.085 ± 23637.632  ns/op
+[info] SlugifyBenchmark.invoke         js  avgt    5    10020.993 ±   402.178  ns/op
+[info] SlugifyBenchmark.invoke       wasm  avgt    5     2275.798 ±   657.818  ns/op
+[success] Total time: 914 s (15:14), completed Jan 31, 2023, 4:10:06 PM
