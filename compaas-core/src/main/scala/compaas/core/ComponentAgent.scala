@@ -2,6 +2,7 @@ package compaas.core
 
 import akka.actor.typed.scaladsl.Behaviors
 import akka.actor.typed.{ActorRef, Behavior, PostStop, Signal}
+import compaas.core.{Component, Language}
 import org.graalvm.polyglot.{Context, Engine, PolyglotException, Source, Value}
 
 import scala.collection.JavaConverters.*
@@ -9,8 +10,6 @@ import scala.collection.mutable.{HashMap, HashSet}
 import scala.util.{Failure, Success, Try}
 
 import shared.Graal
-
-import compaas.core.{Language, Component}
 object ComponentAgent:
   sealed trait Message
   protected final case class Dispatch(port: String, payload: String) extends Message

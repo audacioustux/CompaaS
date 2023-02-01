@@ -13,11 +13,9 @@ object NthPrimeBenchmark {
     "js" -> Source
       .newBuilder(
         "js",
-        Files.readString(
-          Paths.get(
-            "../examples/sources/js/nth-prime.mjs"
-          )
-        ),
+        scala.io.Source
+          .fromResource("js/nth-prime.mjs")
+          .mkString,
         "nth-prime.mjs"
       )
       .mimeType("application/javascript+module")
@@ -26,11 +24,10 @@ object NthPrimeBenchmark {
       .newBuilder(
         "wasm",
         ByteSequence.create(
-          Files.readAllBytes(
-            Paths.get(
-              "../target/wasm32-unknown-unknown/release/nth_prime.wasm"
-            )
-          )
+          scala.io.Source
+            .fromResource("wasm/nth-prime.wasm")
+            .map(_.toByte)
+            .toArray
         ),
         "nth-prime.wasm"
       )

@@ -2,11 +2,10 @@ package compaas.core
 
 import com.github.plokhotnyuk.jsoniter_scala.core.*
 import com.github.plokhotnyuk.jsoniter_scala.macros.*
+import compaas.core.shared.Graal
 import org.graalvm.polyglot.{Context, Source}
 
 import java.util.UUID
-
-import compaas.core.shared.Graal
 
 enum Language(val languageId: String):
   case Js   extends Language("js")

@@ -36,7 +36,22 @@ lazy val `compaas-bench` = project
     ).map(_.cross(CrossVersion.for3Use2_13)),
     libraryDependencies ++= Seq(
       "org.graalvm.sdk" % "graal-sdk" % versions.GraalSDK
-    )
+    ),
+    Compile / resourceGenerators += Def.task {
+      import sys.process.*
+      "cargo build --release" !
+
+      val wasmDir = (Compile / resourceManaged).value / "wasm"
+      val wasmFiles: Seq[File] =
+        (root.base / "target" / "wasm32-unknown-unknown" / "release").listFiles
+          .filter(_.getName.endsWith(".wasm"))
+
+      wasmFiles.foreach { wasmFile =>
+        s"wasm-strip ${wasmFile} -o ${wasmDir / wasmFile.getName}"
+      }
+
+      wasmFiles
+    }.taskValue
   )
 
 lazy val `compaas-core` = project

@@ -1,16 +1,15 @@
+cargo-features = ["per-package-target"]
+
 [package]
-name = "nth-prime"
+name = "slugify"
 version = "0.1.0"
 edition = "2021"
 
+default-target = "wasm32-unknown-unknown"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+unidecode = "0.3.0"
 
 [lib]
 crate-type = ["cdylib"]
-
-[profile.release]
-lto = true
-codegen-units = 1
-panic = 'abort'

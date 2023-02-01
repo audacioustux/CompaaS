@@ -2,10 +2,9 @@ package compaas.core
 
 import akka.actor.typed.scaladsl.Behaviors
 import akka.actor.typed.{Behavior, Terminated}
+import compaas.core.Component
 
 import java.util.UUID
-
-import compaas.core.Component
 object ComponentManager:
   sealed trait Message
   final case class CreateComponent(component: Component) extends Message

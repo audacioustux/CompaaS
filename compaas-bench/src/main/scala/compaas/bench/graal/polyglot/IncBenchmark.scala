@@ -18,11 +18,10 @@ object IncBenchmark {
       .newBuilder(
         "wasm",
         ByteSequence.create(
-          Files.readAllBytes(
-            Paths.get(
-              "../examples/sources/wasm/inc.wasm"
-            )
-          )
+          scala.io.Source
+            .fromResource("wasm/inc.wasm")
+            .map(_.toByte)
+            .toArray
         ),
         "inc.wasm"
       )

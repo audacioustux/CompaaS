@@ -1,11 +1,11 @@
 package compaas.core
 
-import compaas.core.Component
 import akka.actor.typed.scaladsl.Behaviors
 import akka.actor.typed.{ActorSystem, Behavior, DeathPactException, SupervisorStrategy}
 import akka.management.cluster.bootstrap.ClusterBootstrap
 import akka.management.scaladsl.AkkaManagement
 import akka.protobufv3.internal.compiler.PluginProtos.CodeGeneratorResponse.File
+import compaas.core.{Component, Language}
 import org.graalvm.polyglot.Source
 
 import java.nio.file.{Files, Path}
@@ -13,8 +13,6 @@ import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 
 import concurrent.duration.DurationInt
-
-import compaas.core.{Language, Component}
 object ComponentSystem:
   def apply(): Unit =
     given system: ActorSystem[ComponentManager.Message] = ActorSystem(ComponentManager(), "CompaaS")

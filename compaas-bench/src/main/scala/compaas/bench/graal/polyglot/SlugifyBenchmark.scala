@@ -15,11 +15,9 @@ object SlugifyBenchmark {
     "js" -> Source
       .newBuilder(
         "js",
-        Files.readString(
-          Paths.get(
-            "../examples/sources/js/slugify.mjs"
-          )
-        ),
+        scala.io.Source
+          .fromResource("js/slugify.mjs")
+          .mkString,
         "slugify.mjs"
       )
       .mimeType("application/javascript+module")
@@ -28,11 +26,10 @@ object SlugifyBenchmark {
       .newBuilder(
         "wasm",
         ByteSequence.create(
-          Files.readAllBytes(
-            Paths.get(
-              "../target/wasm32-unknown-unknown/release/slugify.wasm"
-            )
-          )
+          scala.io.Source
+            .fromResource("wasm/slugify.wasm")
+            .map(_.toByte)
+            .toArray
         ),
         "slugify.wasm"
       )
