@@ -30,11 +30,11 @@ object SlugifyBenchmark {
         ByteSequence.create(
           Files.readAllBytes(
             Paths.get(
-              "../examples/sources/wasm/target/wasm32-unknown-unknown/release/slugify.wasm"
+              "../target/wasm32-unknown-unknown/release/slugify.wasm"
             )
           )
         ),
-        "Slugify.wasm"
+        "slugify.wasm"
       )
       .build()
   )

@@ -3,7 +3,6 @@ package compaas.bench.akka.actor.typed
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.AskPattern.*
 import com.typesafe.config.ConfigFactory
-import compaas.bench.akka.actor.typed.TypedBenchmarkActors
 import org.openjdk.jmh.annotations.*
 
 import java.util.concurrent.TimeUnit

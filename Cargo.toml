@@ -1,0 +1,7 @@
+[workspace]
+members = ["examples/sources/wasm/nth-prime", "examples/sources/wasm/slugify"]
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = 'abort'

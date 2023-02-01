@@ -8,7 +8,6 @@
 			"extensions": [
 				"sleistner.vscode-fileutils",
 				"bierner.markdown-mermaid",
-				"ms-playwright.playwright",
 				"DavidAnson.vscode-markdownlint",
 				"Gruntfuggly.todo-tree",
 				"GitHub.copilot",

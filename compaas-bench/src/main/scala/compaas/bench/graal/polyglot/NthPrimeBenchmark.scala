@@ -28,7 +28,7 @@ object NthPrimeBenchmark {
         ByteSequence.create(
           Files.readAllBytes(
             Paths.get(
-              "../examples/sources/wasm/target/wasm32-unknown-unknown/release/nth_prime.wasm"
+              "../target/wasm32-unknown-unknown/release/nth_prime.wasm"
             )
           )
         ),
