@@ -38,7 +38,7 @@ object IncBenchmark {
   val n = Value.asValue(0)
 
   final val threads      = 1
-  final val opPerNPA     = 10_000
+  final val opPerNPA     = 10_000_000
   final val numberOfNPAs = threads
   final val opPerInvoke  = opPerNPA * numberOfNPAs
 }
@@ -66,7 +66,15 @@ class IncBenchmark {
       IncBenchmarkActors.Supervisor(numberOfNPAs, modules(module)),
       "inc",
       ConfigFactory.parseString(
-        s"akka.actor.default-dispatcher.fork-join-executor.parallelism-max = $threads"
+        s"""
+           |akka.actor.default-dispatcher {
+           |  type = PinnedDispatcher
+           |  executor = "thread-pool-executor"
+           |  thread-pool-executor {
+           |    fixed-pool-size = $threads
+           |  }
+           |}
+           |""".stripMargin
       )
     )
   }

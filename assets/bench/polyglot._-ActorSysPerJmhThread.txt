@@ -4,16 +4,16 @@
 [info] loading settings for project compaas-build-build from metals.sbt ...
 [info] loading project definition from /workspaces/CompaaS/project/project
 [success] Generated .bloop/compaas-build-build.json
-[success] Total time: 0 s, completed Feb 2, 2023, 4:48:25 PM
+[success] Total time: 0 s, completed Feb 2, 2023, 6:50:54 PM
 [info] loading settings for project compaas-build from metals.sbt,plugins.sbt ...
 [info] loading project definition from /workspaces/CompaaS/project
 [success] Generated .bloop/compaas-build.json
-[success] Total time: 0 s, completed Feb 2, 2023, 4:48:26 PM
+[success] Total time: 0 s, completed Feb 2, 2023, 6:50:55 PM
 [info] loading settings for project root from build.sbt ...
 [info] set current project to compaas (in build file:/workspaces/CompaaS/)
-[info] compiling 9 Scala sources to /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/classes ...
+[info] compiling 2 Scala sources to /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/classes ...
 [info] done compiling
-[info] Running scalafix on 7 Scala sources (incremental)
+[info] Running scalafix on 2 Scala sources (incremental)
 [info] running org.openjdk.jmh.generators.bytecode.JmhBytecodeGenerator /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/classes /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/src_managed/jmh /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/resource_managed/jmh default
 Processing 87 classes from /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/classes with "reflection" generator
 Writing out Java source to /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/src_managed/jmh and resources to /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/resource_managed/jmh
@@ -35,25 +35,25 @@ Writing out Java source to /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/
 [info] # Parameters: (module = js)
 [info] # Run progress: 0.00% complete, ETA 00:30:00
 [info] # Fork: 1 of 1
-[info] # Warmup Iteration   1: 79.859 ±(99.9%) 7.613 ns/op
-[info] # Warmup Iteration   2: 75.051 ±(99.9%) 1.977 ns/op
-[info] # Warmup Iteration   3: 77.140 ±(99.9%) 7.218 ns/op
-[info] # Warmup Iteration   4: 76.922 ±(99.9%) 4.906 ns/op
-[info] # Warmup Iteration   5: 75.272 ±(99.9%) 5.265 ns/op
-[info] # Warmup Iteration   6: 75.741 ±(99.9%) 5.102 ns/op
-[info] # Warmup Iteration   7: 76.042 ±(99.9%) 5.766 ns/op
-[info] # Warmup Iteration   8: 74.483 ±(99.9%) 2.400 ns/op
-[info] # Warmup Iteration   9: 75.613 ±(99.9%) 5.795 ns/op
-[info] # Warmup Iteration  10: 73.816 ±(99.9%) 3.267 ns/op
-[info] Iteration   1: 75.623 ±(99.9%) 5.756 ns/op
-[info] Iteration   2: 75.726 ±(99.9%) 4.781 ns/op
-[info] Iteration   3: 74.530 ±(99.9%) 1.552 ns/op
-[info] Iteration   4: 75.099 ±(99.9%) 1.100 ns/op
-[info] Iteration   5: 76.524 ±(99.9%) 10.021 ns/op
+[info] # Warmup Iteration   1: 79.152 ±(99.9%) 6.669 ns/op
+[info] # Warmup Iteration   2: 75.531 ±(99.9%) 1.685 ns/op
+[info] # Warmup Iteration   3: 76.088 ±(99.9%) 5.179 ns/op
+[info] # Warmup Iteration   4: 75.785 ±(99.9%) 1.402 ns/op
+[info] # Warmup Iteration   5: 75.115 ±(99.9%) 1.807 ns/op
+[info] # Warmup Iteration   6: 76.129 ±(99.9%) 2.444 ns/op
+[info] # Warmup Iteration   7: 74.934 ±(99.9%) 4.256 ns/op
+[info] # Warmup Iteration   8: 76.836 ±(99.9%) 5.609 ns/op
+[info] # Warmup Iteration   9: 76.576 ±(99.9%) 15.646 ns/op
+[info] # Warmup Iteration  10: 74.257 ±(99.9%) 2.004 ns/op
+[info] Iteration   1: 76.324 ±(99.9%) 9.725 ns/op
+[info] Iteration   2: 75.650 ±(99.9%) 4.921 ns/op
+[info] Iteration   3: 74.099 ±(99.9%) 1.325 ns/op
+[info] Iteration   4: 76.014 ±(99.9%) 3.439 ns/op
+[info] Iteration   5: 73.993 ±(99.9%) 1.022 ns/op
 [info] Result "compaas.bench.graal.polyglot.IncBenchmark.invoke":
-[info]   75.500 ±(99.9%) 2.866 ns/op [Average]
-[info]   (min, avg, max) = (74.530, 75.500, 76.524), stdev = 0.744
-[info]   CI (99.9%): [72.634, 78.366] (assumes normal distribution)
+[info]   75.216 ±(99.9%) 4.216 ns/op [Average]
+[info]   (min, avg, max) = (73.993, 75.216, 76.324), stdev = 1.095
+[info]   CI (99.9%): [71.000, 79.431] (assumes normal distribution)
 [info] # JMH version: 1.32
 [info] # VM version: JDK 17.0.6, OpenJDK 64-Bit Server VM, 17.0.6+10-jvmci-22.3-b13
 [info] # VM invoker: /opt/graalvm-ce-java17-22.3.1/bin/java
@@ -68,25 +68,25 @@ Writing out Java source to /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/
 [info] # Parameters: (module = wasm)
 [info] # Run progress: 8.33% complete, ETA 00:27:47
 [info] # Fork: 1 of 1
-[info] # Warmup Iteration   1: 154.314 ±(99.9%) 5.022 ns/op
-[info] # Warmup Iteration   2: 164.390 ±(99.9%) 13.888 ns/op
-[info] # Warmup Iteration   3: 160.159 ±(99.9%) 10.498 ns/op
-[info] # Warmup Iteration   4: 163.003 ±(99.9%) 8.149 ns/op
-[info] # Warmup Iteration   5: 162.559 ±(99.9%) 14.953 ns/op
-[info] # Warmup Iteration   6: 160.120 ±(99.9%) 4.346 ns/op
-[info] # Warmup Iteration   7: 167.205 ±(99.9%) 25.514 ns/op
-[info] # Warmup Iteration   8: 163.195 ±(99.9%) 5.192 ns/op
-[info] # Warmup Iteration   9: 161.199 ±(99.9%) 4.901 ns/op
-[info] # Warmup Iteration  10: 162.003 ±(99.9%) 10.802 ns/op
-[info] Iteration   1: 160.386 ±(99.9%) 8.422 ns/op
-[info] Iteration   2: 164.276 ±(99.9%) 13.497 ns/op
-[info] Iteration   3: 162.426 ±(99.9%) 14.255 ns/op
-[info] Iteration   4: 159.499 ±(99.9%) 4.949 ns/op
-[info] Iteration   5: 163.884 ±(99.9%) 15.779 ns/op
+[info] # Warmup Iteration   1: 162.094 ±(99.9%) 13.716 ns/op
+[info] # Warmup Iteration   2: 171.533 ±(99.9%) 6.940 ns/op
+[info] # Warmup Iteration   3: 163.392 ±(99.9%) 6.097 ns/op
+[info] # Warmup Iteration   4: 165.950 ±(99.9%) 4.976 ns/op
+[info] # Warmup Iteration   5: 164.485 ±(99.9%) 6.941 ns/op
+[info] # Warmup Iteration   6: 167.508 ±(99.9%) 18.201 ns/op
+[info] # Warmup Iteration   7: 169.035 ±(99.9%) 2.034 ns/op
+[info] # Warmup Iteration   8: 164.562 ±(99.9%) 3.226 ns/op
+[info] # Warmup Iteration   9: 168.265 ±(99.9%) 10.981 ns/op
+[info] # Warmup Iteration  10: 163.347 ±(99.9%) 1.556 ns/op
+[info] Iteration   1: 167.141 ±(99.9%) 8.216 ns/op
+[info] Iteration   2: 167.173 ±(99.9%) 13.523 ns/op
+[info] Iteration   3: 164.976 ±(99.9%) 21.680 ns/op
+[info] Iteration   4: 168.265 ±(99.9%) 8.563 ns/op
+[info] Iteration   5: 166.362 ±(99.9%) 9.636 ns/op
 [info] Result "compaas.bench.graal.polyglot.IncBenchmark.invoke":
-[info]   162.094 ±(99.9%) 8.106 ns/op [Average]
-[info]   (min, avg, max) = (159.499, 162.094, 164.276), stdev = 2.105
-[info]   CI (99.9%): [153.988, 170.200] (assumes normal distribution)
+[info]   166.784 ±(99.9%) 4.685 ns/op [Average]
+[info]   (min, avg, max) = (164.976, 166.784, 168.265), stdev = 1.217
+[info]   CI (99.9%): [162.098, 171.469] (assumes normal distribution)
 [info] # JMH version: 1.32
 [info] # VM version: JDK 17.0.6, OpenJDK 64-Bit Server VM, 17.0.6+10-jvmci-22.3-b13
 [info] # VM invoker: /opt/graalvm-ce-java17-22.3.1/bin/java
@@ -101,25 +101,25 @@ Writing out Java source to /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/
 [info] # Parameters: (module = js)
 [info] # Run progress: 16.67% complete, ETA 00:25:13
 [info] # Fork: 1 of 1
-[info] # Warmup Iteration   1: 2234483.689 ±(99.9%) 784956.073 ns/op
-[info] # Warmup Iteration   2: 1949800.143 ±(99.9%) 42221.416 ns/op
-[info] # Warmup Iteration   3: 1992892.015 ±(99.9%) 97123.725 ns/op
-[info] # Warmup Iteration   4: 1992115.262 ±(99.9%) 61259.934 ns/op
-[info] # Warmup Iteration   5: 1959015.859 ±(99.9%) 101597.410 ns/op
-[info] # Warmup Iteration   6: 2004604.259 ±(99.9%) 184142.197 ns/op
-[info] # Warmup Iteration   7: 1961155.978 ±(99.9%) 78230.714 ns/op
-[info] # Warmup Iteration   8: 1982921.473 ±(99.9%) 9169.698 ns/op
-[info] # Warmup Iteration   9: 1989410.041 ±(99.9%) 52373.153 ns/op
-[info] # Warmup Iteration  10: 1972166.473 ±(99.9%) 97407.186 ns/op
-[info] Iteration   1: 1983259.641 ±(99.9%) 68163.359 ns/op
-[info] Iteration   2: 1992795.946 ±(99.9%) 87157.239 ns/op
-[info] Iteration   3: 2001493.983 ±(99.9%) 207881.602 ns/op
-[info] Iteration   4: 1989243.474 ±(99.9%) 109123.813 ns/op
-[info] Iteration   5: 1964884.709 ±(99.9%) 38446.595 ns/op
+[info] # Warmup Iteration   1: 2161289.699 ±(99.9%) 949290.757 ns/op
+[info] # Warmup Iteration   2: 2002047.238 ±(99.9%) 150053.688 ns/op
+[info] # Warmup Iteration   3: 1952700.071 ±(99.9%) 43148.592 ns/op
+[info] # Warmup Iteration   4: 1991657.740 ±(99.9%) 181930.407 ns/op
+[info] # Warmup Iteration   5: 2005762.677 ±(99.9%) 115439.716 ns/op
+[info] # Warmup Iteration   6: 1954243.085 ±(99.9%) 49110.355 ns/op
+[info] # Warmup Iteration   7: 1994544.145 ±(99.9%) 95101.402 ns/op
+[info] # Warmup Iteration   8: 1965152.535 ±(99.9%) 14720.218 ns/op
+[info] # Warmup Iteration   9: 1978092.320 ±(99.9%) 81260.892 ns/op
+[info] # Warmup Iteration  10: 1975192.831 ±(99.9%) 116451.655 ns/op
+[info] Iteration   1: 1949908.489 ±(99.9%) 14429.334 ns/op
+[info] Iteration   2: 1979162.128 ±(99.9%) 132311.375 ns/op
+[info] Iteration   3: 1957708.137 ±(99.9%) 79675.238 ns/op
+[info] Iteration   4: 1969777.771 ±(99.9%) 52107.064 ns/op
+[info] Iteration   5: 1986285.177 ±(99.9%) 37220.795 ns/op
 [info] Result "compaas.bench.graal.polyglot.NthPrimeBenchmark.invoke":
-[info]   1986335.551 ±(99.9%) 52712.019 ns/op [Average]
-[info]   (min, avg, max) = (1964884.709, 1986335.551, 2001493.983), stdev = 13689.144
-[info]   CI (99.9%): [1933623.532, 2039047.569] (assumes normal distribution)
+[info]   1968568.340 ±(99.9%) 57557.513 ns/op [Average]
+[info]   (min, avg, max) = (1949908.489, 1968568.340, 1986285.177), stdev = 14947.503
+[info]   CI (99.9%): [1911010.827, 2026125.854] (assumes normal distribution)
 [info] # JMH version: 1.32
 [info] # VM version: JDK 17.0.6, OpenJDK 64-Bit Server VM, 17.0.6+10-jvmci-22.3-b13
 [info] # VM invoker: /opt/graalvm-ce-java17-22.3.1/bin/java
@@ -132,27 +132,27 @@ Writing out Java source to /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/
 [info] # Benchmark mode: Average time, time/op
 [info] # Benchmark: compaas.bench.graal.polyglot.NthPrimeBenchmark.invoke
 [info] # Parameters: (module = wasm)
-[info] # Run progress: 25.00% complete, ETA 00:22:43
+[info] # Run progress: 25.00% complete, ETA 00:22:42
 [info] # Fork: 1 of 1
-[info] # Warmup Iteration   1: 802197.460 ±(99.9%) 494852.453 ns/op
-[info] # Warmup Iteration   2: 778723.328 ±(99.9%) 102921.187 ns/op
-[info] # Warmup Iteration   3: 746621.489 ±(99.9%) 53999.936 ns/op
-[info] # Warmup Iteration   4: 753915.185 ±(99.9%) 265664.400 ns/op
-[info] # Warmup Iteration   5: 777572.281 ±(99.9%) 56443.609 ns/op
-[info] # Warmup Iteration   6: 732964.137 ±(99.9%) 182677.865 ns/op
-[info] # Warmup Iteration   7: 745010.497 ±(99.9%) 116945.613 ns/op
-[info] # Warmup Iteration   8: 759639.953 ±(99.9%) 251689.854 ns/op
-[info] # Warmup Iteration   9: 748495.429 ±(99.9%) 143054.285 ns/op
-[info] # Warmup Iteration  10: 763060.311 ±(99.9%) 131526.008 ns/op
-[info] Iteration   1: 717466.946 ±(99.9%) 152476.977 ns/op
-[info] Iteration   2: 746882.046 ±(99.9%) 109376.443 ns/op
-[info] Iteration   3: 741564.123 ±(99.9%) 80932.487 ns/op
-[info] Iteration   4: 757036.107 ±(99.9%) 289194.360 ns/op
-[info] Iteration   5: 748552.677 ±(99.9%) 184175.628 ns/op
+[info] # Warmup Iteration   1: 804716.851 ±(99.9%) 248113.845 ns/op
+[info] # Warmup Iteration   2: 799456.960 ±(99.9%) 168958.027 ns/op
+[info] # Warmup Iteration   3: 722819.891 ±(99.9%) 139032.459 ns/op
+[info] # Warmup Iteration   4: 742439.045 ±(99.9%) 211193.677 ns/op
+[info] # Warmup Iteration   5: 753006.998 ±(99.9%) 33853.763 ns/op
+[info] # Warmup Iteration   6: 750212.669 ±(99.9%) 124383.293 ns/op
+[info] # Warmup Iteration   7: 775664.132 ±(99.9%) 152612.543 ns/op
+[info] # Warmup Iteration   8: 751073.587 ±(99.9%) 230911.627 ns/op
+[info] # Warmup Iteration   9: 780990.342 ±(99.9%) 193090.185 ns/op
+[info] # Warmup Iteration  10: 725527.723 ±(99.9%) 149706.110 ns/op
+[info] Iteration   1: 805056.052 ±(99.9%) 154998.272 ns/op
+[info] Iteration   2: 763418.769 ±(99.9%) 267566.186 ns/op
+[info] Iteration   3: 735251.656 ±(99.9%) 174066.402 ns/op
+[info] Iteration   4: 768725.061 ±(99.9%) 190009.340 ns/op
+[info] Iteration   5: 753403.994 ±(99.9%) 311722.886 ns/op
 [info] Result "compaas.bench.graal.polyglot.NthPrimeBenchmark.invoke":
-[info]   742300.380 ±(99.9%) 57581.808 ns/op [Average]
-[info]   (min, avg, max) = (717466.946, 742300.380, 757036.107), stdev = 14953.813
-[info]   CI (99.9%): [684718.571, 799882.188] (assumes normal distribution)
+[info]   765171.106 ±(99.9%) 98927.618 ns/op [Average]
+[info]   (min, avg, max) = (735251.656, 765171.106, 805056.052), stdev = 25691.188
+[info]   CI (99.9%): [666243.488, 864098.725] (assumes normal distribution)
 [info] # JMH version: 1.32
 [info] # VM version: JDK 17.0.6, OpenJDK 64-Bit Server VM, 17.0.6+10-jvmci-22.3-b13
 [info] # VM invoker: /opt/graalvm-ce-java17-22.3.1/bin/java
@@ -167,25 +167,25 @@ Writing out Java source to /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/
 [info] # Parameters: (module = js)
 [info] # Run progress: 33.33% complete, ETA 00:20:11
 [info] # Fork: 1 of 1
-[info] # Warmup Iteration   1: 40552.033 ±(99.9%) 17463.176 ns/op
-[info] # Warmup Iteration   2: 12023.240 ±(99.9%) 740.426 ns/op
-[info] # Warmup Iteration   3: 11496.234 ±(99.9%) 884.454 ns/op
-[info] # Warmup Iteration   4: 11239.962 ±(99.9%) 400.763 ns/op
-[info] # Warmup Iteration   5: 11418.943 ±(99.9%) 778.251 ns/op
-[info] # Warmup Iteration   6: 11440.884 ±(99.9%) 485.442 ns/op
-[info] # Warmup Iteration   7: 11234.594 ±(99.9%) 345.343 ns/op
-[info] # Warmup Iteration   8: 11477.952 ±(99.9%) 403.165 ns/op
-[info] # Warmup Iteration   9: 11295.327 ±(99.9%) 586.541 ns/op
-[info] # Warmup Iteration  10: 11410.968 ±(99.9%) 814.626 ns/op
-[info] Iteration   1: 11464.562 ±(99.9%) 1161.649 ns/op
-[info] Iteration   2: 11254.713 ±(99.9%) 93.550 ns/op
-[info] Iteration   3: 11374.955 ±(99.9%) 467.531 ns/op
-[info] Iteration   4: 11433.952 ±(99.9%) 1143.932 ns/op
-[info] Iteration   5: 11209.891 ±(99.9%) 143.402 ns/op
+[info] # Warmup Iteration   1: 41119.652 ±(99.9%) 10704.336 ns/op
+[info] # Warmup Iteration   2: 15507.039 ±(99.9%) 1606.762 ns/op
+[info] # Warmup Iteration   3: 12518.918 ±(99.9%) 139.970 ns/op
+[info] # Warmup Iteration   4: 12684.581 ±(99.9%) 800.821 ns/op
+[info] # Warmup Iteration   5: 12544.434 ±(99.9%) 247.050 ns/op
+[info] # Warmup Iteration   6: 12710.447 ±(99.9%) 1214.000 ns/op
+[info] # Warmup Iteration   7: 12627.542 ±(99.9%) 785.443 ns/op
+[info] # Warmup Iteration   8: 12732.401 ±(99.9%) 624.885 ns/op
+[info] # Warmup Iteration   9: 12687.113 ±(99.9%) 1418.357 ns/op
+[info] # Warmup Iteration  10: 12490.079 ±(99.9%) 1140.970 ns/op
+[info] Iteration   1: 12748.995 ±(99.9%) 967.117 ns/op
+[info] Iteration   2: 12572.267 ±(99.9%) 903.801 ns/op
+[info] Iteration   3: 12514.606 ±(99.9%) 332.727 ns/op
+[info] Iteration   4: 12826.951 ±(99.9%) 896.306 ns/op
+[info] Iteration   5: 12420.497 ±(99.9%) 337.588 ns/op
 [info] Result "compaas.bench.graal.polyglot.SlugifyBenchmark.invoke":
-[info]   11347.615 ±(99.9%) 428.257 ns/op [Average]
-[info]   (min, avg, max) = (11209.891, 11347.615, 11464.562), stdev = 111.217
-[info]   CI (99.9%): [10919.357, 11775.872] (assumes normal distribution)
+[info]   12616.663 ±(99.9%) 646.061 ns/op [Average]
+[info]   (min, avg, max) = (12420.497, 12616.663, 12826.951), stdev = 167.780
+[info]   CI (99.9%): [11970.602, 13262.724] (assumes normal distribution)
 [info] # JMH version: 1.32
 [info] # VM version: JDK 17.0.6, OpenJDK 64-Bit Server VM, 17.0.6+10-jvmci-22.3-b13
 [info] # VM invoker: /opt/graalvm-ce-java17-22.3.1/bin/java
@@ -200,25 +200,25 @@ Writing out Java source to /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/
 [info] # Parameters: (module = wasm)
 [info] # Run progress: 41.67% complete, ETA 00:17:40
 [info] # Fork: 1 of 1
-[info] # Warmup Iteration   1: 10603.668 ±(99.9%) 13542.013 ns/op
-[info] # Warmup Iteration   2: 11336.350 ±(99.9%) 22376.131 ns/op
-[info] # Warmup Iteration   3: 8815.678 ±(99.9%) 3448.760 ns/op
-[info] # Warmup Iteration   4: 9111.448 ±(99.9%) 8288.978 ns/op
-[info] # Warmup Iteration   5: 9829.391 ±(99.9%) 9139.516 ns/op
-[info] # Warmup Iteration   6: 10205.930 ±(99.9%) 13790.365 ns/op
-[info] # Warmup Iteration   7: 9560.902 ±(99.9%) 9973.263 ns/op
-[info] # Warmup Iteration   8: 9508.994 ±(99.9%) 10470.830 ns/op
-[info] # Warmup Iteration   9: 8789.461 ±(99.9%) 9056.034 ns/op
-[info] # Warmup Iteration  10: 8335.638 ±(99.9%) 4520.144 ns/op
-[info] Iteration   1: 9683.922 ±(99.9%) 11289.326 ns/op
-[info] Iteration   2: 10110.395 ±(99.9%) 9488.144 ns/op
-[info] Iteration   3: 8381.595 ±(99.9%) 4329.820 ns/op
-[info] Iteration   4: 8216.629 ±(99.9%) 7116.352 ns/op
-[info] Iteration   5: 9166.520 ±(99.9%) 3851.033 ns/op
+[info] # Warmup Iteration   1: 11361.370 ±(99.9%) 12476.476 ns/op
+[info] # Warmup Iteration   2: 8665.934 ±(99.9%) 17492.197 ns/op
+[info] # Warmup Iteration   3: 9090.881 ±(99.9%) 16192.008 ns/op
+[info] # Warmup Iteration   4: 9116.348 ±(99.9%) 9944.621 ns/op
+[info] # Warmup Iteration   5: 8535.052 ±(99.9%) 5386.611 ns/op
+[info] # Warmup Iteration   6: 9943.754 ±(99.9%) 17828.711 ns/op
+[info] # Warmup Iteration   7: 8555.105 ±(99.9%) 9680.100 ns/op
+[info] # Warmup Iteration   8: 8023.461 ±(99.9%) 9383.180 ns/op
+[info] # Warmup Iteration   9: 8717.111 ±(99.9%) 6051.131 ns/op
+[info] # Warmup Iteration  10: 9039.663 ±(99.9%) 7095.281 ns/op
+[info] Iteration   1: 9832.518 ±(99.9%) 12026.084 ns/op
+[info] Iteration   2: 8871.294 ±(99.9%) 12584.355 ns/op
+[info] Iteration   3: 9267.916 ±(99.9%) 12669.376 ns/op
+[info] Iteration   4: 10355.697 ±(99.9%) 16005.585 ns/op
+[info] Iteration   5: 9819.186 ±(99.9%) 11272.041 ns/op
 [info] Result "compaas.bench.graal.polyglot.SlugifyBenchmark.invoke":
-[info]   9111.812 ±(99.9%) 3141.309 ns/op [Average]
-[info]   (min, avg, max) = (8216.629, 9111.812, 10110.395), stdev = 815.788
-[info]   CI (99.9%): [5970.503, 12253.121] (assumes normal distribution)
+[info]   9629.322 ±(99.9%) 2203.782 ns/op [Average]
+[info]   (min, avg, max) = (8871.294, 9629.322, 10355.697), stdev = 572.315
+[info]   CI (99.9%): [7425.540, 11833.104] (assumes normal distribution)
 [info] # JMH version: 1.32
 [info] # VM version: JDK 17.0.6, OpenJDK 64-Bit Server VM, 17.0.6+10-jvmci-22.3-b13
 [info] # VM invoker: /opt/graalvm-ce-java17-22.3.1/bin/java
@@ -231,38 +231,38 @@ Writing out Java source to /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/
 [info] # Benchmark mode: Average time, time/op
 [info] # Benchmark: compaas.bench.graal.polyglot.akka.IncBenchmark.inc
 [info] # Parameters: (module = js)
-[info] # Run progress: 50.00% complete, ETA 00:15:09
+[info] # Run progress: 50.00% complete, ETA 00:15:08
 [info] # Fork: 1 of 1
-[info] # Warmup Iteration   1: 17:03:51.709 [inc-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[info] 17:03:51.723 [inc-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[info] 17:03:51.723 [inc-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[info] 17:03:51.724 [inc-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[error] SLF4J: A number (3) of logging calls during the initialization phase have been intercepted and are
+[info] # Warmup Iteration   1: 19:06:18.607 [inc-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 19:06:18.617 [inc-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 19:06:18.617 [inc-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 19:06:18.617 [inc-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[error] SLF4J: A number (4) of logging calls during the initialization phase have been intercepted and are
 [error] SLF4J: now being replayed. These are subject to the filtering rules of the underlying logging system.
 [error] SLF4J: See also https://www.slf4j.org/codes.html#replay
-[info] 240.505 ±(99.9%) 220.439 ns/op
-[info] # Warmup Iteration   2: 204.284 ±(99.9%) 252.238 ns/op
-[info] # Warmup Iteration   3: 196.621 ±(99.9%) 212.784 ns/op
-[info] # Warmup Iteration   4: 199.052 ±(99.9%) 219.781 ns/op
-[info] # Warmup Iteration   5: 203.183 ±(99.9%) 220.471 ns/op
-[info] # Warmup Iteration   6: 200.106 ±(99.9%) 242.474 ns/op
-[info] # Warmup Iteration   7: 203.191 ±(99.9%) 224.610 ns/op
-[info] # Warmup Iteration   8: 198.368 ±(99.9%) 245.727 ns/op
-[info] # Warmup Iteration   9: 200.072 ±(99.9%) 237.913 ns/op
-[info] # Warmup Iteration  10: 199.743 ±(99.9%) 230.743 ns/op
-[info] Iteration   1: 197.390 ±(99.9%) 235.693 ns/op
-[info] Iteration   2: 202.036 ±(99.9%) 238.336 ns/op
-[info] Iteration   3: 200.442 ±(99.9%) 239.549 ns/op
-[info] Iteration   4: 197.042 ±(99.9%) 242.230 ns/op
-[info] Iteration   5: 17:06:21.868 [inc-akka.actor.default-dispatcher-3] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 17:06:21.868 [inc-akka.actor.default-dispatcher-3] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 17:06:21.868 [inc-akka.actor.default-dispatcher-3] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 17:06:21.868 [inc-akka.actor.default-dispatcher-3] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 201.075 ±(99.9%) 227.864 ns/op
+[info] 162.575 ±(99.9%) 56.534 ns/op
+[info] # Warmup Iteration   2: 160.046 ±(99.9%) 4.699 ns/op
+[info] # Warmup Iteration   3: 160.564 ±(99.9%) 4.002 ns/op
+[info] # Warmup Iteration   4: 157.668 ±(99.9%) 1.109 ns/op
+[info] # Warmup Iteration   5: 156.792 ±(99.9%) 6.317 ns/op
+[info] # Warmup Iteration   6: 160.594 ±(99.9%) 12.897 ns/op
+[info] # Warmup Iteration   7: 160.919 ±(99.9%) 11.555 ns/op
+[info] # Warmup Iteration   8: 157.220 ±(99.9%) 6.438 ns/op
+[info] # Warmup Iteration   9: 156.766 ±(99.9%) 4.000 ns/op
+[info] # Warmup Iteration  10: 159.897 ±(99.9%) 14.729 ns/op
+[info] Iteration   1: 160.345 ±(99.9%) 17.919 ns/op
+[info] Iteration   2: 160.326 ±(99.9%) 10.586 ns/op
+[info] Iteration   3: 157.303 ±(99.9%) 0.606 ns/op
+[info] Iteration   4: 159.864 ±(99.9%) 2.234 ns/op
+[info] Iteration   5: 19:09:28.946 [inc-akka.actor.default-dispatcher-124] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 19:09:28.946 [inc-akka.actor.default-dispatcher-126] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 19:09:28.947 [inc-akka.actor.default-dispatcher-127] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 19:09:28.946 [inc-akka.actor.default-dispatcher-121] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 159.635 ±(99.9%) 13.592 ns/op
 [info] Result "compaas.bench.graal.polyglot.akka.IncBenchmark.inc":
-[info]   199.597 ±(99.9%) 8.663 ns/op [Average]
-[info]   (min, avg, max) = (197.042, 199.597, 202.036), stdev = 2.250
-[info]   CI (99.9%): [190.934, 208.260] (assumes normal distribution)
+[info]   159.495 ±(99.9%) 4.861 ns/op [Average]
+[info]   (min, avg, max) = (157.303, 159.495, 160.345), stdev = 1.262
+[info]   CI (99.9%): [154.634, 164.355] (assumes normal distribution)
 [info] # JMH version: 1.32
 [info] # VM version: JDK 17.0.6, OpenJDK 64-Bit Server VM, 17.0.6+10-jvmci-22.3-b13
 [info] # VM invoker: /opt/graalvm-ce-java17-22.3.1/bin/java
@@ -275,38 +275,38 @@ Writing out Java source to /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/
 [info] # Benchmark mode: Average time, time/op
 [info] # Benchmark: compaas.bench.graal.polyglot.akka.IncBenchmark.inc
 [info] # Parameters: (module = wasm)
-[info] # Run progress: 58.33% complete, ETA 00:12:38
+[info] # Run progress: 58.33% complete, ETA 00:13:06
 [info] # Fork: 1 of 1
-[info] # Warmup Iteration   1: 17:06:24.505 [inc-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[error] SLF4J: A number (3) of logging calls during the initialization phase have been intercepted and are
-[info] 17:06:24.511 [inc-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] # Warmup Iteration   1: 19:09:30.075 [inc-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 19:09:30.080 [inc-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[error] SLF4J: A number (4) of logging calls during the initialization phase have been intercepted and are
 [error] SLF4J: now being replayed. These are subject to the filtering rules of the underlying logging system.
 [error] SLF4J: See also https://www.slf4j.org/codes.html#replay
-[info] 17:06:24.511 [inc-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[info] 17:06:24.513 [inc-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[info] 300.543 ±(99.9%) 80.403 ns/op
-[info] # Warmup Iteration   2: 247.499 ±(99.9%) 4.876 ns/op
-[info] # Warmup Iteration   3: 247.754 ±(99.9%) 20.564 ns/op
-[info] # Warmup Iteration   4: 243.517 ±(99.9%) 6.692 ns/op
-[info] # Warmup Iteration   5: 250.972 ±(99.9%) 26.119 ns/op
-[info] # Warmup Iteration   6: 243.338 ±(99.9%) 5.824 ns/op
-[info] # Warmup Iteration   7: 251.363 ±(99.9%) 17.772 ns/op
-[info] # Warmup Iteration   8: 249.346 ±(99.9%) 13.362 ns/op
-[info] # Warmup Iteration   9: 243.348 ±(99.9%) 10.178 ns/op
-[info] # Warmup Iteration  10: 249.081 ±(99.9%) 15.086 ns/op
-[info] Iteration   1: 251.404 ±(99.9%) 2.721 ns/op
-[info] Iteration   2: 245.763 ±(99.9%) 8.867 ns/op
-[info] Iteration   3: 248.626 ±(99.9%) 14.717 ns/op
-[info] Iteration   4: 244.491 ±(99.9%) 8.372 ns/op
-[info] Iteration   5: 17:08:54.700 [inc-akka.actor.default-dispatcher-3] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 17:08:54.700 [inc-akka.actor.default-dispatcher-3] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 17:08:54.702 [inc-akka.actor.default-dispatcher-3] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 17:08:54.702 [inc-akka.actor.default-dispatcher-3] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 249.333 ±(99.9%) 16.162 ns/op
+[info] 19:09:30.080 [inc-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 19:09:30.080 [inc-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 233.319 ±(99.9%) 74.866 ns/op
+[info] # Warmup Iteration   2: 221.467 ±(99.9%) 25.058 ns/op
+[info] # Warmup Iteration   3: 225.066 ±(99.9%) 38.247 ns/op
+[info] # Warmup Iteration   4: 222.427 ±(99.9%) 22.669 ns/op
+[info] # Warmup Iteration   5: 222.959 ±(99.9%) 25.507 ns/op
+[info] # Warmup Iteration   6: 220.684 ±(99.9%) 22.611 ns/op
+[info] # Warmup Iteration   7: 226.771 ±(99.9%) 19.364 ns/op
+[info] # Warmup Iteration   8: 225.705 ±(99.9%) 29.263 ns/op
+[info] # Warmup Iteration   9: 226.046 ±(99.9%) 28.061 ns/op
+[info] # Warmup Iteration  10: 222.044 ±(99.9%) 24.867 ns/op
+[info] Iteration   1: 222.589 ±(99.9%) 20.732 ns/op
+[info] Iteration   2: 227.064 ±(99.9%) 29.215 ns/op
+[info] Iteration   3: 226.483 ±(99.9%) 30.095 ns/op
+[info] Iteration   4: 227.430 ±(99.9%) 26.726 ns/op
+[info] Iteration   5: 19:12:52.035 [inc-akka.actor.default-dispatcher-97] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 19:12:52.037 [inc-akka.actor.default-dispatcher-97] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 19:12:52.040 [inc-akka.actor.default-dispatcher-99] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 19:12:52.041 [inc-akka.actor.default-dispatcher-84] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 227.274 ±(99.9%) 32.159 ns/op
 [info] Result "compaas.bench.graal.polyglot.akka.IncBenchmark.inc":
-[info]   247.923 ±(99.9%) 10.727 ns/op [Average]
-[info]   (min, avg, max) = (244.491, 247.923, 251.404), stdev = 2.786
-[info]   CI (99.9%): [237.196, 258.650] (assumes normal distribution)
+[info]   226.168 ±(99.9%) 7.827 ns/op [Average]
+[info]   (min, avg, max) = (222.589, 226.168, 227.430), stdev = 2.033
+[info]   CI (99.9%): [218.341, 233.995] (assumes normal distribution)
 [info] # JMH version: 1.32
 [info] # VM version: JDK 17.0.6, OpenJDK 64-Bit Server VM, 17.0.6+10-jvmci-22.3-b13
 [info] # VM invoker: /opt/graalvm-ce-java17-22.3.1/bin/java
@@ -319,38 +319,38 @@ Writing out Java source to /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/
 [info] # Benchmark mode: Average time, time/op
 [info] # Benchmark: compaas.bench.graal.polyglot.akka.NthPrimeBenchmark.nthPrime
 [info] # Parameters: (module = js)
-[info] # Run progress: 66.67% complete, ETA 00:10:07
+[info] # Run progress: 66.67% complete, ETA 00:10:51
 [info] # Fork: 1 of 1
-[info] # Warmup Iteration   1: 17:08:57.056 [nth-prime-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[info] 17:08:57.069 [nth-prime-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] # Warmup Iteration   1: 19:12:53.145 [nth-prime-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
 [error] SLF4J: A number (4) of logging calls during the initialization phase have been intercepted and are
 [error] SLF4J: now being replayed. These are subject to the filtering rules of the underlying logging system.
 [error] SLF4J: See also https://www.slf4j.org/codes.html#replay
-[info] 17:08:57.069 [nth-prime-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[info] 17:08:57.069 [nth-prime-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[info] 2010003.943 ±(99.9%) 840960.816 ns/op
-[info] # Warmup Iteration   2: 1956526.978 ±(99.9%) 69339.737 ns/op
-[info] # Warmup Iteration   3: 1953159.376 ±(99.9%) 69634.943 ns/op
-[info] # Warmup Iteration   4: 1959631.162 ±(99.9%) 50278.085 ns/op
-[info] # Warmup Iteration   5: 1958478.410 ±(99.9%) 90732.607 ns/op
-[info] # Warmup Iteration   6: 1960487.986 ±(99.9%) 85554.702 ns/op
-[info] # Warmup Iteration   7: 1971377.435 ±(99.9%) 67642.846 ns/op
-[info] # Warmup Iteration   8: 1957494.603 ±(99.9%) 121214.945 ns/op
-[info] # Warmup Iteration   9: 1968708.434 ±(99.9%) 82523.862 ns/op
-[info] # Warmup Iteration  10: 1952340.028 ±(99.9%) 93829.757 ns/op
-[info] Iteration   1: 1965876.321 ±(99.9%) 179949.488 ns/op
-[info] Iteration   2: 1965033.915 ±(99.9%) 21803.354 ns/op
-[info] Iteration   3: 1955717.561 ±(99.9%) 85605.617 ns/op
-[info] Iteration   4: 1965812.216 ±(99.9%) 71871.395 ns/op
-[info] Iteration   5: 17:23:35.059 [nth-prime-akka.actor.default-dispatcher-45] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 17:23:35.063 [nth-prime-akka.actor.default-dispatcher-51] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 17:23:35.063 [nth-prime-akka.actor.default-dispatcher-50] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 17:23:35.065 [nth-prime-akka.actor.default-dispatcher-49] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 1955018.795 ±(99.9%) 63703.735 ns/op
+[info] 19:12:53.155 [nth-prime-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 19:12:53.155 [nth-prime-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 19:12:53.155 [nth-prime-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 2029538.351 ±(99.9%) 700667.247 ns/op
+[info] # Warmup Iteration   2: 1962775.160 ±(99.9%) 71437.509 ns/op
+[info] # Warmup Iteration   3: 1958070.838 ±(99.9%) 37568.007 ns/op
+[info] # Warmup Iteration   4: 1956652.386 ±(99.9%) 74247.285 ns/op
+[info] # Warmup Iteration   5: 1960796.208 ±(99.9%) 61023.404 ns/op
+[info] # Warmup Iteration   6: 1954687.652 ±(99.9%) 40322.470 ns/op
+[info] # Warmup Iteration   7: 1976514.842 ±(99.9%) 42068.598 ns/op
+[info] # Warmup Iteration   8: 1960847.564 ±(99.9%) 70926.508 ns/op
+[info] # Warmup Iteration   9: 1979631.003 ±(99.9%) 115720.815 ns/op
+[info] # Warmup Iteration  10: 1962656.478 ±(99.9%) 136368.399 ns/op
+[info] Iteration   1: 1967395.797 ±(99.9%) 41510.074 ns/op
+[info] Iteration   2: 1952079.446 ±(99.9%) 56034.597 ns/op
+[info] Iteration   3: 1969643.831 ±(99.9%) 52127.958 ns/op
+[info] Iteration   4: 1967443.824 ±(99.9%) 62434.321 ns/op
+[info] Iteration   5: 19:27:33.558 [nth-prime-akka.actor.default-dispatcher-50] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 19:27:33.560 [nth-prime-akka.actor.default-dispatcher-50] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 19:27:33.558 [nth-prime-akka.actor.default-dispatcher-47] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 19:27:33.559 [nth-prime-akka.actor.default-dispatcher-52] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 1961525.232 ±(99.9%) 35688.230 ns/op
 [info] Result "compaas.bench.graal.polyglot.akka.NthPrimeBenchmark.nthPrime":
-[info]   1961491.762 ±(99.9%) 21584.073 ns/op [Average]
-[info]   (min, avg, max) = (1955018.795, 1961491.762, 1965876.321), stdev = 5605.315
-[info]   CI (99.9%): [1939907.689, 1983075.834] (assumes normal distribution)
+[info]   1963617.626 ±(99.9%) 27413.855 ns/op [Average]
+[info]   (min, avg, max) = (1952079.446, 1963617.626, 1969643.831), stdev = 7119.291
+[info]   CI (99.9%): [1936203.771, 1991031.481] (assumes normal distribution)
 [info] # JMH version: 1.32
 [info] # VM version: JDK 17.0.6, OpenJDK 64-Bit Server VM, 17.0.6+10-jvmci-22.3-b13
 [info] # VM invoker: /opt/graalvm-ce-java17-22.3.1/bin/java
@@ -363,38 +363,38 @@ Writing out Java source to /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/
 [info] # Benchmark mode: Average time, time/op
 [info] # Benchmark: compaas.bench.graal.polyglot.akka.NthPrimeBenchmark.nthPrime
 [info] # Parameters: (module = wasm)
-[info] # Run progress: 75.00% complete, ETA 00:11:37
+[info] # Run progress: 75.00% complete, ETA 00:12:08
 [info] # Fork: 1 of 1
-[info] # Warmup Iteration   1: 17:23:36.136 [nth-prime-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
 [error] SLF4J: A number (4) of logging calls during the initialization phase have been intercepted and are
 [error] SLF4J: now being replayed. These are subject to the filtering rules of the underlying logging system.
 [error] SLF4J: See also https://www.slf4j.org/codes.html#replay
-[info] 17:23:36.148 [nth-prime-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[info] 17:23:36.149 [nth-prime-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[info] 17:23:36.150 [nth-prime-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[info] 672778.232 ±(99.9%) 444734.828 ns/op
-[info] # Warmup Iteration   2: 642143.927 ±(99.9%) 69372.713 ns/op
-[info] # Warmup Iteration   3: 646730.122 ±(99.9%) 27366.340 ns/op
-[info] # Warmup Iteration   4: 634081.848 ±(99.9%) 30920.262 ns/op
-[info] # Warmup Iteration   5: 632833.275 ±(99.9%) 46634.816 ns/op
-[info] # Warmup Iteration   6: 629592.768 ±(99.9%) 16498.741 ns/op
-[info] # Warmup Iteration   7: 631653.146 ±(99.9%) 20685.710 ns/op
-[info] # Warmup Iteration   8: 644938.307 ±(99.9%) 43999.216 ns/op
-[info] # Warmup Iteration   9: 648402.225 ±(99.9%) 64509.421 ns/op
-[info] # Warmup Iteration  10: 631193.658 ±(99.9%) 42383.538 ns/op
-[info] Iteration   1: 630763.610 ±(99.9%) 30709.682 ns/op
-[info] Iteration   2: 632547.463 ±(99.9%) 22954.596 ns/op
-[info] Iteration   3: 642521.151 ±(99.9%) 33900.447 ns/op
-[info] Iteration   4: 642192.937 ±(99.9%) 140703.336 ns/op
-[info] Iteration   5: 17:28:24.248 [nth-prime-akka.actor.default-dispatcher-50] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 17:28:24.249 [nth-prime-akka.actor.default-dispatcher-52] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 17:28:24.248 [nth-prime-akka.actor.default-dispatcher-49] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 17:28:24.254 [nth-prime-akka.actor.default-dispatcher-47] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 643522.523 ±(99.9%) 58074.640 ns/op
+[info] # Warmup Iteration   1: 19:27:34.702 [nth-prime-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 19:27:34.717 [nth-prime-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 19:27:34.717 [nth-prime-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 19:27:34.717 [nth-prime-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 672287.755 ±(99.9%) 526409.414 ns/op
+[info] # Warmup Iteration   2: 635237.847 ±(99.9%) 35769.887 ns/op
+[info] # Warmup Iteration   3: 625947.576 ±(99.9%) 17540.480 ns/op
+[info] # Warmup Iteration   4: 626085.060 ±(99.9%) 8803.164 ns/op
+[info] # Warmup Iteration   5: 653321.292 ±(99.9%) 83772.822 ns/op
+[info] # Warmup Iteration   6: 646727.717 ±(99.9%) 63072.845 ns/op
+[info] # Warmup Iteration   7: 647940.831 ±(99.9%) 70776.677 ns/op
+[info] # Warmup Iteration   8: 634801.059 ±(99.9%) 40749.617 ns/op
+[info] # Warmup Iteration   9: 626903.444 ±(99.9%) 20472.387 ns/op
+[info] # Warmup Iteration  10: 629989.193 ±(99.9%) 28145.361 ns/op
+[info] Iteration   1: 625660.388 ±(99.9%) 33486.557 ns/op
+[info] Iteration   2: 641141.500 ±(99.9%) 64370.289 ns/op
+[info] Iteration   3: 648868.023 ±(99.9%) 59117.544 ns/op
+[info] Iteration   4: 633165.386 ±(99.9%) 20561.844 ns/op
+[info] Iteration   5: 19:32:22.541 [nth-prime-akka.actor.default-dispatcher-50] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 19:32:22.541 [nth-prime-akka.actor.default-dispatcher-48] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 19:32:22.548 [nth-prime-akka.actor.default-dispatcher-48] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 19:32:22.548 [nth-prime-akka.actor.default-dispatcher-53] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 629961.845 ±(99.9%) 61757.949 ns/op
 [info] Result "compaas.bench.graal.polyglot.akka.NthPrimeBenchmark.nthPrime":
-[info]   638309.537 ±(99.9%) 23590.986 ns/op [Average]
-[info]   (min, avg, max) = (630763.610, 638309.537, 643522.523), stdev = 6126.504
-[info]   CI (99.9%): [614718.551, 661900.523] (assumes normal distribution)
+[info]   635759.429 ±(99.9%) 35664.405 ns/op [Average]
+[info]   (min, avg, max) = (625660.388, 635759.429, 648868.023), stdev = 9261.933
+[info]   CI (99.9%): [600095.023, 671423.834] (assumes normal distribution)
 [info] # JMH version: 1.32
 [info] # VM version: JDK 17.0.6, OpenJDK 64-Bit Server VM, 17.0.6+10-jvmci-22.3-b13
 [info] # VM invoker: /opt/graalvm-ce-java17-22.3.1/bin/java
@@ -407,38 +407,38 @@ Writing out Java source to /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/
 [info] # Benchmark mode: Average time, time/op
 [info] # Benchmark: compaas.bench.graal.polyglot.akka.SlugifyBenchmark.slugify
 [info] # Parameters: (module = js)
-[info] # Run progress: 83.33% complete, ETA 00:07:56
+[info] # Run progress: 83.33% complete, ETA 00:08:14
 [info] # Fork: 1 of 1
-[info] # Warmup Iteration   1: 17:28:25.373 [slugify-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[info] 17:28:25.380 [slugify-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[error] SLF4J: A number (3) of logging calls during the initialization phase have been intercepted and are
+[error] SLF4J: A number (4) of logging calls during the initialization phase have been intercepted and are
 [error] SLF4J: now being replayed. These are subject to the filtering rules of the underlying logging system.
 [error] SLF4J: See also https://www.slf4j.org/codes.html#replay
-[info] 17:28:25.380 [slugify-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[info] 17:28:25.381 [slugify-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[info] 32675.100 ±(99.9%) 65707.233 ns/op
-[info] # Warmup Iteration   2: 16026.424 ±(99.9%) 2182.552 ns/op
-[info] # Warmup Iteration   3: 15501.600 ±(99.9%) 1011.752 ns/op
-[info] # Warmup Iteration   4: 14740.378 ±(99.9%) 395.631 ns/op
-[info] # Warmup Iteration   5: 15094.296 ±(99.9%) 660.357 ns/op
-[info] # Warmup Iteration   6: 15219.098 ±(99.9%) 1120.230 ns/op
-[info] # Warmup Iteration   7: 14847.931 ±(99.9%) 582.024 ns/op
-[info] # Warmup Iteration   8: 15228.408 ±(99.9%) 845.588 ns/op
-[info] # Warmup Iteration   9: 14790.748 ±(99.9%) 478.798 ns/op
-[info] # Warmup Iteration  10: 15135.522 ±(99.9%) 396.781 ns/op
-[info] Iteration   1: 15219.340 ±(99.9%) 493.807 ns/op
-[info] Iteration   2: 14778.112 ±(99.9%) 522.903 ns/op
-[info] Iteration   3: 15137.792 ±(99.9%) 694.590 ns/op
-[info] Iteration   4: 15067.272 ±(99.9%) 1024.049 ns/op
-[info] Iteration   5: 17:30:58.932 [slugify-akka.actor.default-dispatcher-3] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 17:30:58.932 [slugify-akka.actor.default-dispatcher-3] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 17:30:58.936 [slugify-akka.actor.default-dispatcher-3] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 17:30:58.935 [slugify-akka.actor.default-dispatcher-3] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 14742.001 ±(99.9%) 191.841 ns/op
+[info] # Warmup Iteration   1: 19:32:23.652 [slugify-akka.actor.default-dispatcher-4] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 19:32:23.669 [slugify-akka.actor.default-dispatcher-4] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 19:32:23.669 [slugify-akka.actor.default-dispatcher-4] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 19:32:23.669 [slugify-akka.actor.default-dispatcher-4] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 15438.047 ±(99.9%) 31648.498 ns/op
+[info] # Warmup Iteration   2: 12879.110 ±(99.9%) 1149.272 ns/op
+[info] # Warmup Iteration   3: 12895.079 ±(99.9%) 360.795 ns/op
+[info] # Warmup Iteration   4: 12880.407 ±(99.9%) 726.321 ns/op
+[info] # Warmup Iteration   5: 12817.011 ±(99.9%) 358.566 ns/op
+[info] # Warmup Iteration   6: 12816.098 ±(99.9%) 1307.793 ns/op
+[info] # Warmup Iteration   7: 12679.603 ±(99.9%) 571.308 ns/op
+[info] # Warmup Iteration   8: 12887.703 ±(99.9%) 877.695 ns/op
+[info] # Warmup Iteration   9: 12738.788 ±(99.9%) 411.562 ns/op
+[info] # Warmup Iteration  10: 12691.514 ±(99.9%) 120.267 ns/op
+[info] Iteration   1: 12881.956 ±(99.9%) 979.893 ns/op
+[info] Iteration   2: 12869.088 ±(99.9%) 349.029 ns/op
+[info] Iteration   3: 12734.310 ±(99.9%) 590.567 ns/op
+[info] Iteration   4: 12837.636 ±(99.9%) 649.826 ns/op
+[info] Iteration   5: 19:42:05.555 [slugify-akka.actor.default-dispatcher-49] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 19:42:05.563 [slugify-akka.actor.default-dispatcher-49] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 19:42:05.563 [slugify-akka.actor.default-dispatcher-48] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 19:42:05.563 [slugify-akka.actor.default-dispatcher-47] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 12768.846 ±(99.9%) 604.214 ns/op
 [info] Result "compaas.bench.graal.polyglot.akka.SlugifyBenchmark.slugify":
-[info]   14988.903 ±(99.9%) 832.141 ns/op [Average]
-[info]   (min, avg, max) = (14742.001, 14988.903, 15219.340), stdev = 216.104
-[info]   CI (99.9%): [14156.763, 15821.044] (assumes normal distribution)
+[info]   12818.367 ±(99.9%) 247.353 ns/op [Average]
+[info]   (min, avg, max) = (12734.310, 12818.367, 12881.956), stdev = 64.237
+[info]   CI (99.9%): [12571.014, 13065.720] (assumes normal distribution)
 [info] # JMH version: 1.32
 [info] # VM version: JDK 17.0.6, OpenJDK 64-Bit Server VM, 17.0.6+10-jvmci-22.3-b13
 [info] # VM invoker: /opt/graalvm-ce-java17-22.3.1/bin/java
@@ -451,55 +451,55 @@ Writing out Java source to /workspaces/CompaaS/compaas-bench/target/scala-3.2.0/
 [info] # Benchmark mode: Average time, time/op
 [info] # Benchmark: compaas.bench.graal.polyglot.akka.SlugifyBenchmark.slugify
 [info] # Parameters: (module = wasm)
-[info] # Run progress: 91.67% complete, ETA 00:03:50
+[info] # Run progress: 91.67% complete, ETA 00:04:37
 [info] # Fork: 1 of 1
-[info] # Warmup Iteration   1: 17:31:00.146 [slugify-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[info] 17:31:00.153 [slugify-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[error] SLF4J: A number (3) of logging calls during the initialization phase have been intercepted and are
+[info] # Warmup Iteration   1: 19:42:06.688 [slugify-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 19:42:06.693 [slugify-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 19:42:06.693 [slugify-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[info] 19:42:06.693 [slugify-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[error] SLF4J: A number (4) of logging calls during the initialization phase have been intercepted and are
 [error] SLF4J: now being replayed. These are subject to the filtering rules of the underlying logging system.
 [error] SLF4J: See also https://www.slf4j.org/codes.html#replay
-[info] 17:31:00.153 [slugify-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[info] 17:31:00.157 [slugify-akka.actor.default-dispatcher-3] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-[info] 9329.568 ±(99.9%) 16630.532 ns/op
-[info] # Warmup Iteration   2: 3740.864 ±(99.9%) 1759.373 ns/op
-[info] # Warmup Iteration   3: 1658.451 ±(99.9%) 431.472 ns/op
-[info] # Warmup Iteration   4: 1409.159 ±(99.9%) 326.216 ns/op
-[info] # Warmup Iteration   5: 1401.322 ±(99.9%) 203.869 ns/op
-[info] # Warmup Iteration   6: 1410.142 ±(99.9%) 289.654 ns/op
-[info] # Warmup Iteration   7: 1414.402 ±(99.9%) 232.051 ns/op
-[info] # Warmup Iteration   8: 1417.481 ±(99.9%) 253.589 ns/op
-[info] # Warmup Iteration   9: 1413.515 ±(99.9%) 255.565 ns/op
-[info] # Warmup Iteration  10: 1385.154 ±(99.9%) 242.614 ns/op
-[info] Iteration   1: 1417.191 ±(99.9%) 384.053 ns/op
-[info] Iteration   2: 1418.027 ±(99.9%) 290.219 ns/op
-[info] Iteration   3: 1392.410 ±(99.9%) 260.719 ns/op
-[info] Iteration   4: 1421.048 ±(99.9%) 323.557 ns/op
-[info] Iteration   5: 17:33:30.692 [slugify-akka.actor.default-dispatcher-3] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 17:33:30.692 [slugify-akka.actor.default-dispatcher-3] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 17:33:30.693 [slugify-akka.actor.default-dispatcher-3] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 17:33:30.692 [slugify-akka.actor.default-dispatcher-3] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
-[info] 1383.834 ±(99.9%) 254.136 ns/op
+[info] 6021.312 ±(99.9%) 31325.003 ns/op
+[info] # Warmup Iteration   2: 1482.379 ±(99.9%) 1038.911 ns/op
+[info] # Warmup Iteration   3: 1363.119 ±(99.9%) 209.809 ns/op
+[info] # Warmup Iteration   4: 1372.483 ±(99.9%) 152.577 ns/op
+[info] # Warmup Iteration   5: 1375.133 ±(99.9%) 244.159 ns/op
+[info] # Warmup Iteration   6: 1338.099 ±(99.9%) 185.015 ns/op
+[info] # Warmup Iteration   7: 1345.680 ±(99.9%) 144.853 ns/op
+[info] # Warmup Iteration   8: 1364.211 ±(99.9%) 205.918 ns/op
+[info] # Warmup Iteration   9: 1355.473 ±(99.9%) 202.024 ns/op
+[info] # Warmup Iteration  10: 1341.596 ±(99.9%) 192.660 ns/op
+[info] Iteration   1: 1342.947 ±(99.9%) 240.807 ns/op
+[info] Iteration   2: 1369.644 ±(99.9%) 192.918 ns/op
+[info] Iteration   3: 1366.237 ±(99.9%) 262.636 ns/op
+[info] Iteration   4: 1330.237 ±(99.9%) 188.078 ns/op
+[info] Iteration   5: 19:45:16.357 [slugify-akka.actor.default-dispatcher-133] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 19:45:16.357 [slugify-akka.actor.default-dispatcher-134] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 19:45:16.357 [slugify-akka.actor.default-dispatcher-136] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 19:45:16.363 [slugify-akka.actor.default-dispatcher-124] INFO akka.actor.CoordinatedShutdown - Running CoordinatedShutdown with reason [ActorSystemTerminateReason]
+[info] 1361.988 ±(99.9%) 146.520 ns/op
 [info] Result "compaas.bench.graal.polyglot.akka.SlugifyBenchmark.slugify":
-[info]   1406.502 ±(99.9%) 65.887 ns/op [Average]
-[info]   (min, avg, max) = (1383.834, 1406.502, 1421.048), stdev = 17.111
-[info]   CI (99.9%): [1340.615, 1472.389] (assumes normal distribution)
-[info] # Run complete. Total time: 00:44:49
+[info]   1354.211 ±(99.9%) 65.147 ns/op [Average]
+[info]   (min, avg, max) = (1330.237, 1354.211, 1369.644), stdev = 16.918
+[info]   CI (99.9%): [1289.064, 1419.358] (assumes normal distribution)
+[info] # Run complete. Total time: 00:54:07
 [info] REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
 [info] why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
 [info] experiments, perform baseline and negative tests that provide experimental control, make sure
 [info] the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
 [info] Do not assume the numbers tell you what you want them to tell.
 [info] Benchmark                        (module)  Mode  Cnt        Score       Error  Units
-[info] IncBenchmark.invoke                    js  avgt    5       75.500 ±     2.866  ns/op
-[info] IncBenchmark.invoke                  wasm  avgt    5      162.094 ±     8.106  ns/op
-[info] NthPrimeBenchmark.invoke               js  avgt    5  1986335.551 ± 52712.019  ns/op
-[info] NthPrimeBenchmark.invoke             wasm  avgt    5   742300.380 ± 57581.808  ns/op
-[info] SlugifyBenchmark.invoke                js  avgt    5    11347.615 ±   428.257  ns/op
-[info] SlugifyBenchmark.invoke              wasm  avgt    5     9111.812 ±  3141.309  ns/op
-[info] akka.IncBenchmark.inc                  js  avgt    5      199.597 ±     8.663  ns/op
-[info] akka.IncBenchmark.inc                wasm  avgt    5      247.923 ±    10.727  ns/op
-[info] akka.NthPrimeBenchmark.nthPrime        js  avgt    5  1961491.762 ± 21584.073  ns/op
-[info] akka.NthPrimeBenchmark.nthPrime      wasm  avgt    5   638309.537 ± 23590.986  ns/op
-[info] akka.SlugifyBenchmark.slugify          js  avgt    5    14988.903 ±   832.141  ns/op
-[info] akka.SlugifyBenchmark.slugify        wasm  avgt    5     1406.502 ±    65.887  ns/op
-[success] Total time: 2703 s (45:03), completed Feb 2, 2023, 5:33:31 PM
+[info] IncBenchmark.invoke                    js  avgt    5       75.216 ±     4.216  ns/op
+[info] IncBenchmark.invoke                  wasm  avgt    5      166.784 ±     4.685  ns/op
+[info] NthPrimeBenchmark.invoke               js  avgt    5  1968568.340 ± 57557.513  ns/op
+[info] NthPrimeBenchmark.invoke             wasm  avgt    5   765171.106 ± 98927.618  ns/op
+[info] SlugifyBenchmark.invoke                js  avgt    5    12616.663 ±   646.061  ns/op
+[info] SlugifyBenchmark.invoke              wasm  avgt    5     9629.322 ±  2203.782  ns/op
+[info] akka.IncBenchmark.inc                  js  avgt    5      159.495 ±     4.861  ns/op
+[info] akka.IncBenchmark.inc                wasm  avgt    5      226.168 ±     7.827  ns/op
+[info] akka.NthPrimeBenchmark.nthPrime        js  avgt    5  1963617.626 ± 27413.855  ns/op
+[info] akka.NthPrimeBenchmark.nthPrime      wasm  avgt    5   635759.429 ± 35664.405  ns/op
+[info] akka.SlugifyBenchmark.slugify          js  avgt    5    12818.367 ±   247.353  ns/op
+[info] akka.SlugifyBenchmark.slugify        wasm  avgt    5     1354.211 ±    65.147  ns/op
+[success] Total time: 3260 s (54:20), completed Feb 2, 2023, 7:45:16 PM
