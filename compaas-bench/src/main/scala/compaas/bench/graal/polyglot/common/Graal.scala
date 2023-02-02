@@ -1,4 +1,4 @@
-package compaas.bench.graal.polyglot.akka
+package compaas.bench.graal.polyglot.common
 
 import org.graalvm.polyglot.Engine
 

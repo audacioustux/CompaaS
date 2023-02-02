@@ -6,6 +6,7 @@ import akka.actor.typed.scaladsl.Behaviors
 import akka.actor.typed.{ActorRef, ActorSystem, PostStop}
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
+import compaas.bench.graal.polyglot.common.Graal
 import org.graalvm.polyglot.io.ByteSequence
 import org.graalvm.polyglot.{Context, Engine, Source, Value}
 import org.openjdk.jmh.annotations.*
@@ -39,7 +40,7 @@ object SlugifyBenchmark {
       .build()
   )
 
-  val n = Value.asValue(10_000)
+  val n = Value.asValue(20)
 
   final val threads      = 1
   final val opPerNPA     = 10_000
@@ -47,11 +48,11 @@ object SlugifyBenchmark {
   final val opPerInvoke  = opPerNPA * numberOfNPAs
 }
 
-@State(Scope.Benchmark)
+@State(Scope.Thread)
 @BenchmarkMode(Array(Mode.AverageTime))
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Fork(1, jvmArgsAppend = Array("-Xmx16G"))
-@Threads(1)
+@Threads(Threads.MAX)
 @Warmup(iterations = 10)
 @Measurement(iterations = 5)
 class SlugifyBenchmark {

@@ -6,6 +6,7 @@ import akka.actor.typed.scaladsl.Behaviors
 import akka.actor.typed.{ActorRef, ActorSystem, DispatcherSelector, PostStop}
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
+import compaas.bench.graal.polyglot.common.Graal
 import org.graalvm.polyglot.io.ByteSequence
 import org.graalvm.polyglot.{Context, Engine, Source, Value}
 import org.openjdk.jmh.annotations.*
@@ -34,7 +35,7 @@ object IncBenchmark {
       .build()
   )
 
-  val n = Value.asValue(10_000)
+  val n = Value.asValue(0)
 
   final val threads      = 1
   final val opPerNPA     = 10_000

@@ -1,5 +1,6 @@
 package compaas.bench.graal.polyglot
 
+import compaas.bench.graal.polyglot.common.Graal
 import org.graalvm.polyglot.io.ByteSequence
 import org.graalvm.polyglot.{Context, Engine, Source, Value}
 import org.openjdk.jmh.annotations.*
@@ -7,7 +8,6 @@ import org.openjdk.jmh.infra.Blackhole
 
 import java.nio.file.{Files, Path, Paths}
 import java.util.concurrent.TimeUnit
-
 object SlugifyBenchmark {
   final val opPerInvoke = 30
 
@@ -66,7 +66,7 @@ class SlugifyBenchmark {
     val language = source.getLanguage()
 
     context = {
-      val builder = Context.newBuilder().engine(engine)
+      val builder = Context.newBuilder().engine(Graal.engine)
       language match {
         case "js" =>
           builder

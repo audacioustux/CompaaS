@@ -6,6 +6,7 @@ import akka.actor.typed.scaladsl.Behaviors
 import akka.actor.typed.{ActorRef, ActorSystem, PostStop}
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
+import compaas.bench.graal.polyglot.common.Graal
 import org.graalvm.polyglot.io.ByteSequence
 import org.graalvm.polyglot.{Context, Engine, Source, Value}
 import org.openjdk.jmh.annotations.*
@@ -47,11 +48,11 @@ object NthPrimeBenchmark {
   final val opPerInvoke  = opPerNPA * numberOfNPAs
 }
 
-@State(Scope.Benchmark)
+@State(Scope.Thread)
 @BenchmarkMode(Array(Mode.AverageTime))
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Fork(1, jvmArgsAppend = Array("-Xmx16G"))
-@Threads(1)
+@Threads(Threads.MAX)
 @Warmup(iterations = 10)
 @Measurement(iterations = 5)
 class NthPrimeBenchmark {
@@ -70,7 +71,15 @@ class NthPrimeBenchmark {
       NthPrimeBenchmarkActors.Supervisor(numberOfNPAs, modules(module)),
       "nth-prime",
       ConfigFactory.parseString(
-        s"akka.actor.default-dispatcher.fork-join-executor.parallelism-max = $threads"
+        s"""
+           |akka.actor.default-dispatcher {
+           |  type = PinnedDispatcher
+           |  executor = "thread-pool-executor"
+           |  thread-pool-executor {
+           |    fixed-pool-size = $threads
+           |  }
+           |}
+           |""".stripMargin
       )
     )
   }

@@ -1,5 +1,6 @@
 package compaas.bench.graal.polyglot
 
+import compaas.bench.graal.polyglot.common.Graal
 import org.graalvm.polyglot.io.ByteSequence
 import org.graalvm.polyglot.{Context, Engine, Source, Value}
 import org.openjdk.jmh.annotations.*
@@ -36,8 +37,6 @@ object IncBenchmark {
 class IncBenchmark {
   import IncBenchmark.*
 
-  var engine: Engine = _
-
   @Param(Array("js", "wasm"))
   var module: String = _
   var source: Source = _
@@ -46,11 +45,6 @@ class IncBenchmark {
 
   var executable: Value = _
 
-  @Setup(Level.Trial)
-  def setupEngine(): Unit = {
-    engine = Engine.create()
-  }
-
   @Setup(Level.Iteration)
   def setup(): Unit = {
     source = modules(module)
@@ -58,7 +52,7 @@ class IncBenchmark {
     val language = source.getLanguage()
 
     context = {
-      val builder = Context.newBuilder().engine(engine)
+      val builder = Context.newBuilder().engine(Graal.engine)
       language match {
         case "js" =>
           builder
@@ -84,18 +78,10 @@ class IncBenchmark {
     context.close()
   }
 
-  @TearDown(Level.Trial)
-  def closeEngine(): Unit = {
-    engine.close()
-  }
-
-  private var n: Value = _
-  @Setup(Level.Invocation)
-  def setUp(): Unit =
-    n = Value.asValue(0)
+  private val n: Value = Value.asValue(0)
 
   @Benchmark
-  def invoke(): Unit = {
-    n = executable.execute(n)
+  def invoke(): Value = {
+    executable.execute(n)
   }
 }
