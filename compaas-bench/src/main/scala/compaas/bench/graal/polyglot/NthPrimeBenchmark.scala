@@ -24,10 +24,7 @@ object NthPrimeBenchmark {
       .newBuilder(
         "wasm",
         ByteSequence.create(
-          scala.io.Source
-            .fromResource("wasm/nth-prime.wasm")
-            .map(_.toByte)
-            .toArray
+          getClass.getClassLoader().getResourceAsStream("wasm/nth_prime.wasm").readAllBytes()
         ),
         "nth-prime.wasm"
       )

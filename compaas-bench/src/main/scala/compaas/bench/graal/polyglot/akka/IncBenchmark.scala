@@ -12,30 +12,25 @@ import org.graalvm.polyglot.{Context, Engine, Source, Value}
 import org.openjdk.jmh.annotations.*
 import org.openjdk.jmh.infra.Blackhole
 
+import java.nio.file.{Files, Paths}
 import java.util.concurrent.TimeUnit
 import scala.concurrent.Await
 
 import concurrent.duration.DurationInt
 
-object NthPrimeBenchmark {
+object IncBenchmark {
   val modules = Map(
     "js" -> Source
-      .newBuilder(
-        "js",
-        scala.io.Source
-          .fromResource("js/nth-prime.mjs")
-          .mkString,
-        "nth-prime.mjs"
-      )
+      .newBuilder("js", "export const inc = (n) => n + 1", "inc.js")
       .mimeType("application/javascript+module")
       .build(),
     "wasm" -> Source
       .newBuilder(
         "wasm",
         ByteSequence.create(
-          getClass.getClassLoader().getResourceAsStream("wasm/nth_prime.wasm").readAllBytes()
+          getClass.getClassLoader().getResourceAsStream("wasm/inc.wasm").readAllBytes()
         ),
-        "nth-prime.wasm"
+        "inc.wasm"
       )
       .build()
   )
@@ -55,10 +50,10 @@ object NthPrimeBenchmark {
 @Threads(1)
 @Warmup(iterations = 10)
 @Measurement(iterations = 5)
-class NthPrimeBenchmark {
-  import NthPrimeBenchmark.*
+class IncBenchmark {
+  import IncBenchmark.*
 
-  implicit var system: ActorSystem[NthPrimeBenchmarkActors.Start] = _
+  implicit var system: ActorSystem[IncBenchmarkActors.Start] = _
 
   given Timeout = Timeout(30.seconds)
 
@@ -71,14 +66,13 @@ class NthPrimeBenchmark {
 
   @Setup(Level.Trial)
   def setup(using Blackhole): Unit = {
-    system =
-      ActorSystem(NthPrimeBenchmarkActors.Supervisor(numberOfNPAs, modules(module)), "nth-prime")
+    system = ActorSystem(IncBenchmarkActors.Supervisor(numberOfNPAs, modules(module)), "inc")
   }
 
   @Benchmark
   @OperationsPerInvocation(opPerInvoke)
-  def nthPrime(): Unit = {
-    Await.result(system.ask(NthPrimeBenchmarkActors.Start(_)), 30.seconds)
+  def inc(): Unit = {
+    Await.result(system.ask(IncBenchmarkActors.Start(_)), 30.seconds)
   }
 
   @TearDown(Level.Trial)
@@ -88,8 +82,8 @@ class NthPrimeBenchmark {
   }
 }
 
-object NthPrimeBenchmarkActors {
-  import NthPrimeBenchmark.*
+object IncBenchmarkActors {
+  import IncBenchmark.*
 
   case class Start(replyTo: ActorRef[Done])
   case class Execute(times: Int, replyTo: ActorRef[Done])
@@ -111,7 +105,7 @@ object NthPrimeBenchmarkActors {
   def Supervisor(numberOfNPAs: Int, source: Source)(using blackhole: Blackhole) = Behaviors.setup {
     ctx =>
       val npa_s = (1 to numberOfNPAs).map { _ =>
-        ctx.spawnAnonymous(NthPrimeActor(source))
+        ctx.spawnAnonymous(IncActor(source))
       }
 
       Behaviors.receiveMessage { msg =>
@@ -126,7 +120,7 @@ object NthPrimeBenchmarkActors {
       }
   }
 
-  def NthPrimeActor(source: Source)(using blackhole: Blackhole) =
+  def IncActor(source: Source)(using blackhole: Blackhole) =
     Behaviors.setup { ctx =>
       val language = source.getLanguage()
 
@@ -145,10 +139,10 @@ object NthPrimeBenchmarkActors {
 
       val executable = language match {
         case "js" =>
-          context.eval(source).getMember("nth_prime")
+          context.eval(source).getMember("inc")
         case "wasm" =>
           context.eval(source)
-          context.getBindings("wasm").getMember("main").getMember("nth_prime")
+          context.getBindings("wasm").getMember("main").getMember("inc")
       }
 
       Behaviors

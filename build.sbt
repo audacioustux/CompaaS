@@ -35,7 +35,8 @@ lazy val `compaas-bench` = project
       "com.typesafe.akka" %% "akka-actor-typed" % versions.Akka
     ).map(_.cross(CrossVersion.for3Use2_13)),
     libraryDependencies ++= Seq(
-      "org.graalvm.sdk" % "graal-sdk" % versions.GraalSDK
+      "ch.qos.logback"  % "logback-classic" % versions.Logback,
+      "org.graalvm.sdk" % "graal-sdk"       % versions.GraalSDK
     ),
     Compile / resourceGenerators += Def.task {
       import sys.process.*
@@ -46,11 +47,13 @@ lazy val `compaas-bench` = project
         (root.base / "target" / "wasm32-unknown-unknown" / "release").listFiles
           .filter(_.getName.endsWith(".wasm"))
 
-      wasmFiles.foreach { wasmFile =>
-        s"wasm-strip ${wasmFile} -o ${wasmDir / wasmFile.getName}"
-      }
+      wasmFiles.map { wasmFile =>
+        val targetFile = wasmDir / wasmFile.getName
+        IO.copyFile(wasmFile, targetFile)
+        s"wasm-strip ${targetFile}".!
 
-      wasmFiles
+        targetFile
+      }
     }.taskValue
   )
 

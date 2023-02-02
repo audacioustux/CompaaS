@@ -18,10 +18,7 @@ object IncBenchmark {
       .newBuilder(
         "wasm",
         ByteSequence.create(
-          scala.io.Source
-            .fromResource("wasm/inc.wasm")
-            .map(_.toByte)
-            .toArray
+          getClass.getClassLoader().getResourceAsStream("wasm/inc.wasm").readAllBytes()
         ),
         "inc.wasm"
       )

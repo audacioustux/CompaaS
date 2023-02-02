@@ -26,10 +26,7 @@ object SlugifyBenchmark {
       .newBuilder(
         "wasm",
         ByteSequence.create(
-          scala.io.Source
-            .fromResource("wasm/slugify.wasm")
-            .map(_.toByte)
-            .toArray
+          getClass.getClassLoader().getResourceAsStream("wasm/slugify.wasm").readAllBytes()
         ),
         "slugify.wasm"
       )

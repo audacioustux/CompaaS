@@ -17,15 +17,15 @@ import scala.concurrent.Await
 
 import concurrent.duration.DurationInt
 
-object NthPrimeBenchmark {
+object SlugifyBenchmark {
   val modules = Map(
     "js" -> Source
       .newBuilder(
         "js",
         scala.io.Source
-          .fromResource("js/nth-prime.mjs")
+          .fromResource("js/slugify.mjs")
           .mkString,
-        "nth-prime.mjs"
+        "slugify.mjs"
       )
       .mimeType("application/javascript+module")
       .build(),
@@ -33,9 +33,9 @@ object NthPrimeBenchmark {
       .newBuilder(
         "wasm",
         ByteSequence.create(
-          getClass.getClassLoader().getResourceAsStream("wasm/nth_prime.wasm").readAllBytes()
+          getClass.getClassLoader().getResourceAsStream("wasm/slugify.wasm").readAllBytes()
         ),
-        "nth-prime.wasm"
+        "slugify.wasm"
       )
       .build()
   )
@@ -55,10 +55,10 @@ object NthPrimeBenchmark {
 @Threads(1)
 @Warmup(iterations = 10)
 @Measurement(iterations = 5)
-class NthPrimeBenchmark {
-  import NthPrimeBenchmark.*
+class SlugifyBenchmark {
+  import SlugifyBenchmark.*
 
-  implicit var system: ActorSystem[NthPrimeBenchmarkActors.Start] = _
+  implicit var system: ActorSystem[SlugifyBenchmarkActors.Start] = _
 
   given Timeout = Timeout(30.seconds)
 
@@ -72,13 +72,13 @@ class NthPrimeBenchmark {
   @Setup(Level.Trial)
   def setup(using Blackhole): Unit = {
     system =
-      ActorSystem(NthPrimeBenchmarkActors.Supervisor(numberOfNPAs, modules(module)), "nth-prime")
+      ActorSystem(SlugifyBenchmarkActors.Supervisor(numberOfNPAs, modules(module)), "slugify")
   }
 
   @Benchmark
   @OperationsPerInvocation(opPerInvoke)
-  def nthPrime(): Unit = {
-    Await.result(system.ask(NthPrimeBenchmarkActors.Start(_)), 30.seconds)
+  def slugify(): Unit = {
+    Await.result(system.ask(SlugifyBenchmarkActors.Start(_)), 30.seconds)
   }
 
   @TearDown(Level.Trial)
@@ -88,8 +88,8 @@ class NthPrimeBenchmark {
   }
 }
 
-object NthPrimeBenchmarkActors {
-  import NthPrimeBenchmark.*
+object SlugifyBenchmarkActors {
+  import SlugifyBenchmark.*
 
   case class Start(replyTo: ActorRef[Done])
   case class Execute(times: Int, replyTo: ActorRef[Done])
@@ -111,7 +111,7 @@ object NthPrimeBenchmarkActors {
   def Supervisor(numberOfNPAs: Int, source: Source)(using blackhole: Blackhole) = Behaviors.setup {
     ctx =>
       val npa_s = (1 to numberOfNPAs).map { _ =>
-        ctx.spawnAnonymous(NthPrimeActor(source))
+        ctx.spawnAnonymous(SlugifyActor(source))
       }
 
       Behaviors.receiveMessage { msg =>
@@ -126,7 +126,7 @@ object NthPrimeBenchmarkActors {
       }
   }
 
-  def NthPrimeActor(source: Source)(using blackhole: Blackhole) =
+  def SlugifyActor(source: Source)(using blackhole: Blackhole) =
     Behaviors.setup { ctx =>
       val language = source.getLanguage()
 
@@ -145,10 +145,10 @@ object NthPrimeBenchmarkActors {
 
       val executable = language match {
         case "js" =>
-          context.eval(source).getMember("nth_prime")
+          context.eval(source).getMember("slugify")
         case "wasm" =>
           context.eval(source)
-          context.getBindings("wasm").getMember("main").getMember("nth_prime")
+          context.getBindings("wasm").getMember("main").getMember("slugify")
       }
 
       Behaviors
