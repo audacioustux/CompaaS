@@ -71,8 +71,13 @@ class NthPrimeBenchmark {
 
   @Setup(Level.Trial)
   def setup(using Blackhole): Unit = {
-    system =
-      ActorSystem(NthPrimeBenchmarkActors.Supervisor(numberOfNPAs, modules(module)), "nth-prime")
+    system = ActorSystem(
+      NthPrimeBenchmarkActors.Supervisor(numberOfNPAs, modules(module)),
+      "nth-prime",
+      ConfigFactory.parseString(
+        s"akka.actor.default-dispatcher.fork-join-executor.parallelism-max = $threads"
+      )
+    )
   }
 
   @Benchmark

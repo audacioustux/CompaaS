@@ -3,17 +3,16 @@ package compaas.bench.graal.polyglot.akka
 import akka.Done
 import akka.actor.typed.scaladsl.AskPattern.*
 import akka.actor.typed.scaladsl.Behaviors
-import akka.actor.typed.{ActorRef, ActorSystem, PostStop}
+import akka.actor.typed.{ActorRef, ActorSystem, DispatcherSelector, PostStop}
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
-import compaas.bench.akka.actor.typed.TypedActorBenchmark.threads
 import org.graalvm.polyglot.io.ByteSequence
 import org.graalvm.polyglot.{Context, Engine, Source, Value}
 import org.openjdk.jmh.annotations.*
 import org.openjdk.jmh.infra.Blackhole
 
 import java.nio.file.{Files, Paths}
-import java.util.concurrent.TimeUnit
+import java.util.concurrent.{Executors, TimeUnit}
 import scala.concurrent.Await
 
 import concurrent.duration.DurationInt
@@ -37,17 +36,17 @@ object IncBenchmark {
 
   val n = Value.asValue(10_000)
 
-  final val threads      = 4
+  final val threads      = 1
   final val opPerNPA     = 10_000
   final val numberOfNPAs = threads
   final val opPerInvoke  = opPerNPA * numberOfNPAs
 }
 
-@State(Scope.Benchmark)
+@State(Scope.Thread)
 @BenchmarkMode(Array(Mode.AverageTime))
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Fork(1, jvmArgsAppend = Array("-Xmx16G"))
-@Threads(1)
+@Threads(Threads.MAX)
 @Warmup(iterations = 10)
 @Measurement(iterations = 5)
 class IncBenchmark {
@@ -61,12 +60,14 @@ class IncBenchmark {
   var module: String = _
 
   @Setup(Level.Trial)
-  def requireRightNumberOfThreads: Unit =
-    require(threads == Runtime.getRuntime().availableProcessors())
-
-  @Setup(Level.Trial)
   def setup(using Blackhole): Unit = {
-    system = ActorSystem(IncBenchmarkActors.Supervisor(numberOfNPAs, modules(module)), "inc")
+    system = ActorSystem(
+      IncBenchmarkActors.Supervisor(numberOfNPAs, modules(module)),
+      "inc",
+      ConfigFactory.parseString(
+        s"akka.actor.default-dispatcher.fork-join-executor.parallelism-max = $threads"
+      )
+    )
   }
 
   @Benchmark

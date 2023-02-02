@@ -71,8 +71,13 @@ class SlugifyBenchmark {
 
   @Setup(Level.Trial)
   def setup(using Blackhole): Unit = {
-    system =
-      ActorSystem(SlugifyBenchmarkActors.Supervisor(numberOfNPAs, modules(module)), "slugify")
+    system = ActorSystem(
+      SlugifyBenchmarkActors.Supervisor(numberOfNPAs, modules(module)),
+      "slugify",
+      ConfigFactory.parseString(
+        s"akka.actor.default-dispatcher.fork-join-executor.parallelism-max = $threads"
+      )
+    )
   }
 
   @Benchmark
