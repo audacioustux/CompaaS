@@ -16,7 +16,12 @@
 				"mutantdino.resourcemonitor",
 				"rust-lang.rust-analyzer",
 				"tamasfe.even-better-toml",
-				"serayuzgur.crates"
+				"serayuzgur.crates",
+				"akamud.vscode-theme-onedark",
+				"jeff-hykin.better-cpp-syntax",
+				"PKief.material-icon-theme",
+				"PKief.material-product-icons",
+				"dtsvet.vscode-wasm"
 			],
 			"settings": {
 				"git.autofetch": true,

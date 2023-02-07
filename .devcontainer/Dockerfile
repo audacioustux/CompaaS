@@ -43,11 +43,21 @@ RUN curl -sL https://get.graalvm.org/jdk | bash -s -- $GRAALVM_NAME \
 ENV GRAALVM_HOME="/opt/${GRAALVM_NAME}"
 RUN source ~/.zshrc && sdk install java ${GRAALVM_VERSION:0:6}.r${JAVA_VERSION:4:2}-grl${GRAALVM_EDITION:0:1} ${GRAALVM_HOME}
 
-ENV PATH "${GRAALVM_HOME}/bin:$PATH"
+ENV PATH "$PATH:${GRAALVM_HOME}/bin"
 ENV JAVA_HOME "${GRAALVM_HOME}"
 
 ### Install Scala and SBT
 RUN source ~/.zshrc && sdk install sbt
+
+### Install Emscripten
+#### NOTE: https://github.com/nodejs/docker-node/issues/1559
+RUN apt install -y emscripten
+
+### Install NVM
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+
+### Install nodejs
+RUN source ~/.zshrc && nvm install v18.13.0
 
 ARG WORKSPACES_DIR="/workspaces"
 WORKDIR ${WORKSPACES_DIR}
