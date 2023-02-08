@@ -9,18 +9,24 @@ import java.util.*;
 class Main {
 	public static void main(String[] args) throws IOException {
 		Engine engine = Engine.newBuilder().allowExperimentalOptions(true).option("js.webassembly", "true").build();
-		Context context = Context.newBuilder().engine(engine).option("wasm.Builtins", "wasi_snapshot_preview1")
-				.allowAllAccess(true).build();
+		Context context = Context.newBuilder().engine(engine).allowExperimentalOptions(true).allowAllAccess(true)
+				.allowIO(true).build();
 		context.initialize("wasm");
 		context.initialize("js");
 
-		ProxyObject state = ProxyObject.fromMap(new java.util.HashMap<String, Object>());
+		ProxyObject state = ProxyObject.fromMap(new HashMap<String, Object>() {
+			{
+				put("wasmModule", Files.readAllBytes(Path.of("test.wasm")));
+				put("count", 42);
+			}
+		});
 		context.getBindings("js").putMember("state", state);
 
-		// source from test.mjs in this directory
-		Path path = Path.of("test.mjs");
-		String data = Files.readString(path);
-		Source testjs = Source.newBuilder("js", data, "test.mjs").build();
+		Source testjs = Source.newBuilder("js", "load('./test.mjs')", "test.mjs")
+				.mimeType("application/javascript+module").build();
 		context.eval(testjs);
+
+		Object count = state.getMember("count");
+		System.out.println("count: " + count);
 	}
 }

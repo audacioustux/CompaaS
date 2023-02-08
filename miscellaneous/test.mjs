@@ -1,12 +1,12 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
-
 const importObject = {
-    imports: { imported_func: (arg) => console.log(arg) },
+    imports: { imported_func: (arg) => state.count += arg },
 };
 
-const wasmCode = readFileSync(join('./', 'test.wasm'));
+const wasmCode = new Uint8Array(state.wasmModule);
+
 const obj = WebAssembly.instantiate(wasmCode, importObject);
 obj.then((result) => {
     result.instance.exports.exported_func()
-});
+}).catch((err) => {
+    console.log('err', err);
+})

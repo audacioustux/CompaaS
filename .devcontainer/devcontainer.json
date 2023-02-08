@@ -27,7 +27,10 @@
 				"git.autofetch": true,
 				"files.autoSave": "onFocusChange",
 				"editor.formatOnSave": true,
-				"resmon.show.cpufreq": false
+				"resmon.show.cpufreq": false,
+				"workbench.productIconTheme": "material-product-icons",
+				"workbench.iconTheme": "material-icon-theme",
+				"workbench.colorTheme": "Atom One Dark"
 			}
 		}
 	},
