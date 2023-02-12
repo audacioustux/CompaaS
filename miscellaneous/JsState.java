@@ -9,26 +9,27 @@ import java.util.*;
 class Main {
 	public static void main(String[] args) throws IOException {
 		Engine engine = Engine.newBuilder().build();
-		Context context = Context.newBuilder().engine(engine).build();
-		// context.initialize("wasm");
-		// context.initialize("js");
+		Context context = Context.newBuilder().allowExperimentalOptions(true)
+				.option("js.esm-eval-returns-exports", "true").engine(engine).build();
 
 		ProxyObject state = ProxyObject.fromMap(new HashMap<String, Object>() {
 			{
-				// put("wasmModule", Files.readAllBytes(Path.of("test.wasm")));
 				put("count", 42);
 			}
 		});
 
-		context.eval("js", "let state; (s) => { state = s; }").execute(state);
-		// context.getBindings("js").putMember("state", state);
+		String code = """
+				let state;
+				export const init = (s) => { state = s; }
+				export const increment = () => state.count++;
+				""";
 
-		// load test.mjs as File
-		String testmjs = Files.readString(Path.of("test.mjs"));
+		Source source = Source.newBuilder("js", code, "test.mjs").mimeType("application/javascript+module").build();
 
-		// Source testjs = Source.newBuilder("js", testmjs,
-		// "test.mjs").mimeType("application/javascript+module").build();
-		context.eval("js", testmjs);
+		Value exports = context.eval(source);
+
+		exports.invokeMember("init", state);
+		exports.invokeMember("increment");
 
 		Object count = state.getMember("count");
 		System.out.println("count: " + count);
