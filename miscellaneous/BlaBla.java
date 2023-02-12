@@ -16,12 +16,11 @@ class Main {
 
 		ProxyObject state = ProxyObject.fromMap(new HashMap<String, Object>() {
 			{
+				put("wasmModule", Files.readAllBytes(Path.of("test.wasm")));
 				put("count", 42);
 			}
 		});
-
-		content.eval("js", "let state; (s) => { state = s; }").execute(state);
-		// context.getBindings("js").putMember("state", state);
+		context.getBindings("js").putMember("state", state);
 
 		Source testjs = Source.newBuilder("js", "load('./test.mjs')", "test.mjs")
 				.mimeType("application/javascript+module").build();
