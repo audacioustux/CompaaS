@@ -8,20 +8,18 @@ import java.util.*;
 
 class Main {
 	public static void main(String[] args) throws IOException {
-		Engine engine = Engine.newBuilder().allowExperimentalOptions(true).option("js.webassembly", "true").build();
-		Context context = Context.newBuilder().engine(engine).allowExperimentalOptions(true).allowAllAccess(true)
-				.allowIO(true).build();
-		context.initialize("wasm");
-		context.initialize("js");
+		Engine engine = Engine.newBuilder().build();
+		Context context = Context.newBuilder().engine(engine).allowIO(true).build();
+		// context.initialize("wasm");
+		// context.initialize("js");
 
 		ProxyObject state = ProxyObject.fromMap(new HashMap<String, Object>() {
 			{
+				put("wasmModule", Files.readAllBytes(Path.of("test.wasm")));
 				put("count", 42);
 			}
 		});
-
-		content.eval("js", "let state; (s) => { state = s; }").execute(state);
-		// context.getBindings("js").putMember("state", state);
+		context.getBindings("js").putMember("state", state);
 
 		Source testjs = Source.newBuilder("js", "load('./test.mjs')", "test.mjs")
 				.mimeType("application/javascript+module").build();
