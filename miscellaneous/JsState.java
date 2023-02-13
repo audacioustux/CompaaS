@@ -43,6 +43,9 @@ class Main {
 
 				export const add_rect = (state) => state.rect = new Rectangle(10, 10);
 				export const get_rect_area = (state) => state.rect.calcArea();
+
+				// NOTE: does not work
+				export const dump_state = (state) => JSON.stringify(state);
 				""";
 
 		Source source = Source.newBuilder("js", code, "test.mjs").mimeType("application/javascript+module").build();
@@ -73,6 +76,7 @@ class Main {
 			Value rect_area = exports.invokeMember("get_rect_area", state);
 			System.out.println("rect area: " + rect_area);
 
+			System.out.println("state: " + exports.invokeMember("dump_state", state));
 			// context.close();
 		}
 
@@ -84,5 +88,6 @@ class Main {
 			Value rect_area = exports.invokeMember("get_rect_area", state);
 			System.out.println("rect area: " + rect_area);
 		}
+
 	}
 }
