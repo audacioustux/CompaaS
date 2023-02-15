@@ -3,6 +3,10 @@
 version = 3
 
 [[package]]
+name = "hello-world"
+version = "0.1.0"
+
+[[package]]
 name = "nth-prime"
 version = "0.1.0"
 
