@@ -6,9 +6,23 @@ import java.nio.file.Path;
 import org.graalvm.polyglot.proxy.*;
 import java.util.*;
 
+class State extends HashMap<String, Object> {
+	@Override
+	public Object put(String key, Object value) {
+		System.out.println("put: " + key + " = " + value);
+		return super.put(key, value);
+	}
+
+	@Override
+	public Object get(Object key) {
+		System.out.println("get: " + key);
+		return super.get(key);
+	}
+}
+
 class Main {
 	public static void main(String[] args) throws IOException, NoSuchMethodException {
-		Map<String, Object> state = new HashMap<String, Object>() {
+		State state = new State() {
 			{
 				put("count", 42);
 			}
@@ -41,11 +55,11 @@ class Main {
 					}
 				}
 
-				export const add_rect = (state) => state.rect = new Rectangle(10, 10);
+				export const add_rect = (state) => state.rect = new Rectangle(10, 20);
 				export const get_rect_area = (state) => state.rect.calcArea();
-
-				// NOTE: does not work
-				export const dump_state = (state) => JSON.stringify(state);
+				export const print_rect_sides = (state) => {
+					for (const side of state.rect.getSides()) console.log(side);
+				};
 				""";
 
 		Source source = Source.newBuilder("js", code, "test.mjs").mimeType("application/javascript+module").build();
@@ -75,8 +89,6 @@ class Main {
 			exports.invokeMember("add_rect", state);
 			Value rect_area = exports.invokeMember("get_rect_area", state);
 			System.out.println("rect area: " + rect_area);
-
-			System.out.println("state: " + exports.invokeMember("dump_state", state));
 			// context.close();
 		}
 
@@ -87,7 +99,8 @@ class Main {
 
 			Value rect_area = exports.invokeMember("get_rect_area", state);
 			System.out.println("rect area: " + rect_area);
-		}
 
+			exports.invokeMember("print_rect_sides", state);
+		}
 	}
 }
