@@ -13,6 +13,14 @@ object PolyglotContext {
   class PolyglotContextBuilder(private val builder: Context#Builder):
     def build(): PolyglotContext = new PolyglotContext(builder.build())
 
+    def ecmaScriptVersion(version: Int): PolyglotContextBuilder =
+      builder.option("js.ecmascript-version", version.toString); this
+
+    def strictMode(enable: Boolean): PolyglotContextBuilder =
+      builder.option("js.strict", enable.toString); this
+
+    def foreignObjectPrototype(enable: Boolean): PolyglotContextBuilder =
+      builder.option("js.foreign-object-prototype", enable.toString); this
 }
 
 class PolyglotContext(val context: Context) extends AutoCloseable {
