@@ -60,6 +60,19 @@ class Main {
 				export const print_rect_sides = (state) => {
 					for (const side of state.rect.getSides()) console.log(side);
 				};
+
+				const closure = (n) => () => console.log(n);
+				export const add_complex = (state) =>
+					state.complex = {
+						foo: 'bar',
+						bar: 42,
+						baz: {
+							foo: 'bar',
+							bar: 42,
+							log: () => console.log('baz'),
+							closure: closure(42),
+						},
+					};
 				""";
 
 		Source source = Source.newBuilder("js", code, "test.mjs").mimeType("application/javascript+module").build();
@@ -72,8 +85,8 @@ class Main {
 
 		{
 			Context context = Context.newBuilder().allowExperimentalOptions(true)
-					.option("js.esm-eval-returns-exports", "true").allowHostAccess(builder.build()).engine(engine)
-					.build();
+					.option("js.esm-eval-returns-exports", "true").option("js.foreign-object-prototype", "true")
+					.allowHostAccess(builder.build()).engine(engine).build();
 
 			Value exports = context.eval(source);
 
@@ -89,6 +102,9 @@ class Main {
 			exports.invokeMember("add_rect", state);
 			Value rect_area = exports.invokeMember("get_rect_area", state);
 			System.out.println("rect area: " + rect_area);
+
+			exports.invokeMember("add_complex", state);
+			System.out.println(state.toString());
 			// context.close();
 		}
 

@@ -1,0 +1,24 @@
+{
+    "name": "greeter",
+    "version": "0.0.1",
+    "description": "A simple greeter component",
+    "ports": {
+        "in": [
+            "greet"
+        ],
+        "out": [
+            "greet"
+        ]
+    },
+    "sources": [
+        {
+            "type": "file",
+            "path": "impl.mjs",
+            "language": {
+                "name": "javascript",
+                "sourceType": "module",
+                "ecmaVersion": 2022
+            }
+        }
+    ]
+}

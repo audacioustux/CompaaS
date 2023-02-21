@@ -5,4 +5,6 @@ enum LanguageId(val codename: String):
   case Python extends LanguageId("python")
   case Wasm   extends LanguageId("wasm")
 
-case class LanguageInfo(val id: LanguageId)
+case class LanguageInfo(
+    val id: LanguageId
+)
