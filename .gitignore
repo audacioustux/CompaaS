@@ -33,3 +33,6 @@ metals.sbt
 
 # .env files
 **/*.env
+
+# core dump files
+core.*
