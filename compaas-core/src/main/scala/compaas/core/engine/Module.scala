@@ -4,7 +4,6 @@ import org.graalvm.polyglot.*
 import java.io.File
 import java.util.UUID
 
-import compaas.core.engine.LanguageInfo
 case class ModuleInfo(id: UUID, source: Source, language: LanguageInfo)
 
 object Module {

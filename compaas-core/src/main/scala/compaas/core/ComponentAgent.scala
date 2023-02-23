@@ -1,5 +1,5 @@
 package compaas.core
 
-object EventActor {
+object ComponentAgent {
   def apply() = ???
 }

@@ -3,9 +3,9 @@ package compaas.core.engine
 import org.graalvm.polyglot.*
 
 object ExecutorContext {
-  def newBuilder() = new Builder
-  class Builder {
-    private val contextBuilder = Context.newBuilder()
+  def newBuilder(languageId: LanguageId) = new Builder(languageId)
+  class Builder(languageId: LanguageId) {
+    private val contextBuilder = Context.newBuilder(languageId.codename)
 
     def useEngine(engine: Engine): Builder =
       contextBuilder.engine(engine); this

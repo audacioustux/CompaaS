@@ -1,6 +1,5 @@
 package compaas.core.engine
 
-import cats.instances.boolean
 import org.graalvm.polyglot.*
 
 object Executor {
@@ -9,12 +8,13 @@ object Executor {
     private val engineBuilder = Engine.newBuilder()
 
     def build(): Executor = {
-      val engine                = engineBuilder.build()
-      given ec: ExecutorContext = ExecutorContext.newBuilder().useEngine(engine).build()
-
+      given engine: Engine = engineBuilder.build()
       new Executor
     }
   }
 }
 
-class Executor(using ec: ExecutorContext) {}
+class Executor(using engine: Engine) {
+  def createContext(languageId: LanguageId): ExecutorContext =
+    ExecutorContext.newBuilder(languageId).useEngine(engine).build()
+}
