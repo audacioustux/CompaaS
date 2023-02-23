@@ -1,9 +1,20 @@
 package compaas.core
 
-import compaas.core.engine.LanguageInfo
+import java.util.UUID
 
-case class Component(
+import engine.ModuleInfo
+
+case class ComponentInfo(
+    val id: UUID,
     val name: String,
-    val language: LanguageInfo,
-    val source: String
+    val modules: List[ModuleInfo]
 )
+
+object Component {
+  def apply(info: ComponentInfo): Component =
+    new Component(info)
+}
+
+class Component(info: ComponentInfo) {
+  import info.*
+}

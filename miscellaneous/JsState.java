@@ -73,6 +73,9 @@ class Main {
 							closure: closure(42),
 						},
 					};
+
+				// NOTE: Object.keys() does not work on foreign objects
+				// NOTE: closure or functions can't be serialized to JSON naively
 				""";
 
 		Source source = Source.newBuilder("js", code, "test.mjs").mimeType("application/javascript+module").build();
