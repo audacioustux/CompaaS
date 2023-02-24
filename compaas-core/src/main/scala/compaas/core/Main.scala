@@ -21,15 +21,14 @@ import compaas.core.engine.ExecutorContext
 
   val ports = Ports(List("greet"), List("greet"))
 
-  val executor          = Executor.newBuilder().build()
-  given ExecutorContext = executor.createContext(LanguageId.Js)
-
-  val modules = List(
+  val moduleInfos = List(
     ModuleInfo(
-      Source.newBuilder("js", greeterJs, "greeter.js").build(),
+      Source.newBuilder("js", greeterJs, "greeter.mjs").build(),
       LanguageInfo(LanguageId.Js)
     )
-  ).map(Module(_))
+  )
 
-  val component = Component(modules, ports)
+  val manifest = Manifest("test", "0.0.1", "test", ports, moduleInfos)
+
+  val component = Component(manifest)
 }
