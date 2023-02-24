@@ -1,14 +1,23 @@
 package compaas.core.engine
 
 import org.graalvm.polyglot.*
+
 import java.io.File
 import java.util.UUID
 
-case class ModuleInfo(id: UUID, source: Source, language: LanguageInfo)
+case class ModuleInfo(source: Source, language: LanguageInfo)
 
 object Module {
-  def apply(info: ModuleInfo, ec: ExecutorContext): Module =
-    new Module(info)(using ec)
+  def apply(info: ModuleInfo)(using ExecutorContext): Module =
+    new Module(info)
 }
 
-class Module(info: ModuleInfo)(using ec: ExecutorContext) {}
+class Module(info: ModuleInfo)(using ec: ExecutorContext) {
+  private val initValue: Value = ec.initialize(info.source)
+  val exports = {
+    info.language.id match {
+      case LanguageId.Js => initValue
+      case _             => ???
+    }
+  }
+}

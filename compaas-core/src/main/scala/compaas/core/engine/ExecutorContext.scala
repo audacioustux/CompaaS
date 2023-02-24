@@ -31,4 +31,6 @@ object ExecutorContext {
   }
 }
 
-class ExecutorContext(using context: Context) {}
+class ExecutorContext(using context: Context) {
+  def initialize(source: Source): Value = context.eval(source)
+}

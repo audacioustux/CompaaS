@@ -2,19 +2,13 @@ package compaas.core
 
 import java.util.UUID
 
-import engine.ModuleInfo
+import engine.{Module}
 
-case class ComponentInfo(
-    val id: UUID,
-    val name: String,
-    val modules: List[ModuleInfo]
-)
+case class Ports(in: List[String], out: List[String])
 
 object Component {
-  def apply(info: ComponentInfo): Component =
-    new Component(info)
+  def apply(modules: List[Module], ports: Ports): Component =
+    new Component()
 }
 
-class Component(info: ComponentInfo) {
-  import info.*
-}
+class Component() {}

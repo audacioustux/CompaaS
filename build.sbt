@@ -8,11 +8,11 @@ lazy val versions = new {
   val AkkaPersistenceCassandra = "1.0.6"
   val DatastaxJavaDriver       = "4.15.0"
   val KafkaClient              = "3.3.1"
-  val JsoniterScala            = "2.17.9"
+  val JsoniterScala            = "2.21.2"
   val Logback                  = "1.4.4"
   val Cats                     = "2.8.0"
-  val munit                    = "0.7.29"
-  val scalatest                = "3.2.14"
+  val Munit                    = "0.7.29"
+  val Scalatest                = "3.2.14"
 }
 
 inThisBuild(
@@ -91,8 +91,8 @@ lazy val `compaas-core` = project
       "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core" % versions.JsoniterScala,
       "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % versions.JsoniterScala % "compile-internal",
       // Test
-      "org.scalameta" %% "munit"     % versions.munit     % Test,
-      "org.scalatest" %% "scalatest" % versions.scalatest % Test
+      "org.scalameta" %% "munit"     % versions.Munit     % Test,
+      "org.scalatest" %% "scalatest" % versions.Scalatest % Test
     )
   )
 
