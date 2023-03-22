@@ -9,7 +9,6 @@
 				"sleistner.vscode-fileutils",
 				"bierner.markdown-mermaid",
 				"DavidAnson.vscode-markdownlint",
-				"Gruntfuggly.todo-tree",
 				"GitHub.copilot",
 				"scalameta.metals",
 				"vadimcn.vscode-lldb",
@@ -21,7 +20,9 @@
 				"jeff-hykin.better-cpp-syntax",
 				"PKief.material-icon-theme",
 				"PKief.material-product-icons",
-				"dtsvet.vscode-wasm"
+				"dtsvet.vscode-wasm",
+				"svelte.svelte-vscode",
+				"vscjava.vscode-java-pack"
 			],
 			"settings": {
 				"git.autofetch": true,

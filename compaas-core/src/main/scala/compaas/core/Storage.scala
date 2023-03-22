@@ -4,4 +4,4 @@ import org.graalvm.polyglot.*
 
 import java.util.HashMap
 
-class StateStore {}
+class Storage {}

@@ -3,10 +3,10 @@
     "version": "0.0.1",
     "description": "A simple greeter component",
     "ports": {
-        "incoming": [
+        "inlet": [
             "greet"
         ],
-        "outgoing": [
+        "outlet": [
             "greet"
         ]
     },
