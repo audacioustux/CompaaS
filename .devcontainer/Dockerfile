@@ -59,5 +59,9 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | b
 ### Install nodejs
 RUN source ~/.zshrc && nvm install v18.13.0
 
+### Install common utilities
+RUN source ~/.zshrc && npm install -g \
+        js-yaml
+
 ARG WORKSPACES_DIR="/workspaces"
 WORKDIR ${WORKSPACES_DIR}

@@ -22,7 +22,9 @@
 				"PKief.material-product-icons",
 				"dtsvet.vscode-wasm",
 				"svelte.svelte-vscode",
-				"vscjava.vscode-java-pack"
+				"vscjava.vscode-java-pack",
+				"redhat.vscode-yaml",
+				"ms-azuretools.vscode-docker"
 			],
 			"settings": {
 				"git.autofetch": true,

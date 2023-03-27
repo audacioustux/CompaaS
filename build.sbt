@@ -10,9 +10,11 @@ lazy val versions = new {
   val KafkaClient              = "3.3.1"
   val JsoniterScala            = "2.21.2"
   val Logback                  = "1.4.4"
-  val Cats                     = "2.8.0"
+  val Cats                     = "2.9.0"
   val Munit                    = "0.7.29"
   val Scalatest                = "3.2.14"
+  val CirceYaml                = "0.15.0-RC1"
+  val Shapeless3Deriving       = "3.0.1"
 }
 
 inThisBuild(
@@ -23,7 +25,21 @@ inThisBuild(
     scalafixOnCompile                              := true,
     semanticdbEnabled                              := true,
     semanticdbVersion                              := scalafixSemanticdb.revision,
-    scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
+    scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0",
+    resolvers ++= Resolver.sonatypeOssRepos("snapshots"),
+    scalacOptions ++= Seq(
+      "-explain",
+      "-indent",
+      "-rewrite",
+      "-print-lines",
+      "-deprecation",
+      "-explain-types",
+      "-feature",
+      "-unchecked",
+      "-Ykind-projector",
+      "-Xfatal-warnings",
+      "-Xmigration"
+    )
   )
 )
 
@@ -73,13 +89,10 @@ lazy val `compaas-core` = project
       "com.typesafe.akka"  %% "akka-discovery"              % versions.Akka,
       "com.lightbend.akka" %% "akka-projection-core"        % versions.AkkaProjection,
       "com.typesafe.akka"  %% "akka-persistence-cassandra"  % versions.AkkaPersistenceCassandra,
-      "org.typelevel"      %% "cats-core"                   % versions.Cats,
       "com.lightbend.akka.management" %% "akka-management"              % versions.AkkaManagement,
       "com.lightbend.akka.management" %% "akka-management-cluster-http" % versions.AkkaManagement,
       "com.lightbend.akka.management" %% "akka-management-cluster-bootstrap" % versions.AkkaManagement,
-      // Test
       "com.typesafe.akka" %% "akka-http-testkit"        % versions.AkkaHttp % Test,
-      "com.typesafe.akka" %% "akka-stream-testkit"      % versions.Akka     % Test,
       "com.typesafe.akka" %% "akka-actor-testkit-typed" % versions.Akka     % Test,
       "com.typesafe.akka" %% "akka-persistence-testkit" % versions.Akka     % Test
     ).map(_.cross(CrossVersion.for3Use2_13)),
@@ -88,6 +101,8 @@ lazy val `compaas-core` = project
       "org.graalvm.sdk"  % "graal-sdk"        % versions.GraalSDK,
       "org.apache.kafka" % "kafka-clients"    % versions.KafkaClient,
       "com.datastax.oss" % "java-driver-core" % versions.DatastaxJavaDriver,
+      "org.typelevel"   %% "cats-core"        % versions.Cats,
+      "io.circe"        %% "circe-yaml-v12"   % versions.CirceYaml,
       "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core" % versions.JsoniterScala,
       "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % versions.JsoniterScala % "compile-internal",
       // Test
@@ -103,17 +118,3 @@ lazy val root = project
   .settings(name := "compaas")
   .aggregate(projects*)
   .dependsOn(projects.map(_ % "compile->compile")*)
-
-scalacOptions ++= Seq(
-  "-explain",
-  "-indent",
-  "-rewrite",
-  "-print-lines",
-  "-deprecation",
-  "-explain-types",
-  "-feature",
-  "-unchecked",
-  "-Ykind-projector",
-  "-Xfatal-warnings",
-  "-Xmigration"
-)
