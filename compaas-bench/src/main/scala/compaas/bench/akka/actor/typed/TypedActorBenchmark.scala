@@ -8,7 +8,7 @@ import org.openjdk.jmh.annotations.*
 import java.util.concurrent.TimeUnit
 import scala.concurrent.Await
 import scala.concurrent.duration.*
-object TypedActorBenchmark {
+object TypedActorBenchmark:
   // Constants because they are used in annotations
   final val threads                 = 4       // update according to cpu
   final val numMessagesPerActorPair = 1000000 // messages per actor pair
@@ -16,7 +16,6 @@ object TypedActorBenchmark {
   final val numActors     = 512
   final val totalMessages = numMessagesPerActorPair * numActors / 2
   final val timeout       = 30.seconds
-}
 
 @State(Scope.Benchmark)
 @BenchmarkMode(Array(Mode.Throughput))
@@ -24,7 +23,7 @@ object TypedActorBenchmark {
 @Threads(1)
 @Warmup(iterations = 10, time = 5, timeUnit = TimeUnit.SECONDS, batchSize = 1)
 @Measurement(iterations = 10, time = 15, timeUnit = TimeUnit.SECONDS, batchSize = 1)
-class TypedActorBenchmark {
+class TypedActorBenchmark:
   import TypedActorBenchmark.*
   import TypedBenchmarkActors.*
 
@@ -55,7 +54,7 @@ class TypedActorBenchmark {
     )
 
   @Setup(Level.Trial)
-  def setup(): Unit = {
+  def setup(): Unit =
     requireRightNumberOfCores(threads)
     system = ActorSystem(
       TypedBenchmarkActors
@@ -92,18 +91,14 @@ class TypedActorBenchmark {
        }
       """)
     )
-  }
 
   @TearDown(Level.Trial)
-  def shutdown(): Unit = {
+  def shutdown(): Unit =
     system.terminate()
     Await.ready(system.whenTerminated, 15.seconds)
-  }
 
   @Benchmark
   @OperationsPerInvocation(totalMessages)
-  def echo(): Unit = {
+  def echo(): Unit =
     Await.result(system.ask(Start(_)), timeout)
-  }
 
-}

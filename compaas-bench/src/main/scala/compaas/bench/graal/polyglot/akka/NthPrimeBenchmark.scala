@@ -17,7 +17,7 @@ import scala.concurrent.Await
 
 import concurrent.duration.DurationInt
 
-object NthPrimeBenchmark {
+object NthPrimeBenchmark:
   val modules = Map(
     "js" -> Source
       .newBuilder(
@@ -46,7 +46,6 @@ object NthPrimeBenchmark {
   final val opPerNPA     = 10_000
   final val numberOfNPAs = threads
   final val opPerInvoke  = opPerNPA * numberOfNPAs
-}
 
 @State(Scope.Thread)
 @BenchmarkMode(Array(Mode.AverageTime))
@@ -55,7 +54,7 @@ object NthPrimeBenchmark {
 @Threads(Threads.MAX)
 @Warmup(iterations = 10)
 @Measurement(iterations = 5)
-class NthPrimeBenchmark {
+class NthPrimeBenchmark:
   import NthPrimeBenchmark.*
 
   implicit var system: ActorSystem[NthPrimeBenchmarkActors.Start] = _
@@ -66,7 +65,7 @@ class NthPrimeBenchmark {
   var module: String = _
 
   @Setup(Level.Trial)
-  def setup(using Blackhole): Unit = {
+  def setup(using Blackhole): Unit =
     system = ActorSystem(
       NthPrimeBenchmarkActors.Supervisor(numberOfNPAs, modules(module)),
       "nth-prime",
@@ -82,22 +81,18 @@ class NthPrimeBenchmark {
            |""".stripMargin
       )
     )
-  }
 
   @Benchmark
   @OperationsPerInvocation(opPerInvoke)
-  def nthPrime(): Unit = {
+  def nthPrime(): Unit =
     Await.result(system.ask(NthPrimeBenchmarkActors.Start(_)), 30.seconds)
-  }
 
   @TearDown(Level.Trial)
-  def shutdown(): Unit = {
+  def shutdown(): Unit =
     system.terminate()
     Await.ready(system.whenTerminated, 15.seconds)
-  }
-}
 
-object NthPrimeBenchmarkActors {
+object NthPrimeBenchmarkActors:
   import NthPrimeBenchmark.*
 
   case class Start(replyTo: ActorRef[Done])
@@ -108,10 +103,9 @@ object NthPrimeBenchmarkActors {
 
     Behaviors.receiveMessage { _ =>
       count += 1
-      if count == threshold then {
+      if count == threshold then
         replyTo ! Done
         count = 0
-      }
 
       Behaviors.same
     }
@@ -124,14 +118,13 @@ object NthPrimeBenchmarkActors {
       }
 
       Behaviors.receiveMessage { msg =>
-        msg match {
+        msg match
           case Start(replyTo) =>
             val spikingActor = ctx.spawnAnonymous(spikingActorBehavior(numberOfNPAs, replyTo))
             npa_s.foreach { npa =>
               npa ! Execute(opPerNPA, spikingActor)
             }
             Behaviors.same
-        }
       }
   }
 
@@ -139,9 +132,9 @@ object NthPrimeBenchmarkActors {
     Behaviors.setup { ctx =>
       val language = source.getLanguage()
 
-      val context = {
+      val context =
         val builder = Context.newBuilder().engine(Graal.engine)
-        language match {
+        language match
           case "js" =>
             builder
               .allowExperimentalOptions(true)
@@ -149,20 +142,17 @@ object NthPrimeBenchmarkActors {
               .build()
           case "wasm" =>
             builder.build()
-        }
-      }
 
-      val executable = language match {
+      val executable = language match
         case "js" =>
           context.eval(source).getMember("nth_prime")
         case "wasm" =>
           context.eval(source)
           context.getBindings("wasm").getMember("main").getMember("nth_prime")
-      }
 
       Behaviors
         .receiveMessage { msg =>
-          msg match {
+          msg match
             case Execute(times, replyTo) =>
               blackhole.consume(executable.execute(n))
 
@@ -170,11 +160,9 @@ object NthPrimeBenchmarkActors {
               else replyTo ! Done
 
               Behaviors.same
-          }
         }
         .receiveSignal({ case (_, PostStop) =>
           context.close()
           Behaviors.same
         })
     }
-}

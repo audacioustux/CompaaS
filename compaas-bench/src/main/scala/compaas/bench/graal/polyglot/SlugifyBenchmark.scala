@@ -8,7 +8,7 @@ import org.openjdk.jmh.infra.Blackhole
 
 import java.nio.file.{Files, Path, Paths}
 import java.util.concurrent.TimeUnit
-object SlugifyBenchmark {
+object SlugifyBenchmark:
   final val opPerInvoke = 30
 
   val modules = Map(
@@ -32,7 +32,6 @@ object SlugifyBenchmark {
       )
       .build()
   )
-}
 
 @State(Scope.Thread)
 @BenchmarkMode(Array(Mode.AverageTime))
@@ -41,7 +40,7 @@ object SlugifyBenchmark {
 @Threads(Threads.MAX)
 @Warmup(iterations = 10)
 @Measurement(iterations = 5)
-class SlugifyBenchmark {
+class SlugifyBenchmark:
   import SlugifyBenchmark.*
 
   var engine: Engine = _
@@ -55,19 +54,18 @@ class SlugifyBenchmark {
   var executable: Value = _
 
   @Setup(Level.Trial)
-  def setupEngine(): Unit = {
+  def setupEngine(): Unit =
     engine = Engine.create()
-  }
 
   @Setup(Level.Iteration)
-  def setup(): Unit = {
+  def setup(): Unit =
     source = modules(module)
 
     val language = source.getLanguage()
 
-    context = {
+    context =
       val builder = Context.newBuilder().engine(Graal.engine)
-      language match {
+      language match
         case "js" =>
           builder
             .allowExperimentalOptions(true)
@@ -75,32 +73,24 @@ class SlugifyBenchmark {
             .build()
         case "wasm" =>
           builder.build()
-      }
-    }
 
-    executable = language match {
+    executable = language match
       case "js" =>
         context.eval(source).getMember("slugify")
       case "wasm" =>
         context.eval(source)
         context.getBindings("wasm").getMember("main").getMember("slugify")
-    }
-  }
 
   @TearDown(Level.Iteration)
-  def closeContext(): Unit = {
+  def closeContext(): Unit =
     context.close()
-  }
 
   @TearDown(Level.Trial)
-  def closeEngine(): Unit = {
+  def closeEngine(): Unit =
     engine.close()
-  }
 
   private val n = Value.asValue(20)
 
   @Benchmark
-  def invoke(): Value = {
+  def invoke(): Value =
     executable.execute(n)
-  }
-}

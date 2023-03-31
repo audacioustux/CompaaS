@@ -18,7 +18,7 @@ import scala.concurrent.Await
 
 import concurrent.duration.DurationInt
 
-object IncBenchmark {
+object IncBenchmark:
   val modules = Map(
     "js" -> Source
       .newBuilder("js", "export const inc = (n) => n + 1", "inc.js")
@@ -41,7 +41,6 @@ object IncBenchmark {
   final val opPerNPA     = 10_000_000
   final val numberOfNPAs = threads
   final val opPerInvoke  = opPerNPA * numberOfNPAs
-}
 
 @State(Scope.Thread)
 @BenchmarkMode(Array(Mode.AverageTime))
@@ -50,7 +49,7 @@ object IncBenchmark {
 @Threads(Threads.MAX)
 @Warmup(iterations = 10)
 @Measurement(iterations = 5)
-class IncBenchmark {
+class IncBenchmark:
   import IncBenchmark.*
 
   implicit var system: ActorSystem[IncBenchmarkActors.Start] = _
@@ -61,7 +60,7 @@ class IncBenchmark {
   var module: String = _
 
   @Setup(Level.Trial)
-  def setup(using Blackhole): Unit = {
+  def setup(using Blackhole): Unit =
     system = ActorSystem(
       IncBenchmarkActors.Supervisor(numberOfNPAs, modules(module)),
       "inc",
@@ -77,22 +76,18 @@ class IncBenchmark {
            |""".stripMargin
       )
     )
-  }
 
   @Benchmark
   @OperationsPerInvocation(opPerInvoke)
-  def inc(): Unit = {
+  def inc(): Unit =
     Await.result(system.ask(IncBenchmarkActors.Start(_)), 30.seconds)
-  }
 
   @TearDown(Level.Trial)
-  def shutdown(): Unit = {
+  def shutdown(): Unit =
     system.terminate()
     Await.ready(system.whenTerminated, 15.seconds)
-  }
-}
 
-object IncBenchmarkActors {
+object IncBenchmarkActors:
   import IncBenchmark.*
 
   case class Start(replyTo: ActorRef[Done])
@@ -103,10 +98,9 @@ object IncBenchmarkActors {
 
     Behaviors.receiveMessage { _ =>
       count += 1
-      if count == threshold then {
+      if count == threshold then
         replyTo ! Done
         count = 0
-      }
 
       Behaviors.same
     }
@@ -119,14 +113,13 @@ object IncBenchmarkActors {
       }
 
       Behaviors.receiveMessage { msg =>
-        msg match {
+        msg match
           case Start(replyTo) =>
             val spikingActor = ctx.spawnAnonymous(spikingActorBehavior(numberOfNPAs, replyTo))
             npa_s.foreach { npa =>
               npa ! Execute(opPerNPA, spikingActor)
             }
             Behaviors.same
-        }
       }
   }
 
@@ -134,9 +127,9 @@ object IncBenchmarkActors {
     Behaviors.setup { ctx =>
       val language = source.getLanguage()
 
-      val context = {
+      val context =
         val builder = Context.newBuilder().engine(Graal.engine)
-        language match {
+        language match
           case "js" =>
             builder
               .allowExperimentalOptions(true)
@@ -144,20 +137,17 @@ object IncBenchmarkActors {
               .build()
           case "wasm" =>
             builder.build()
-        }
-      }
 
-      val executable = language match {
+      val executable = language match
         case "js" =>
           context.eval(source).getMember("inc")
         case "wasm" =>
           context.eval(source)
           context.getBindings("wasm").getMember("main").getMember("inc")
-      }
 
       Behaviors
         .receiveMessage { msg =>
-          msg match {
+          msg match
             case Execute(times, replyTo) =>
               blackhole.consume(executable.execute(n))
 
@@ -165,11 +155,9 @@ object IncBenchmarkActors {
               else replyTo ! Done
 
               Behaviors.same
-          }
         }
         .receiveSignal({ case (_, PostStop) =>
           context.close()
           Behaviors.same
         })
     }
-}

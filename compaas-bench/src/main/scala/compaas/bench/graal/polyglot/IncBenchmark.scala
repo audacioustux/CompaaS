@@ -9,7 +9,7 @@ import org.openjdk.jmh.infra.Blackhole
 import java.nio.file.{Files, Path, Paths}
 import java.util.concurrent.TimeUnit
 
-object IncBenchmark {
+object IncBenchmark:
   val modules = Map(
     "js" -> Source
       .newBuilder("js", "export const inc = (n) => n + 1", "inc.js")
@@ -25,7 +25,6 @@ object IncBenchmark {
       )
       .build()
   )
-}
 
 @State(Scope.Thread)
 @BenchmarkMode(Array(Mode.AverageTime))
@@ -34,7 +33,7 @@ object IncBenchmark {
 @Threads(Threads.MAX)
 @Warmup(iterations = 10)
 @Measurement(iterations = 5)
-class IncBenchmark {
+class IncBenchmark:
   import IncBenchmark.*
 
   @Param(Array("js", "wasm"))
@@ -46,14 +45,14 @@ class IncBenchmark {
   var executable: Value = _
 
   @Setup(Level.Iteration)
-  def setup(): Unit = {
+  def setup(): Unit =
     source = modules(module)
 
     val language = source.getLanguage()
 
-    context = {
+    context =
       val builder = Context.newBuilder().engine(Graal.engine)
-      language match {
+      language match
         case "js" =>
           builder
             .allowExperimentalOptions(true)
@@ -61,27 +60,20 @@ class IncBenchmark {
             .build()
         case "wasm" =>
           builder.build()
-      }
-    }
 
-    executable = language match {
+    executable = language match
       case "js" =>
         context.eval(source).getMember("inc")
       case "wasm" =>
         context.eval(source)
         context.getBindings("wasm").getMember("main").getMember("inc")
-    }
-  }
 
   @TearDown(Level.Iteration)
-  def closeContext(): Unit = {
+  def closeContext(): Unit =
     context.close()
-  }
 
   private val n: Value = Value.asValue(0)
 
   @Benchmark
-  def invoke(): Value = {
+  def invoke(): Value =
     executable.execute(n)
-  }
-}

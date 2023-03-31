@@ -8,7 +8,7 @@ import org.openjdk.jmh.infra.Blackhole
 
 import java.nio.file.{Files, Path, Paths}
 import java.util.concurrent.TimeUnit
-object NthPrimeBenchmark {
+object NthPrimeBenchmark:
   val modules = Map(
     "js" -> Source
       .newBuilder(
@@ -30,7 +30,6 @@ object NthPrimeBenchmark {
       )
       .build()
   )
-}
 
 @State(Scope.Thread)
 @BenchmarkMode(Array(Mode.AverageTime))
@@ -39,7 +38,7 @@ object NthPrimeBenchmark {
 @Threads(Threads.MAX)
 @Warmup(iterations = 10)
 @Measurement(iterations = 5)
-class NthPrimeBenchmark {
+class NthPrimeBenchmark:
   import NthPrimeBenchmark.*
 
   var engine: Engine = _
@@ -53,19 +52,18 @@ class NthPrimeBenchmark {
   var executable: Value = _
 
   @Setup(Level.Trial)
-  def setupEngine(): Unit = {
+  def setupEngine(): Unit =
     engine = Engine.create()
-  }
 
   @Setup(Level.Iteration)
-  def setup(): Unit = {
+  def setup(): Unit =
     source = modules(module)
 
     val language = source.getLanguage()
 
-    context = {
+    context =
       val builder = Context.newBuilder().engine(Graal.engine)
-      language match {
+      language match
         case "js" =>
           builder
             .allowExperimentalOptions(true)
@@ -73,32 +71,24 @@ class NthPrimeBenchmark {
             .build()
         case "wasm" =>
           builder.build()
-      }
-    }
 
-    executable = language match {
+    executable = language match
       case "js" =>
         context.eval(source).getMember("nth_prime")
       case "wasm" =>
         context.eval(source)
         context.getBindings("wasm").getMember("main").getMember("nth_prime")
-    }
-  }
 
   @TearDown(Level.Iteration)
-  def closeContext(): Unit = {
+  def closeContext(): Unit =
     context.close()
-  }
 
   @TearDown(Level.Trial)
-  def closeEngine(): Unit = {
+  def closeEngine(): Unit =
     engine.close()
-  }
 
   private val n = Value.asValue(10_000)
 
   @Benchmark
-  def invoke(): Value = {
+  def invoke(): Value =
     executable.execute(n)
-  }
-}

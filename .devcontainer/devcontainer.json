@@ -37,5 +37,14 @@
 			}
 		}
 	},
-	"remoteUser": "root"
+	"remoteUser": "root",
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {
+			"moby": true,
+			"azureDnsAutoDetection": true,
+			"installDockerBuildx": true,
+			"version": "latest",
+			"dockerDashComposeVersion": "v2"
+		}
+	}
 }

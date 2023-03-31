@@ -7,7 +7,7 @@ import akka.actor.typed.{ActorRef, Behavior, Props}
 import java.util.concurrent.CountDownLatch
 import scala.concurrent.duration.*
 
-object TypedBenchmarkActors {
+object TypedBenchmarkActors:
 
   // to avoid benchmark to be dominated by allocations of message
   // we pass the respondTo actor ref into the behavior
@@ -30,27 +30,24 @@ object TypedBenchmarkActors {
       var left  = messagesPerPair / 2
       var batch = 0
 
-      def sendBatch(): Boolean = {
-        if left > 0 then {
+      def sendBatch(): Boolean =
+        if left > 0 then
           var i = 0
-          while i < batchSize do {
+          while i < batchSize do
             echo ! Message
             i += 1
-          }
           left -= batchSize
           batch = batchSize
           true
-        } else false
-      }
+        else false
 
       Behaviors.receiveMessage { _ =>
         batch -= 1
-        if batch <= 0 && !sendBatch() then {
+        if batch <= 0 && !sendBatch() then
           onDone ! Done
           Behaviors.stopped
-        } else {
+        else
           Behaviors.same
-        }
       }
     }
 
@@ -64,7 +61,7 @@ object TypedBenchmarkActors {
       batchSize: Int
   ): Behavior[Start] =
     Behaviors.receive { (ctx, msg) =>
-      msg match {
+      msg match
         case Start(respondTo) =>
           // note: no protection against accidentally running bench sessions in parallel
           val sessionBehavior =
@@ -77,7 +74,6 @@ object TypedBenchmarkActors {
             )
           ctx.spawnAnonymous(sessionBehavior)
           Behaviors.same
-      }
     }
 
   private def startEchoBenchSession(
@@ -86,7 +82,7 @@ object TypedBenchmarkActors {
       dispatcher: String,
       batchSize: Int,
       respondTo: ActorRef[Completed]
-  ): Behavior[Unit] = {
+  ): Behavior[Unit] =
 
     val numPairs = numActors / 2
 
@@ -104,19 +100,17 @@ object TypedBenchmarkActors {
         var interactionsLeft = numPairs
         Behaviors.receiveMessagePartial { case Done =>
           interactionsLeft -= 1
-          if interactionsLeft == 0 then {
+          if interactionsLeft == 0 then
             val totalNumMessages = numPairs * messagesPerPair
             printProgress(totalNumMessages, numActors, startNanoTime)
             respondTo ! Completed(startNanoTime)
             Behaviors.stopped
-          } else {
+          else
             Behaviors.same
-          }
 
         }
       }
       .narrow[Unit]
-  }
 
   sealed trait PingPongCommand
   case class StartPingPong(
@@ -133,7 +127,7 @@ object TypedBenchmarkActors {
       totalNumMessages: Int
   )
   case object Stop extends PingPongCommand
-  def benchmarkPingPongSupervisor(): Behavior[PingPongCommand] = {
+  def benchmarkPingPongSupervisor(): Behavior[PingPongCommand] =
     Behaviors.setup { ctx =>
       Behaviors.receiveMessage {
         case StartPingPong(
@@ -158,38 +152,34 @@ object TypedBenchmarkActors {
           Behaviors.same
       }
     }
-  }
 
   private def initiatePingPongForPairs(
       refs: Vector[(ActorRef[Message], ActorRef[Message])],
       inFlight: Int
-  ): Unit = {
+  ): Unit =
     for {
       (ping, pong) <- refs
       message = Message(pong) // just allocate once
       _ <- 1 to inFlight
     } ping ! message
-  }
 
   private def startPingPongActorPairs(
       ctx: ActorContext[?],
       messagesPerPair: Int,
       numPairs: Int,
       dispatcher: String
-  ): (Vector[(ActorRef[Message], ActorRef[Message])], CountDownLatch) = {
+  ): (Vector[(ActorRef[Message], ActorRef[Message])], CountDownLatch) =
     val fullPathToDispatcher = "akka.actor." + dispatcher
     val latch                = new CountDownLatch(numPairs * 2)
     val pingPongBehavior     = newPingPongBehavior(messagesPerPair, latch)
     val pingPongProps        = Props.empty.withDispatcherFromConfig(fullPathToDispatcher)
     val actors = for {
       _ <- (1 to numPairs).toVector
-    } yield {
+    } yield
       val ping = ctx.spawnAnonymous(pingPongBehavior, pingPongProps)
       val pong = ctx.spawnAnonymous(pingPongBehavior, pingPongProps)
       (ping, pong)
-    }
     (actors, latch)
-  }
 
   case class Message(replyTo: ActorRef[Message])
   private def newPingPongBehavior(messagesPerPair: Int, latch: CountDownLatch): Behavior[Message] =
@@ -198,21 +188,18 @@ object TypedBenchmarkActors {
       val pong = Message(ctx.self) // we re-use a single pong to avoid alloc on each msg
       Behaviors.receiveMessage[Message] { case Message(replyTo) =>
         replyTo ! pong
-        if left == 0 then {
+        if left == 0 then
           latch.countDown()
           Behaviors.stopped // note that this will likely lead to dead letters
-        } else {
+        else
           left -= 1
           Behaviors.same
-        }
       }
     }
 
-  def printProgress(totalMessages: Long, numActors: Int, startNanoTime: Long) = {
+  def printProgress(totalMessages: Long, numActors: Int, startNanoTime: Long) =
     val durationMicros = (System.nanoTime() - startNanoTime) / 1000
     println(
       f"  $totalMessages messages by $numActors actors took ${durationMicros / 1000} ms, " +
         f"${totalMessages.toDouble / durationMicros}%,.2f M msg/s"
     )
-  }
-}

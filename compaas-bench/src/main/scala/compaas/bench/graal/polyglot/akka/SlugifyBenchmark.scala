@@ -17,7 +17,7 @@ import scala.concurrent.Await
 
 import concurrent.duration.DurationInt
 
-object SlugifyBenchmark {
+object SlugifyBenchmark:
   val modules = Map(
     "js" -> Source
       .newBuilder(
@@ -46,7 +46,6 @@ object SlugifyBenchmark {
   final val opPerNPA     = 1_000_000
   final val numberOfNPAs = threads
   final val opPerInvoke  = opPerNPA * numberOfNPAs
-}
 
 @State(Scope.Thread)
 @BenchmarkMode(Array(Mode.AverageTime))
@@ -55,7 +54,7 @@ object SlugifyBenchmark {
 @Threads(Threads.MAX)
 @Warmup(iterations = 10)
 @Measurement(iterations = 5)
-class SlugifyBenchmark {
+class SlugifyBenchmark:
   import SlugifyBenchmark.*
 
   implicit var system: ActorSystem[SlugifyBenchmarkActors.Start] = _
@@ -70,7 +69,7 @@ class SlugifyBenchmark {
   //   require(threads == Runtime.getRuntime().availableProcessors())
 
   @Setup(Level.Trial)
-  def setup(using Blackhole): Unit = {
+  def setup(using Blackhole): Unit =
     system = ActorSystem(
       SlugifyBenchmarkActors.Supervisor(numberOfNPAs, modules(module)),
       "slugify",
@@ -86,22 +85,18 @@ class SlugifyBenchmark {
            |""".stripMargin
       )
     )
-  }
 
   @Benchmark
   @OperationsPerInvocation(opPerInvoke)
-  def slugify(): Unit = {
+  def slugify(): Unit =
     Await.result(system.ask(SlugifyBenchmarkActors.Start(_)), 30.seconds)
-  }
 
   @TearDown(Level.Trial)
-  def shutdown(): Unit = {
+  def shutdown(): Unit =
     system.terminate()
     Await.ready(system.whenTerminated, 15.seconds)
-  }
-}
 
-object SlugifyBenchmarkActors {
+object SlugifyBenchmarkActors:
   import SlugifyBenchmark.*
 
   case class Start(replyTo: ActorRef[Done])
@@ -112,10 +107,9 @@ object SlugifyBenchmarkActors {
 
     Behaviors.receiveMessage { _ =>
       count += 1
-      if count == threshold then {
+      if count == threshold then
         replyTo ! Done
         count = 0
-      }
 
       Behaviors.same
     }
@@ -128,14 +122,13 @@ object SlugifyBenchmarkActors {
       }
 
       Behaviors.receiveMessage { msg =>
-        msg match {
+        msg match
           case Start(replyTo) =>
             val spikingActor = ctx.spawnAnonymous(spikingActorBehavior(numberOfNPAs, replyTo))
             npa_s.foreach { npa =>
               npa ! Execute(opPerNPA, spikingActor)
             }
             Behaviors.same
-        }
       }
   }
 
@@ -143,9 +136,9 @@ object SlugifyBenchmarkActors {
     Behaviors.setup { ctx =>
       val language = source.getLanguage()
 
-      val context = {
+      val context =
         val builder = Context.newBuilder().engine(Graal.engine)
-        language match {
+        language match
           case "js" =>
             builder
               .allowExperimentalOptions(true)
@@ -153,20 +146,17 @@ object SlugifyBenchmarkActors {
               .build()
           case "wasm" =>
             builder.build()
-        }
-      }
 
-      val executable = language match {
+      val executable = language match
         case "js" =>
           context.eval(source).getMember("slugify")
         case "wasm" =>
           context.eval(source)
           context.getBindings("wasm").getMember("main").getMember("slugify")
-      }
 
       Behaviors
         .receiveMessage { msg =>
-          msg match {
+          msg match
             case Execute(times, replyTo) =>
               blackhole.consume(executable.execute(n))
 
@@ -174,11 +164,9 @@ object SlugifyBenchmarkActors {
               else replyTo ! Done
 
               Behaviors.same
-          }
         }
         .receiveSignal({ case (_, PostStop) =>
           context.close()
           Behaviors.same
         })
     }
-}
