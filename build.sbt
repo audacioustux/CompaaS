@@ -84,7 +84,6 @@ lazy val `compaas-core` = project
       "com.typesafe.akka"             %% "akka-cluster-sharding-typed"       % versions.Akka,
       "com.typesafe.akka"             %% "akka-persistence-query"            % versions.Akka,
       "com.typesafe.akka"             %% "akka-discovery"                    % versions.Akka,
-      "com.typesafe.akka"             %% "akka-discovery"                    % versions.Akka,
       "com.lightbend.akka"            %% "akka-projection-core"              % versions.AkkaProjection,
       "com.lightbend.akka.management" %% "akka-management"                   % versions.AkkaManagement,
       "com.lightbend.akka"            %% "akka-persistence-r2dbc"            % versions.AkkaPersistenceR2dbc,

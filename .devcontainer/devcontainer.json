@@ -45,12 +45,10 @@
 			"version": "latest",
 			"dockerDashComposeVersion": "v2"
 		},
-		"ghcr.io/devcontainers-contrib/features/kubectx-kubens:1": {
-			"version": "latest"
-		},
-		"ghcr.io/devcontainers-contrib/features/kubectl-asdf:2": {
-			"version": "latest"
-		},
-		"ghcr.io/rio/features/k3d:1": {}
+		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+			"version": "latest",
+			"helm": "latest",
+			"minikube": "latest"
+		}
 	}
 }
