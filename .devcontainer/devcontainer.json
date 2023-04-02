@@ -37,7 +37,6 @@
 			}
 		}
 	},
-	"remoteUser": "root",
 	"features": {
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {
 			"moby": true,
@@ -45,6 +44,13 @@
 			"installDockerBuildx": true,
 			"version": "latest",
 			"dockerDashComposeVersion": "v2"
-		}
+		},
+		"ghcr.io/devcontainers-contrib/features/kubectx-kubens:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-contrib/features/kubectl-asdf:2": {
+			"version": "latest"
+		},
+		"ghcr.io/rio/features/k3d:1": {}
 	}
 }

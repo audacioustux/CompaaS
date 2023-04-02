@@ -1,14 +1,15 @@
 ARG VARIANT="ubuntu-22.04"
 FROM mcr.microsoft.com/devcontainers/base:${VARIANT}
 
-RUN chsh -s $(which zsh)
+USER vscode
+RUN sudo chsh -s $(which zsh)
 
 SHELL ["zsh", "-c"]
 
 ARG DEBIAN_FRONTEND="noninteractive"
-RUN apt update
-RUN apt upgrade -y
-RUN apt install -y --no-install-recommends \
+RUN sudo apt update
+RUN sudo apt upgrade -y
+RUN sudo apt install -y --no-install-recommends \
     ripgrep \
     neofetch \
     build-essential \
@@ -36,7 +37,7 @@ ARG GRAALVM_VERSION=22.3.1
 ARG JAVA_VERSION=java17
 ENV GRAALVM_NAME=graalvm-${GRAALVM_EDITION}-${JAVA_VERSION}-${GRAALVM_VERSION}
 
-RUN curl -sL https://get.graalvm.org/jdk | bash -s -- $GRAALVM_NAME \
+RUN curl -sL https://get.graalvm.org/jdk | sudo bash -s -- $GRAALVM_NAME \
     --to /opt \
     -c native-image,nodejs,wasm
 
@@ -51,10 +52,11 @@ RUN source ~/.zshrc && sdk install sbt
 
 ### Install Emscripten
 #### NOTE: https://github.com/nodejs/docker-node/issues/1559
-RUN apt install -y emscripten
+RUN sudo apt install -y emscripten
 
 ### Install NVM
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+RUN echo "source ~/.nvm/nvm.sh" >> ~/.zshrc
 
 ### Install nodejs
 RUN source ~/.zshrc && nvm install v18.13.0
