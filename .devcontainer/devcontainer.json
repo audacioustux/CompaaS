@@ -1,89 +1,89 @@
 {
-	"name": "CompaaS Dev Container",
-	"dockerComposeFile": "Compose.yml",
-	"service": "app",
-	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"sleistner.vscode-fileutils",
-				"bierner.markdown-mermaid",
-				"DavidAnson.vscode-markdownlint",
-				"GitHub.copilot",
-				"scalameta.metals",
-				"vadimcn.vscode-lldb",
-				"mutantdino.resourcemonitor",
-				"rust-lang.rust-analyzer",
-				"tamasfe.even-better-toml",
-				"serayuzgur.crates",
-				"akamud.vscode-theme-onedark",
-				"jeff-hykin.better-cpp-syntax",
-				"PKief.material-icon-theme",
-				"PKief.material-product-icons",
-				"dtsvet.vscode-wasm",
-				"svelte.svelte-vscode",
-				"vscjava.vscode-java-pack",
-				"redhat.vscode-yaml",
-				"ms-azuretools.vscode-docker"
-			],
-			"settings": {
-				"git.autofetch": true,
-				"files.autoSave": "onFocusChange",
-				"editor.formatOnSave": true,
-				"resmon.show.cpufreq": false,
-				"workbench.productIconTheme": "material-product-icons",
-				"workbench.iconTheme": "material-icon-theme",
-				"workbench.colorTheme": "Atom One Dark"
-			}
-		}
-	},
-	"hostRequirements": {
-		"cpus": 4,
-		"memory": "8gb"
-	},
-	"features": {
-		"ghcr.io/devcontainers/features/node:1": {
-			"nodeGypDependencies": true,
-			"version": "latest"
-		},
-		"ghcr.io/devcontainers/features/common-utils:2": {
-			"installZsh": true,
-			"configureZshAsDefaultShell": true,
-			"installOhMyZsh": true,
-			"upgradePackages": true,
-			"username": "devcontainer",
-			"userUid": "1000",
-			"userGid": "1000"
-		},
-		"ghcr.io/devcontainers/features/rust:1": {
-			"version": "latest",
-			"profile": "complete"
-		},
-		"ghcr.io/devcontainers/features/docker-in-docker:2": {
-			"moby": true,
-			"azureDnsAutoDetection": true,
-			"installDockerBuildx": true,
-			"version": "latest",
-			"dockerDashComposeVersion": "v2"
-		},
-		"ghcr.io/devcontainers/features/github-cli:1": {
-			"installDirectlyFromGitHubRelease": true,
-			"version": "latest"
-		},
-		"ghcr.io/devcontainers/features/git:1": {
-			"ppa": true,
-			"version": "latest"
-		},
-		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
-			"version": "latest",
-			"helm": "latest",
-			"minikube": "latest"
-		}
-	},
-	"remoteUser": "devcontainer",
-	"postCreateCommand": {
-		"minikube_cluster-init": ". /scripts.sh && create_minikube_cluster && minikube_docker_env",
-		"k9s-install": ". /scripts.sh && install_k9s",
-		"sdks-install": ". /scripts.sh && install_sdkman && install_graalvm && install_sbt &; install_graalvm_components &; wait"
-	}
+        "name": "CompaaS Dev Container",
+        "dockerComposeFile": "Compose.yml",
+        "service": "app",
+        "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+        "customizations": {
+                "vscode": {
+                        "extensions": [
+                                "sleistner.vscode-fileutils",
+                                "bierner.markdown-mermaid",
+                                "DavidAnson.vscode-markdownlint",
+                                "GitHub.copilot",
+                                "scalameta.metals",
+                                "vadimcn.vscode-lldb",
+                                "mutantdino.resourcemonitor",
+                                "rust-lang.rust-analyzer",
+                                "tamasfe.even-better-toml",
+                                "serayuzgur.crates",
+                                "akamud.vscode-theme-onedark",
+                                "jeff-hykin.better-cpp-syntax",
+                                "PKief.material-icon-theme",
+                                "PKief.material-product-icons",
+                                "dtsvet.vscode-wasm",
+                                "svelte.svelte-vscode",
+                                "vscjava.vscode-java-pack",
+                                "redhat.vscode-yaml",
+                                "ms-azuretools.vscode-docker"
+                        ],
+                        "settings": {
+                                "git.autofetch": true,
+                                "files.autoSave": "onFocusChange",
+                                "editor.formatOnSave": true,
+                                "resmon.show.cpufreq": false,
+                                "workbench.productIconTheme": "material-product-icons",
+                                "workbench.iconTheme": "material-icon-theme",
+                                "workbench.colorTheme": "Atom One Dark"
+                        }
+                }
+        },
+        "hostRequirements": {
+                "cpus": 4,
+                "memory": "8gb"
+        },
+        "features": {
+                "ghcr.io/devcontainers/features/node:1": {
+                        "nodeGypDependencies": true,
+                        "version": "latest"
+                },
+                "ghcr.io/devcontainers/features/common-utils:2": {
+                        "installZsh": true,
+                        "configureZshAsDefaultShell": true,
+                        "installOhMyZsh": true,
+                        "upgradePackages": true,
+                        "username": "devcontainer",
+                        "userUid": "1000",
+                        "userGid": "1000"
+                },
+                "ghcr.io/devcontainers/features/rust:1": {
+                        "version": "latest",
+                        "profile": "complete"
+                },
+                "ghcr.io/devcontainers/features/docker-in-docker:2": {
+                        "moby": true,
+                        "azureDnsAutoDetection": true,
+                        "installDockerBuildx": true,
+                        "version": "latest",
+                        "dockerDashComposeVersion": "v2"
+                },
+                "ghcr.io/devcontainers/features/github-cli:1": {
+                        "installDirectlyFromGitHubRelease": true,
+                        "version": "latest"
+                },
+                "ghcr.io/devcontainers/features/git:1": {
+                        "ppa": true,
+                        "version": "latest"
+                },
+                "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+                        "version": "latest",
+                        "helm": "latest",
+                        "minikube": "latest"
+                }
+        },
+        "remoteUser": "devcontainer",
+        "postCreateCommand": {
+                "build": "/scripts/build.sh",
+                "minikube-init": "minikube start --cpus 2 --memory 4096 --driver=docker",
+                "k9s-install": "curl -sS https://webi.sh/k9s | sh"
+        }
 }
