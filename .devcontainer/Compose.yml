@@ -5,8 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        VARIANT: ubuntu-22.04
     volumes:
       - ../..:/workspaces:cached
 
