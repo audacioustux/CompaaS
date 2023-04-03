@@ -16,8 +16,8 @@ install_graalvm() {
     GRAALVM_NAME=graalvm-${GRAALVM_EDITION}-${JAVA_VERSION}-${GRAALVM_VERSION}
 
     curl -sL https://get.graalvm.org/jdk | bash -s -- $GRAALVM_NAME \
-        --to $HOME/ \
-        -c $GRAALVM_COMPONENTS
+    --to $HOME/ \
+    -c $GRAALVM_COMPONENTS
 
     GRAALVM_HOME="$HOME/${GRAALVM_NAME}"
 
