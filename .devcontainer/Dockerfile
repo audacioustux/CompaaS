@@ -1,3 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/base:ubuntu
+ARG VARIANT="jammy"
+FROM buildpack-deps:${VARIANT}-curl
 
 COPY ./scripts /scripts
