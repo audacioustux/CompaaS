@@ -1,3 +1,3 @@
-FROM mcr.microsoft.com/devcontainers/base:${VARIANT}
+FROM mcr.microsoft.com/devcontainers/base:ubuntu
 
 COPY ./scripts /scripts
