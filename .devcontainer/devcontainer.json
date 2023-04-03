@@ -39,8 +39,7 @@
 	},
 	"hostRequirements": {
 		"cpus": 4,
-		"memory": "10gb",
-		"storage": "50gb"
+		"memory": "8gb"
 	},
 	"features": {
 		"ghcr.io/devcontainers/features/node:1": {
@@ -74,6 +73,11 @@
 		"ghcr.io/devcontainers/features/git:1": {
 			"ppa": true,
 			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+			"version": "latest",
+			"helm": "latest",
+			"minikube": "latest"
 		}
 	},
 	"remoteUser": "devcontainer",
