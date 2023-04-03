@@ -29,6 +29,16 @@ install_sbt() {
     sdk install sbt
 }
 
+create_k8s_cluster() {
+    minikube start --cpus 4 --memory 8192 --driver=docker
+}
+
+apply_k8s_manifests() {
+    kubectl apply -f k8s/manifests
+}
+
 install_sdkman
 install_graalvm
 install_sbt
+create_k8s_cluster
+apply_k8s_manifests

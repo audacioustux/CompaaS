@@ -2,7 +2,11 @@ version: '3'
 
 services:
   app:
-    image: mcr.microsoft.com/devcontainers/base:ubuntu-22.04
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VARIANT: ubuntu-22.04
     volumes:
       - ../..:/workspaces:cached
 
