@@ -29,7 +29,8 @@ install_common-cli-tools(){
 install_wasm_tools() {
     sudo apt-get install -y --no-install-recommends \
         wabt \
-        binaryen
+        binaryen \
+        emscripten
 }
 
 refresh_apt
