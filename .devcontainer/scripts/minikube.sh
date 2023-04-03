@@ -9,3 +9,6 @@ create_cluster(){
 init_docker_env(){
     echo "eval \$(minikube docker-env)" >> ~/.zshrc
 }
+
+create_cluster
+init_docker_env
