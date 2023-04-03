@@ -72,5 +72,5 @@
 			"version": "latest"
 		}
 	},
-	"postCreateCommand": "./scripts/post-create.sh"
+	"postCreateCommand": "/scripts/post-create.sh"
 }
