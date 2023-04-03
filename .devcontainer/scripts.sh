@@ -44,14 +44,6 @@ minikube_docker_env() {
     echo "eval \$(minikube docker-env)" >> ~/.zshrc
 }
 
-publishLocalImage() {
-    sbt docker:publishLocal
-}
-
-apply_k8s_manifests() {
-    kubectl apply -k k8s/overlays/minikube
-}
-
 install_k9s() {
     curl -sS https://webi.sh/k9s | sh
 }
