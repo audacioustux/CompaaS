@@ -2,12 +2,7 @@ version: '3'
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        GRAALVM_EDITION: ${GRAALVM_EDITION:-ce}
-        GRAAL_EE_DOWNLOAD_TOKEN: ${GRAAL_EE_DOWNLOAD_TOKEN}
+    image: mcr.microsoft.com/devcontainers/base:ubuntu-22.04
     volumes:
       - ../..:/workspaces:cached
 
