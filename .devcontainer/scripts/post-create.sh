@@ -18,27 +18,46 @@ install_graalvm() {
         --to /opt \
         -c $GRAALVM_COMPONENTS
 
+    GRAALVM_HOME="/opt/${GRAALVM_NAME}"
+
     SDK_GRAALVM_ID=${GRAALVM_VERSION:0:6}.r${JAVA_VERSION:4:2}-grl${GRAALVM_EDITION:0:1}
     sdk install java ${SDK_GRAALVM_ID} ${GRAALVM_HOME}
     sdk default java ${SDK_GRAALVM_ID}
 
-    java -version
+    sdk current java
 }
 
 install_sbt() {
     sdk install sbt
+
+    sdk current sbt
 }
 
 create_k8s_cluster() {
-    minikube start --cpus 4 --memory 8192 --driver=docker
+    minikube start --cpus 3 --memory 6144 --driver=docker
+}
+
+minikube_docker_env() {
+    eval $(minikube docker-env)
+}
+
+publishLocalImage() {
+    sbt docker:publishLocal
 }
 
 apply_k8s_manifests() {
-    kubectl apply -f k8s/manifests
+    kubectl apply -k k8s/overlays/minikube
+}
+
+install_k9s() {
+    curl -sS https://webi.sh/k9s | sh
 }
 
 install_sdkman
 install_graalvm
 install_sbt
 create_k8s_cluster
+minikube_docker_env
+publishLocalImage
 apply_k8s_manifests
+install_k9s

@@ -15,7 +15,6 @@ lazy val versions = new {
 
 inThisBuild(
   List(
-    version                                        := "1.0",
     organization                                   := "com.audacioustux",
     scalaVersion                                   := versions.scala,
     scalafixOnCompile                              := true,
@@ -24,6 +23,7 @@ inThisBuild(
     scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0",
     run / fork                                     := true,
     Global / cancelable                            := false,
+    dynverSeparator := "-",
     resolvers ++= Resolver.sonatypeOssRepos("snapshots"),
     scalacOptions ++= Seq(
       "-explain",
@@ -89,6 +89,7 @@ lazy val `compaas-core` = project
       "com.lightbend.akka"            %% "akka-persistence-r2dbc"            % versions.AkkaPersistenceR2dbc,
       "com.lightbend.akka.management" %% "akka-management-cluster-http"      % versions.AkkaManagement,
       "com.lightbend.akka.management" %% "akka-management-cluster-bootstrap" % versions.AkkaManagement,
+        "com.lightbend.akka.discovery" %% "akka-discovery-kubernetes-api" % versions.AkkaManagement,
       "com.typesafe.akka"             %% "akka-cluster-tools"                % versions.Akka,
       "com.typesafe.akka"             %% "akka-serialization-jackson"        % versions.Akka,
       "com.typesafe.akka"             %% "akka-http-testkit"                 % versions.AkkaHttp % Test,
@@ -114,3 +115,9 @@ lazy val root = project
   .settings(name := "compaas")
   .aggregate(projects*)
   .dependsOn(projects.map(_ % "compile->compile")*)
+  .enablePlugins(JavaAppPackaging, DockerPlugin)
+  .settings(
+    dockerBaseImage := "adoptopenjdk:11-jre-hotspot",
+    dockerUpdateLatest := true,
+    dockerExposedPorts := Seq(8080, 8558, 25520)
+  )

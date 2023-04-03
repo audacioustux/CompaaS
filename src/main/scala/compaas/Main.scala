@@ -13,17 +13,9 @@ object Main:
   val logger = LoggerFactory.getLogger(getClass)
 
   def main(args: Array[String]): Unit =
-    (1 to 2).foreach { nr =>
-      val config: Config = ConfigFactory
-        .parseString(s"""|akka.remote.artery.canonical.hostname = "127.0.0.$nr"
-                         |akka.management.http.hostname = "127.0.0.$nr"
-                         |""".stripMargin)
-        .withFallback(ConfigFactory.load())
+          init()
 
-      init(config)
-    }
-
-  def init(config: Config): Unit =
+  def init(): Unit =
     val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "compaas")
 
     AkkaManagement(system).start()

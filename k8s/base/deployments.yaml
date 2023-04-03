@@ -19,7 +19,7 @@ spec:
       containers:
         - name: compaas
           image: compaas:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Never
           readinessProbe:
             httpGet:
               path: /ready
