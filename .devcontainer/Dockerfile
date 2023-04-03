@@ -1,4 +1,4 @@
 ARG VARIANT="jammy"
 FROM buildpack-deps:${VARIANT}-curl
 
-COPY scripts.sh /scripts.sh
+COPY setup.sh /tmp/setup.sh
