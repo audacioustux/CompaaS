@@ -82,8 +82,8 @@
 	},
 	"remoteUser": "devcontainer",
 	"postCreateCommand": {
-		"minikube_cluster-init": ". ./scripts.sh && create_minikube_cluster && minikube_docker_env",
-		"k9s-install": ". ./scripts.sh && install_k9s",
-		"sdks-install": ". ./scripts.sh && install_sdkman && install_graalvm && install_sbt &; install_graalvm_components &; wait"
+		"minikube_cluster-init": ". /scripts.sh && create_minikube_cluster && minikube_docker_env",
+		"k9s-install": ". /scripts.sh && install_k9s",
+		"sdks-install": ". /scripts.sh && install_sdkman && install_graalvm && install_sbt &; install_graalvm_components &; wait"
 	}
 }
