@@ -82,8 +82,8 @@
         },
         "remoteUser": "devcontainer",
         "postCreateCommand": {
-                "build": "/scripts/build.sh",
-                "minikube-init": "minikube start --cpus 2 --memory 4096 --driver=docker",
-                "k9s-install": "curl -sS https://webi.sh/k9s | sh"
+                "sbt": "/scripts/sbt.sh",
+                "minikube-init": "/scripts/minikube.sh",
+                "tools": "/scripts/tools.sh"
         }
 }

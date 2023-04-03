@@ -15,7 +15,7 @@ install_graalvm() {
 
     GRAALVM_NAME=graalvm-${GRAALVM_EDITION}-${JAVA_VERSION}-${GRAALVM_VERSION}
 
-    curl -sL https://get.graalvm.org/jdk | sudo bash -s -- $GRAALVM_NAME \
+    curl -sL https://get.graalvm.org/jdk | bash -s -- $GRAALVM_NAME \
         --to $HOME/ \
         -c $GRAALVM_COMPONENTS
 
@@ -31,10 +31,6 @@ install_graalvm() {
 
 install_sbt() {
     sdk install sbt
-}
-
-minikube_docker_env() {
-    echo "eval \$(minikube docker-env)" >> ~/.zshrc
 }
 
 install_sdkman
