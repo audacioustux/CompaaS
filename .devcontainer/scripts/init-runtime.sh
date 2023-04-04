@@ -2,11 +2,6 @@
 
 set -e
 
-install_sdkman() {
-    curl -s "https://get.sdkman.io" | bash
-    source "$HOME/.sdkman/bin/sdkman-init.sh"
-}
-
 install_graalvm() {
     GRAALVM_EDITION=${GRAALVM_EDITION:-ce}
     GRAALVM_VERSION=${GRAALVM_VERSION:-"22.3.1"}
@@ -33,6 +28,5 @@ install_sbt() {
     sdk install sbt
 }
 
-install_sdkman
 install_graalvm
 install_sbt
