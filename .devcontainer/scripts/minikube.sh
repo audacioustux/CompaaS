@@ -3,7 +3,7 @@
 set -e
 
 create_cluster(){
-    minikube start --cpus 2 --memory 4096 --driver=docker
+    minikube start
 }
 
 init_docker_env(){
