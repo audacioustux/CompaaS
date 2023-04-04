@@ -5,7 +5,12 @@ set -e
 source "${SDKMAN_DIR}/bin/sdkman-init.sh"
 
 install_graalvm() {
-    GRAALVM_EDITION=${GRAALVM_EDITION:-ce}
+    if [ -n "${GRAAL_EE_DOWNLOAD_TOKEN}" ]; then
+        GRAALVM_EDITION="ee"
+    else
+        GRAALVM_EDITION="ce"
+    fi
+
     GRAALVM_VERSION=${GRAALVM_VERSION:-"22.3.1"}
     JAVA_VERSION=${JAVA_VERSION:-"java17"}
     GRAALVM_COMPONENTS=${GRAALVM_COMPONENTS:-"native-image,nodejs,wasm"}
