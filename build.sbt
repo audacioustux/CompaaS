@@ -23,7 +23,7 @@ inThisBuild(
     scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0",
     run / fork                                     := true,
     Global / cancelable                            := false,
-    dynverSeparator := "-",
+    dynverSeparator                                := "-",
     resolvers ++= Resolver.sonatypeOssRepos("snapshots"),
     scalacOptions ++= Seq(
       "-explain",
@@ -89,7 +89,7 @@ lazy val `compaas-core` = project
       "com.lightbend.akka"            %% "akka-persistence-r2dbc"            % versions.AkkaPersistenceR2dbc,
       "com.lightbend.akka.management" %% "akka-management-cluster-http"      % versions.AkkaManagement,
       "com.lightbend.akka.management" %% "akka-management-cluster-bootstrap" % versions.AkkaManagement,
-        "com.lightbend.akka.discovery" %% "akka-discovery-kubernetes-api" % versions.AkkaManagement,
+      "com.lightbend.akka.discovery"  %% "akka-discovery-kubernetes-api"     % versions.AkkaManagement,
       "com.typesafe.akka"             %% "akka-cluster-tools"                % versions.Akka,
       "com.typesafe.akka"             %% "akka-serialization-jackson"        % versions.Akka,
       "com.typesafe.akka"             %% "akka-http-testkit"                 % versions.AkkaHttp % Test,
@@ -117,7 +117,7 @@ lazy val root = project
   .dependsOn(projects.map(_ % "compile->compile")*)
   .enablePlugins(JavaAppPackaging, DockerPlugin)
   .settings(
-    dockerBaseImage := "adoptopenjdk:11-jre-hotspot",
+    dockerBaseImage    := "ghcr.io/graalvm/graalvm-ce:latest",
     dockerUpdateLatest := true,
     dockerExposedPorts := Seq(8080, 8558, 25520)
   )

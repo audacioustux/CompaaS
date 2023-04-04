@@ -44,7 +44,7 @@
         "features": {
                 "ghcr.io/devcontainers/features/node:1": {
                         "nodeGypDependencies": true,
-                        "version": "latest"
+                        "version": "18"
                 },
                 "ghcr.io/devcontainers/features/common-utils:2": {
                         "installZsh": true,
@@ -85,7 +85,8 @@
                         "version": "17",
                         "jdkDistro": "oracle",
                         "gradleVersion": "latest",
-                        "mavenVersion": "latest"
+                        "mavenVersion": "latest",
+                        "antVersion": "latest"
                 }
         },
         "remoteUser": "devcontainer",
@@ -93,5 +94,8 @@
                 "runtime-init": ".devcontainer/scripts/init-runtime.sh",
                 "k8s-init": ".devcontainer/scripts/init-k8s.sh",
                 "tools-init": ".devcontainer/scripts/init-tools.sh"
+        },
+        "postStartCommand": {
+                "build-sbt": ".devcontainer/scripts/build-sbt.sh"
         }
 }
