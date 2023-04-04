@@ -2,13 +2,15 @@
 
 set -e
 
+export DEBIAN_FRONTEND=noninteractive
+
 refresh_apt(){
-    apt-get update
-    apt-get upgrade -y
+    sudo apt-get update
+    sudo apt-get upgrade -y
 }
 
 install_common-cli-tools(){
-    apt-get install -y --no-install-recommends \
+    sudo apt-get install -y --no-install-recommends \
         neovim \
         python3-neovim \
         fzf \
@@ -21,7 +23,7 @@ install_common-cli-tools(){
 }
 
 install_wasm_tools() {
-    apt-get install -y --no-install-recommends \
+    sudo apt-get install -y --no-install-recommends \
         wabt \
         binaryen \
         emscripten

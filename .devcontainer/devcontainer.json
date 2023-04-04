@@ -43,54 +43,55 @@
         },
         "features": {
                 "ghcr.io/devcontainers/features/node:1": {
-					"nodeGypDependencies": true,
-					"version": "latest"
-				},
+                        "nodeGypDependencies": true,
+                        "version": "latest"
+                },
                 "ghcr.io/devcontainers/features/common-utils:2": {
-					"installZsh": true,
-					"configureZshAsDefaultShell": true,
-					"installOhMyZsh": true,
-					"upgradePackages": true,
-					"username": "devcontainer",
-					"userUid": "automatic",
-					"userGid": "automatic"
-				},
+                        "installZsh": true,
+                        "configureZshAsDefaultShell": true,
+                        "installOhMyZsh": true,
+                        "upgradePackages": true,
+                        "username": "devcontainer",
+                        "userUid": "automatic",
+                        "userGid": "automatic"
+                },
                 "ghcr.io/devcontainers/features/rust:1": {
-					"version": "latest",
-					"profile": "complete"
-				},
+                        "version": "latest",
+                        "profile": "complete"
+                },
                 "ghcr.io/devcontainers/features/docker-in-docker:2": {
-					"moby": true,
-					"azureDnsAutoDetection": true,
-					"installDockerBuildx": true,
-					"version": "latest",
-					"dockerDashComposeVersion": "v2"
-				},
+                        "moby": true,
+                        "azureDnsAutoDetection": true,
+                        "installDockerBuildx": true,
+                        "version": "latest",
+                        "dockerDashComposeVersion": "v2"
+                },
                 "ghcr.io/devcontainers/features/github-cli:1": {
-					"installDirectlyFromGitHubRelease": true,
-					"version": "latest"
-				},
+                        "installDirectlyFromGitHubRelease": true,
+                        "version": "latest"
+                },
                 "ghcr.io/devcontainers/features/git:1": {
-					"ppa": true,
-					"version": "latest"
-				},
+                        "ppa": true,
+                        "version": "latest"
+                },
                 "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
-					"version": "latest",
-					"helm": "latest",
-					"minikube": "latest"
-				},
-				"ghcr.io/devcontainers/features/java:1": {
-					"installGradle": true,
-					"installMaven": true,
-					"version": "17",
-					"jdkDistro": "oracle",
-					"gradleVersion": "latest",
-					"mavenVersion": "latest"
-				}
+                        "version": "latest",
+                        "helm": "latest",
+                        "minikube": "latest"
+                },
+                "ghcr.io/devcontainers/features/java:1": {
+                        "installGradle": true,
+                        "installMaven": true,
+                        "version": "17",
+                        "jdkDistro": "oracle",
+                        "gradleVersion": "latest",
+                        "mavenVersion": "latest"
+                }
         },
         "remoteUser": "devcontainer",
         "postCreateCommand": {
                 "runtime-init": "/scripts/init-runtime.sh",
-                "k8s-init": "/scripts/init-k8s.sh"
+                "k8s-init": "/scripts/init-k8s.sh",
+                "tools-init": "/scripts/init-tools.sh"
         }
 }
