@@ -13,7 +13,7 @@ object Main:
   val logger = LoggerFactory.getLogger(getClass)
 
   def main(args: Array[String]): Unit =
-          init()
+    init()
 
   def init(): Unit =
     val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "compaas")

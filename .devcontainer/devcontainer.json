@@ -92,6 +92,7 @@
         "remoteUser": "devcontainer",
         "postCreateCommand": {
                 "runtime-init": ".devcontainer/scripts/init-runtime.sh",
-                "tools-init": ".devcontainer/scripts/init-tools.sh"
+                "tools-init": ".devcontainer/scripts/init-tools.sh",
+                "k8s-init": ".devcontainer/scripts/init-k8s.sh"
         }
 }
