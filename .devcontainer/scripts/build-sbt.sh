@@ -3,7 +3,7 @@
 set -e
 
 publish_local() {
-    eval $(minikube docker-env)
+    eval $(minikube -p minikube docker-env)
 
     sbt "Docker / publishLocal"
 }
