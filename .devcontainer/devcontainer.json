@@ -77,7 +77,7 @@
                 "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
                         "version": "latest",
                         "helm": "latest",
-                        "minikube": "latest"
+                        "minikube": "1.29.0"
                 },
                 "ghcr.io/devcontainers/features/java:1": {
                         "installGradle": true,
