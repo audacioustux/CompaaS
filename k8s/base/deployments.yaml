@@ -4,12 +4,16 @@ metadata:
   labels:
     app: compaas
   name: compaas
-  namespace: compaas
 spec:
   replicas: 3
   selector:
     matchLabels:
       app: compaas
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -42,9 +46,13 @@ spec:
               containerPort: 8080
               protocol: TCP
           env:
-            - name: NAMESPACE
+            - name: KUBERNETES_NAMESPACE
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
+            - name: KUBERNETES_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: REQUIRED_CONTACT_POINT_NR
               value: "3"

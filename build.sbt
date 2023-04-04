@@ -90,6 +90,7 @@ lazy val `compaas-core` = project
       "com.lightbend.akka.management" %% "akka-management-cluster-http"      % versions.AkkaManagement,
       "com.lightbend.akka.management" %% "akka-management-cluster-bootstrap" % versions.AkkaManagement,
       "com.lightbend.akka.discovery"  %% "akka-discovery-kubernetes-api"     % versions.AkkaManagement,
+      "com.lightbend.akka.management" %% "akka-rolling-update-kubernetes"    % versions.AkkaManagement,
       "com.typesafe.akka"             %% "akka-cluster-tools"                % versions.Akka,
       "com.typesafe.akka"             %% "akka-serialization-jackson"        % versions.Akka,
       "com.typesafe.akka"             %% "akka-http-testkit"                 % versions.AkkaHttp % Test,

@@ -3,7 +3,6 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: pod-reader
-  namespace: compaas
 rules:
   - apiGroups: [""]
     resources: ["pods"]
@@ -13,11 +12,32 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: read-pods
-  namespace: compaas
 subjects:
-  - kind: User
-    name: system:serviceaccount:compaas:default
+  - kind: ServiceAccount
+    name: default
 roleRef:
   kind: Role
   name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: pod-annotator
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["patch"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: annotate-pods
+subjects:
+  - kind: ServiceAccount
+    name: default
+roleRef:
+  kind: Role
+  name: pod-annotator
   apiGroup: rbac.authorization.k8s.io
