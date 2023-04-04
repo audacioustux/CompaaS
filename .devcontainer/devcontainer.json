@@ -6,27 +6,27 @@
         "customizations": {
                 "vscode": {
                         "extensions": [
-							"sleistner.vscode-fileutils",
-							"bierner.markdown-mermaid",
-							"DavidAnson.vscode-markdownlint",
-							"GitHub.copilot",
-							"scalameta.metals",
-							"vadimcn.vscode-lldb",
-							"mutantdino.resourcemonitor",
-							"rust-lang.rust-analyzer",
-							"tamasfe.even-better-toml",
-							"serayuzgur.crates",
-							"akamud.vscode-theme-onedark",
-							"jeff-hykin.better-cpp-syntax",
-							"PKief.material-icon-theme",
-							"PKief.material-product-icons",
-							"dtsvet.vscode-wasm",
-							"svelte.svelte-vscode",
-							"vscjava.vscode-java-pack",
-							"redhat.vscode-yaml",
-							"ms-azuretools.vscode-docker",
-							"EditorConfig.EditorConfig"
-						],
+                                "sleistner.vscode-fileutils",
+                                "bierner.markdown-mermaid",
+                                "DavidAnson.vscode-markdownlint",
+                                "GitHub.copilot",
+                                "scalameta.metals",
+                                "vadimcn.vscode-lldb",
+                                "mutantdino.resourcemonitor",
+                                "rust-lang.rust-analyzer",
+                                "tamasfe.even-better-toml",
+                                "serayuzgur.crates",
+                                "akamud.vscode-theme-onedark",
+                                "jeff-hykin.better-cpp-syntax",
+                                "PKief.material-icon-theme",
+                                "PKief.material-product-icons",
+                                "dtsvet.vscode-wasm",
+                                "svelte.svelte-vscode",
+                                "vscjava.vscode-java-pack",
+                                "redhat.vscode-yaml",
+                                "ms-azuretools.vscode-docker",
+                                "EditorConfig.EditorConfig"
+                        ],
                         "settings": {
                                 "git.autofetch": true,
                                 "files.autoSave": "onFocusChange",
@@ -83,8 +83,7 @@
         },
         "remoteUser": "devcontainer",
         "postCreateCommand": {
-                "sbt": "/scripts/sbt.sh",
-                "minikube-init": "/scripts/minikube.sh",
-                "tools": "/scripts/tools.sh"
+                "runtime-init": "/scripts/init-runtime.sh",
+                "k8s-init": "/scripts/init-k8s.sh"
         }
 }

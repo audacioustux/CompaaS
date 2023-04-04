@@ -2,12 +2,6 @@
 
 set -e
 
-export DEBIAN_FRONTEND=noninteractive
-
-install_k9s() {
-    curl -sS https://webi.sh/k9s | sh
-}
-
 refresh_apt(){
     sudo apt-get update
     sudo apt-get upgrade -y
@@ -34,6 +28,5 @@ install_wasm_tools() {
 }
 
 refresh_apt
-install_k9s
 install_common-cli-tools
 install_wasm_tools
