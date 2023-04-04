@@ -5,7 +5,7 @@ metadata:
   name: pod-reader
   namespace: compaas
 rules:
-  - apiGroups: [""] # "" indicates the core API group
+  - apiGroups: [""]
     resources: ["pods"]
     verbs: ["get", "watch", "list"]
 ---
@@ -15,8 +15,6 @@ metadata:
   name: read-pods
   namespace: compaas
 subjects:
-  # Note the `name` line below. The first default refers to the namespace. The second refers to the service account name.
-  # For instance, `name: system:serviceaccount:myns:default` would refer to the default service account in namespace `myns`
   - kind: User
     name: system:serviceaccount:compaas:default
 roleRef:

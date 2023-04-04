@@ -7,7 +7,7 @@ remove_trace() {
 }
 
 start_minikube() {
-    minikube start --driver=docker
+    minikube start --driver=docker --cpus=3 --memory=6144 --disk-size=16g
 }
 
 set_minikube_docker_env() {
