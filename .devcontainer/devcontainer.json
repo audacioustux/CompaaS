@@ -90,8 +90,8 @@
         },
         "remoteUser": "devcontainer",
         "postCreateCommand": {
-                "runtime-init": "/scripts/init-runtime.sh",
-                "k8s-init": "/scripts/init-k8s.sh",
-                "tools-init": "/scripts/init-tools.sh"
+                "runtime-init": ".devcontainer/scripts/init-runtime.sh",
+                "k8s-init": ".devcontainer/scripts/init-k8s.sh",
+                "tools-init": ".devcontainer/scripts/init-tools.sh"
         }
 }
