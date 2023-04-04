@@ -3,8 +3,9 @@
 ## Important Commands
 
 ``` bash
-# Watch for changes and publish to local registry
 sbt --client -J-Xmx2G "~Docker / publishLocal"
+kubectl apply -k k8s/overlays/minikube
+kubectl rollout restart deployment compaas -n compaas
 ```
 
 ## Contributors
