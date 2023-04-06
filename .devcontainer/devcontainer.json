@@ -93,6 +93,9 @@
         "postCreateCommand": {
                 "runtime-init": ".devcontainer/scripts/init-runtime.sh",
                 "tools-init": ".devcontainer/scripts/init-tools.sh",
-                "k8s-init": ".devcontainer/scripts/init-k8s.sh"
+                "minikube-init": ".devcontainer/scripts/init-minikube.sh"
+        },
+        "postStartCommand": {
+                "minikube-start": "minikube start"
         }
 }
