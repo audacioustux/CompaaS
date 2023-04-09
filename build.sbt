@@ -122,8 +122,3 @@ lazy val root = project
     dockerUpdateLatest := true,
     dockerExposedPorts := Seq(8080, 8558, 25520)
   )
-
-lazy val dev = taskKey[Unit]("Run the project in development mode")
-dev := {
-  "Docker / publistLocal"
-}
