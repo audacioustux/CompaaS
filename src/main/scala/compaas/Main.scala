@@ -16,7 +16,17 @@ object Main:
     init()
 
   def init(): Unit =
-    val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "compaas")
+    val system: ActorSystem[Nothing] = ActorSystem(
+      Behaviors.setup { ctx =>
+        ctx.log.info("Starting up")
+
+        Behaviors.receiveSignal { case (_, PostStop) =>
+          ctx.log.info("Shutting down")
+          Behaviors.same
+        }
+      },
+      "compaas"
+    )
 
     AkkaManagement(system).start()
     ClusterBootstrap(system).start()
