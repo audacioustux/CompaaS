@@ -18,10 +18,10 @@ object Main:
   def init(): Unit =
     val system: ActorSystem[Nothing] = ActorSystem(
       Behaviors.setup { ctx =>
-        ctx.log.info("Starting up")
+        ctx.log.info("Starting up...")
 
         Behaviors.receiveSignal { case (_, PostStop) =>
-          ctx.log.info("Shutting down")
+          ctx.log.info("Shutting down...")
           Behaviors.same
         }
       },
