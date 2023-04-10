@@ -29,11 +29,6 @@ install_wasm_tools() {
         emscripten
 }
 
-install_k9s() {
-    curl -sS https://webi.sh/k9s | sh
-}
-
 refresh_apt
 install_common-cli-tools
 install_wasm_tools
-install_k9s

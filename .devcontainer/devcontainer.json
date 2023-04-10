@@ -90,11 +90,16 @@
         },
         "remoteUser": "devcontainer",
         "postCreateCommand": {
-                "runtime-init": ".devcontainer/scripts/init-runtime.sh",
-                "tools-init": ".devcontainer/scripts/init-tools.sh",
-                "minikube-init": ".devcontainer/scripts/init-minikube.sh"
+                "sdks-init": ".devcontainer/scripts/init-sdks.sh",
+                "minikube-init": ".devcontainer/scripts/init-minikube.sh",
+                "apt-pkgs-init": ".devcontainer/scripts/init-apt-pkgs.sh",
+                "k9s-init": ".devcontainer/scripts/init-k9s.sh",
+                "pueue-init": ".devcontainer/scripts/init-pueue.sh"
         },
         "postStartCommand": {
                 "minikube-start": "minikube start"
+        },
+        "postAttachCommand": {
+                "pueue-daemon": "pueued"
         }
 }

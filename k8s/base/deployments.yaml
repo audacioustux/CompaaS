@@ -1,14 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: compaas
   name: compaas
 spec:
   replicas: 3
-  selector:
-    matchLabels:
-      app: compaas
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -17,7 +12,6 @@ spec:
   template:
     metadata:
       labels:
-        app: compaas
         actorSystemName: compaas
     spec:
       containers:
@@ -45,6 +39,9 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: compaas-cm
           env:
             - name: KUBERNETES_NAMESPACE
               valueFrom:
@@ -54,5 +51,3 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            - name: REQUIRED_CONTACT_POINT_NR
-              value: "3"

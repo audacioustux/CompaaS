@@ -1,5 +1,0 @@
-namespace: compaas
-
-resources:
-  - namespace.yaml
-  - ../../base
