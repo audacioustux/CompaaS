@@ -118,7 +118,7 @@ lazy val root = project
   .dependsOn(projects.map(_ % "compile->compile")*)
   .enablePlugins(JavaAppPackaging, DockerPlugin)
   .settings(
-    dockerBaseImage    := "ghcr.io/graalvm/graalvm-ce:latest",
+    dockerBaseImage    := "ghcr.io/graalvm/graalvm-ce",
     dockerUpdateLatest := true,
     dockerExposedPorts := Seq(8080, 8558, 25520)
   )

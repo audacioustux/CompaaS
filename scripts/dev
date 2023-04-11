@@ -7,4 +7,4 @@ concurrently \
     --names 'build,deploy' \
     --prefix-colors 'cyan,magenta' \
         'sbt --client -J-Xmx2G "~Docker / stage"' \
-        'skaffold dev'
+        'skaffold dev --tail'

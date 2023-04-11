@@ -10,8 +10,6 @@ import org.slf4j.LoggerFactory
 import scala.util.control.NonFatal
 
 object Main:
-  val logger = LoggerFactory.getLogger(getClass)
-
   def main(args: Array[String]): Unit =
     init()
 

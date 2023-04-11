@@ -1,6 +1,7 @@
 {
         "name": "CompaaS Dev Container",
-        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+        "dockerComposeFile": "Compose.yml",
+        "service": "devcontainer",
         "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
         "customizations": {
                 "vscode": {
