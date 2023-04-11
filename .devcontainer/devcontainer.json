@@ -42,6 +42,7 @@
                 "cpus": 4,
                 "memory": "8gb"
         },
+        "shutdownAction": "none",
         "features": {
                 "ghcr.io/devcontainers/features/node:1": {
                         "nodeGypDependencies": true,
