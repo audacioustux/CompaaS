@@ -11,7 +11,6 @@ start_minikube() {
 }
 
 set_docker_env() {
-    rm ~/.docker/config.json
     echo "eval \$(minikube docker-env)" >> ~/.zshrc
 }
 

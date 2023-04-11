@@ -34,7 +34,8 @@
                                 "resmon.show.cpufreq": false,
                                 "workbench.productIconTheme": "material-product-icons",
                                 "workbench.iconTheme": "material-icon-theme",
-                                "workbench.colorTheme": "Atom One Dark"
+                                "workbench.colorTheme": "Atom One Dark",
+                                "dev.containers.dockerCredentialHelper": false
                         }
                 }
         },
@@ -101,5 +102,6 @@
         },
         "postStartCommand": {
                 "minikube-start": "minikube start"
-        }
+        },
+        "postAttachCommand": {}
 }
