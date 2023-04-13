@@ -10,7 +10,7 @@
                                 "bierner.markdown-mermaid",
                                 "DavidAnson.vscode-markdownlint",
                                 "GitHub.copilot",
-                                "scalameta.metals",
+                                "scalameta.metals@prerelease",
                                 "vadimcn.vscode-lldb",
                                 "mutantdino.resourcemonitor",
                                 "rust-lang.rust-analyzer",
@@ -25,7 +25,9 @@
                                 "vscjava.vscode-java-pack",
                                 "redhat.vscode-yaml",
                                 "ms-azuretools.vscode-docker",
-                                "EditorConfig.EditorConfig"
+                                "EditorConfig.EditorConfig",
+                                "mhutchie.git-graph",
+                                "tilt-dev.Tiltfile"
                         ],
                         "settings": {
                                 "git.autofetch": true,
@@ -98,7 +100,7 @@
                 "apt-pkgs-init": ".devcontainer/scripts/init-apt-pkgs.sh",
                 "npm-pkgs-init": ".devcontainer/scripts/init-npm-pkgs.sh",
                 "k9s-init": ".devcontainer/scripts/init-k9s.sh",
-                "skafold-init": ".devcontainer/scripts/init-skaffold.sh"
+                "tilt-init": ".devcontainer/scripts/init-tilt.sh"
         },
         "postStartCommand": {
                 "minikube-start": "minikube start"

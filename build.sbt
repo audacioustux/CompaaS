@@ -24,7 +24,7 @@ inThisBuild(
     run / fork                                     := true,
     Global / cancelable                            := false,
     dynverSeparator                                := "-",
-    resolvers ++= Resolver.sonatypeOssRepos("snapshots"),
+    // resolvers ++= Resolver.sonatypeOssRepos("snapshots"),
     scalacOptions ++= Seq(
       "-explain",
       "-indent",
@@ -118,6 +118,9 @@ lazy val root = project
   .dependsOn(projects.map(_ % "compile->compile")*)
   .enablePlugins(JavaAppPackaging, DockerPlugin)
   .settings(
+    javaOptions ++= Seq(
+      "XX:+UseCGroupMemoryLimitForHeap"
+    ),
     dockerBaseImage    := "ghcr.io/graalvm/graalvm-ce",
     dockerUpdateLatest := true,
     dockerExposedPorts := Seq(8080, 8558, 25520)
