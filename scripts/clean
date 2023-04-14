@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-sbt --client clean
-rm -rfv .metals .bloop .bsp core.*
-docker image prune -a -f

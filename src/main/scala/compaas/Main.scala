@@ -6,14 +6,15 @@ import akka.cluster.sharding.typed.scaladsl.{ClusterSharding, Entity}
 import akka.management.cluster.bootstrap.ClusterBootstrap
 import akka.management.scaladsl.AkkaManagement
 import com.typesafe.config.{Config, ConfigFactory}
+import compaas.core.Compaas
 
-import scala.util.control.NonFatal
 object Main:
   def main(args: Array[String]): Unit =
     given ActorSystem[?] = ActorSystem(Behaviors.empty, "compaas")
 
     startClusterBootstrap
     startClusterSharding
+    startCompaasCore
 
   private def startClusterBootstrap(using ActorSystem[?]): Unit =
     AkkaManagement(summon).start()
@@ -21,3 +22,6 @@ object Main:
 
   private def startClusterSharding(using ActorSystem[?]): Unit =
     val sharding = ClusterSharding(summon)
+
+  private def startCompaasCore(using ActorSystem[?]): Unit =
+    Compaas()

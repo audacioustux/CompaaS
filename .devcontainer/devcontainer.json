@@ -100,7 +100,8 @@
                 "apt-pkgs-init": ".devcontainer/scripts/init-apt-pkgs.sh",
                 "npm-pkgs-init": ".devcontainer/scripts/init-npm-pkgs.sh",
                 "k9s-init": ".devcontainer/scripts/init-k9s.sh",
-                "tilt-init": ".devcontainer/scripts/init-tilt.sh"
+                "tilt-init": ".devcontainer/scripts/init-tilt.sh",
+                "clean-up": "git clean -Xdf"
         },
         "postStartCommand": {
                 "minikube-start": "minikube start"
