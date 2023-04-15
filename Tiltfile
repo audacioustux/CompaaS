@@ -1,10 +1,13 @@
 local_resource(
     "sbt", 
-    serve_cmd='sbt --client -J-Xmx2G "~Docker / stage"', 
+    serve_cmd='sbt -J-Xmx2G "~stage"', 
     deps=["build.sbt"]
 )
 
-docker_build("compaas", "target/docker/stage")
+docker_build("compaas", 
+  context="target/universal/stage", 
+  dockerfile="Dockerfile"
+)
 docker_prune_settings(True)
 
 k8s_yaml(

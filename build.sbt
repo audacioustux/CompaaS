@@ -116,12 +116,4 @@ lazy val root = project
   .settings(name := "compaas")
   .aggregate(projects*)
   .dependsOn(projects.map(_ % "compile->compile")*)
-  .enablePlugins(JavaAppPackaging, DockerPlugin)
-  .settings(
-    javaOptions ++= Seq(
-      "XX:+UseCGroupMemoryLimitForHeap"
-    ),
-    dockerBaseImage    := "ghcr.io/graalvm/graalvm-ce",
-    dockerUpdateLatest := true,
-    dockerExposedPorts := Seq(8080, 8558, 25520)
-  )
+  .enablePlugins(JavaAppPackaging)
