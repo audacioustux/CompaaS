@@ -4,10 +4,10 @@ kind: Kustomization
 commonLabels:
   app: compaas
 
-resources:
-  - deployments.yaml
-  - rbac.yaml
-
 configMapGenerator:
   - name: compaas-cm
     env: config.properties
+
+resources:
+  - deployments.yaml
+  - rbac.yaml

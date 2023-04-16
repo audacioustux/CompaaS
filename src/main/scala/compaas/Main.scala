@@ -9,6 +9,8 @@ import akka.rollingupdate.kubernetes.PodDeletionCost
 import com.typesafe.config.{Config, ConfigFactory}
 import compaas.core.Compaas
 
+import java.lang.management.ManagementFactory
+
 object Main:
   def main(args: Array[String]): Unit =
     given ActorSystem[?] = ActorSystem(Behaviors.empty, "compaas")

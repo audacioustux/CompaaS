@@ -5,6 +5,9 @@ metadata:
 spec:
   strategy:
     rollingUpdate:
-      maxUnavailable: 3
       maxSurge: 3
-      timeoutSeconds: 60
+      maxUnavailable: 3
+  template:
+    metadata:
+      annotations:
+        instrumentation.opentelemetry.io/inject-java: "true"

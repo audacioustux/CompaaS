@@ -14,3 +14,10 @@ docker_prune_settings(True)
 k8s_yaml(
   kustomize("k8s/overlays/dev")
 )
+
+local_resource(
+  "minikube-tunnel",
+  serve_cmd="minikube tunnel --bind-address 0.0.0.0",
+)
+
+analytics_settings(enable=False)

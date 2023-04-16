@@ -30,14 +30,14 @@ spec:
             failureThreshold: 5
             initialDelaySeconds: 20
           ports:
-            - name: jmx
-              containerPort: 9099
-              protocol: TCP
             - name: management
               containerPort: 8558
               protocol: TCP
             - name: http
               containerPort: 8080
+              protocol: TCP
+            - name: jmx
+              containerPort: 9996
               protocol: TCP
           envFrom:
             - configMapRef:
@@ -58,5 +58,13 @@ metadata:
   name: compaas
 spec:
   type: LoadBalancer
----
-
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+    - name: management
+      port: 8558
+      targetPort: management
+    - name: jmx
+      port: 9996
+      targetPort: jmx
