@@ -1,0 +1,10 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: compaas
+spec:
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 3
+      maxSurge: 3
+      timeoutSeconds: 60

@@ -4,7 +4,8 @@ local_resource(
     deps=["build.sbt"]
 )
 
-docker_build("compaas", 
+docker_build(
+  "compaas", 
   context="target/universal/stage", 
   dockerfile="Dockerfile"
 )

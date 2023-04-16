@@ -104,7 +104,7 @@
                 "clean-up": "git clean -Xdf"
         },
         "postStartCommand": {
-                "minikube-start": "minikube start"
+                "minikube-start": "minikube status || minikube start"
         },
         "postAttachCommand": {}
 }

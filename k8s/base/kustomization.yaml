@@ -7,3 +7,7 @@ commonLabels:
 resources:
   - deployments.yaml
   - rbac.yaml
+
+configMapGenerator:
+  - name: compaas-cm
+    env: config.properties

@@ -7,7 +7,12 @@ reset_minikube() {
 }
 
 start_minikube() {
-    minikube start --driver=docker --cpus=4 --memory=8gb --disk-size=20gb
+    minikube start \
+        --driver=docker \
+        --cpus=3 \
+        --memory=8gb \
+        --disk-size=20gb \
+        --addons=metrics-server,dashboard
 }
 
 set_docker_env() {

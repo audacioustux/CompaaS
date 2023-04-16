@@ -11,6 +11,7 @@ lazy val versions = new {
   val Cats                 = "2.9.0"
   val Munit                = "0.7.29"
   val Scalatest            = "3.2.14"
+  val OpenTelemetry        = "1.25.0"
 }
 
 inThisBuild(
@@ -98,6 +99,7 @@ lazy val `compaas-core` = project
       "com.typesafe.akka"             %% "akka-persistence-testkit"          % versions.Akka     % Test
     ).map(_.cross(CrossVersion.for3Use2_13)),
     libraryDependencies ++= Seq(
+      "io.opentelemetry"                       % "opentelemetry-api"     % versions.OpenTelemetry,
       "ch.qos.logback"                         % "logback-classic"       % versions.Logback,
       "org.graalvm.sdk"                        % "graal-sdk"             % versions.GraalSDK,
       "org.typelevel"                         %% "cats-core"             % versions.Cats,

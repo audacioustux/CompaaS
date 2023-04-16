@@ -9,4 +9,8 @@ resources:
 
 configMapGenerator:
   - name: compaas-cm
+    behavior: merge
     env: config.properties
+
+patchesStrategicMerge:
+  - deployments.yaml
