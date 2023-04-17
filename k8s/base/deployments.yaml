@@ -37,7 +37,7 @@ spec:
               containerPort: 8080
               protocol: TCP
             - name: jmx
-              containerPort: 9996
+              containerPort: 9010
               protocol: TCP
           envFrom:
             - configMapRef:
@@ -66,5 +66,5 @@ spec:
       port: 8558
       targetPort: management
     - name: jmx
-      port: 9996
+      port: 9010
       targetPort: jmx

@@ -4,11 +4,8 @@ RUN gu install native-image js wasm python
 
 COPY . .
 
-RUN mkdir -p /agent
-ADD https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar /agent/opentelemetry-javaagent.jar
+EXPOSE 8080 8558 25520 9010
 
-EXPOSE 8080 8558 25520
+ENV JAVA_OPTS "-XX:+EagerJVMCI -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9010 -Dcom.sun.management.jmxremote.rmi.port=9010 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=0.0.0.0"
 
-ENV JAVA_OPTS "-XX:+EagerJVMCI -javaagent:/agent/opentelemetry-javaagent.jar -Dotel.traces.exporter=none "
-
-ENTRYPOINT bin/compaas
+ENTRYPOINT bin/compaas 
