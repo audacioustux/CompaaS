@@ -1,12 +1,20 @@
 package compaas.core
 
+import akka.actor.typed.*
+import akka.actor.typed.scaladsl.Behaviors
 import org.graalvm.polyglot.*
 
 object Compaas:
-  def apply() =
-    val engine  = GraalEngine()
-    val context = engine.GraalContext()
-    val source  = Source.newBuilder("js", "1 + 2", "test").build()
-    val script  = context.parse(source)
-    val result  = script.execute()
-    println(result.asInt())
+  def apply(): Behavior[Unit] =
+    Behaviors.setup { ctx =>
+      ctx.log.info("Starting compaas")
+
+      val component = ctx.spawn(Component("test", "js", "console.log('hello world')"), "test")
+
+      component ! Component.Add("test")
+      
+      Behaviors.receiveSignal { case (_, PostStop) =>
+        ctx.log.info("Stopping compaas")
+        Behaviors.same
+      }
+    }

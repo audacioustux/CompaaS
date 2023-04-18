@@ -8,10 +8,19 @@ import akka.persistence.typed.scaladsl.*
 import java.util.UUID
 import scala.collection.mutable.{HashMap, HashSet}
 
+case class Module(name: String, language: String, code: String)
+
 object Component:
-  sealed trait Command extends Serializable
-  sealed trait Event   extends Serializable
-  final case class State(ports: HashSet[Port] = HashSet(), connectors: HashSet[Connector] = HashSet())
+  sealed trait Command               extends Serializable
+  final case class Add(data: String) extends Command
+  case object Clear                  extends Command
+
+  sealed trait Event                   extends Serializable
+  final case class Added(data: String) extends Event
+  case object Cleared                  extends Event
+
+  final case class State(ports: HashSet[Port] = HashSet(), connectors: HashSet[Connector] = HashSet(), module: Module)
+      extends Serializable
 
   sealed trait Port
   final case class Inlet(id: UUID, name: Option[String])  extends Port
@@ -20,12 +29,24 @@ object Component:
   sealed trait Connector
   final case class Hub(id: UUID, ports: HashSet[Port], name: Option[String]) extends Connector
 
-  def apply(): Behavior[Command] = Behaviors.setup { ctx =>
+  val commandHandler: (State, Command) => Effect[Event, State] = { (state, command) =>
+    command match
+      case Add(data) => Effect.persist(Added(data))
+      case Clear     => Effect.persist(Cleared)
+  }
+
+  val eventHandler: (State, Event) => State = { (state, event) =>
+    event match
+      case Added(data) => state
+      case Cleared     => state
+  }
+
+  def apply(name: String, language: String, code: String): Behavior[Command] = Behaviors.setup { ctx =>
     val persistenceId = PersistenceId.ofUniqueId(UUID.randomUUID().toString)
     EventSourcedBehavior[Command, Event, State](
       persistenceId = persistenceId,
-      emptyState = State(),
-      commandHandler = (state, cmd) => throw new NotImplementedError("TODO: process the command & return an Effect"),
-      eventHandler = (state, evt) => throw new NotImplementedError("TODO: process the event return the next state")
+      emptyState = State(module = Module(name, language, code)),
+      commandHandler,
+      eventHandler
     )
   }
