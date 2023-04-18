@@ -5,6 +5,6 @@ metadata:
 spec:
   strategy:
     rollingUpdate:
-      maxSurge: 3
-      maxUnavailable: 0
+      maxSurge: 0
+      maxUnavailable: 3
       timeoutSeconds: 60

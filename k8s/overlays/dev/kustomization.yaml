@@ -6,6 +6,7 @@ namespace: compaas-dev
 resources:
   - namespace.yaml
   - ../../base
+  - service.yaml
 
 configMapGenerator:
   - name: compaas-cm

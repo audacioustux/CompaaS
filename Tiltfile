@@ -1,3 +1,6 @@
+# if k8s_namespace() == 'default':
+#   fail("failing early to avoid deploying to 'default' namespace")
+
 local_resource(
     "sbt", 
     serve_cmd='sbt -J-Xmx2G "~stage"', 

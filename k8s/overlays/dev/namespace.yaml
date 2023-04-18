@@ -1,6 +1,4 @@
-apiVersion: v1
 kind: Namespace
+apiVersion: v1
 metadata:
   name: compaas-dev
-  labels:
-    name: compaas-dev

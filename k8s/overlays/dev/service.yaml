@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: compaas-svc
+spec:
+  selector:
+    app: compaas
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+    - name: management
+      port: 8558
+      targetPort: management
+    - name: jmx
+      port: 9010
+      targetPort: jmx
