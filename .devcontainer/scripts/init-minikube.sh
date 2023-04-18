@@ -10,8 +10,8 @@ start_minikube() {
     minikube start \
         --driver=docker \
         --cpus=3 \
-        --memory=8gb \
-        --disk-size=20gb \
+        --memory=6gb \
+        --disk-size=15gb \
         --addons=metrics-server,dashboard
 }
 
