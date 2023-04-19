@@ -96,7 +96,7 @@
         "remoteUser": "devcontainer",
         "postCreateCommand": {
                 "sdks-init": ".devcontainer/scripts/init-sdks.sh",
-                "minikube-init": ".devcontainer/scripts/init-minikube.sh",
+                "infra-init": ".devcontainer/scripts/init-infra.sh",
                 "apt-pkgs-init": ".devcontainer/scripts/init-apt-pkgs.sh",
                 "npm-pkgs-init": ".devcontainer/scripts/init-npm-pkgs.sh",
                 "k9s-init": ".devcontainer/scripts/init-k9s.sh",

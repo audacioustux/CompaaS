@@ -17,9 +17,10 @@ install_common-cli-tools(){
         bat \
         ripgrep \
         exa \
-        tldr \
         httpie \
-        ncdu 
+        ncdu \
+        socat \
+        parallel
 }
 
 install_wasm_tools() {
@@ -27,6 +28,11 @@ install_wasm_tools() {
         wabt \
         binaryen \
         emscripten
+}
+
+cleanup_apt(){
+    sudo apt-get autoremove -y
+    sudo apt-get clean -y
 }
 
 refresh_apt
