@@ -26,9 +26,6 @@ install_graalvm() {
     SDK_GRAALVM_ID=${GRAALVM_VERSION:0:6}.r${JAVA_VERSION:4:2}-grl${GRAALVM_EDITION:0:1}
     sdk install java ${SDK_GRAALVM_ID} ${GRAALVM_HOME}
     sdk default java ${SDK_GRAALVM_ID}
-
-    export PATH=${GRAALVM_HOME}/bin:$PATH
-    export JAVA_HOME=${GRAALVM_HOME}
 }
 
 install_sbt() {

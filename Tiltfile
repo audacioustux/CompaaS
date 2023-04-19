@@ -18,4 +18,9 @@ local_resource(
   serve_cmd="minikube tunnel --bind-address 0.0.0.0",
 )
 
+local_resource(
+  "minikube-dashboard",
+  serve_cmd="minikube dashboard",
+)
+
 analytics_settings(enable=False)

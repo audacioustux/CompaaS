@@ -101,7 +101,7 @@
                 "npm-pkgs-init": ".devcontainer/scripts/init-npm-pkgs.sh",
                 "k9s-init": ".devcontainer/scripts/init-k9s.sh",
                 "tilt-init": ".devcontainer/scripts/init-tilt.sh",
-                "clean-up": "git clean -Xdf"
+                "clean-up": "git clean -Xdf --exclude='!**/*.env'"
         },
         "postStartCommand": {
                 "minikube-start": "minikube status || minikube start"
