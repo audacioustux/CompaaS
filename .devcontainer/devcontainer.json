@@ -1,6 +1,6 @@
 {
         "name": "CompaaS Dev Container",
-        "dockerComposeFile": "Compose.yml",
+        "dockerComposeFile": "compose.yaml",
         "service": "devcontainer",
         "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
         "customizations": {

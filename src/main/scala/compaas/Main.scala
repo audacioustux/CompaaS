@@ -12,6 +12,8 @@ object Main:
   def main(args: Array[String]): Unit =
     given ActorSystem[?] = ActorSystem(Guardian(), "compaas")
 
+    println("Started compaas")
+    
     startClusterBootstrap
     startClusterSharding
 

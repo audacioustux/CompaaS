@@ -24,8 +24,6 @@ inThisBuild(
     scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0",
     run / fork                                     := true,
     Global / cancelable                            := false,
-    dynverSeparator                                := "-",
-    // resolvers ++= Resolver.sonatypeOssRepos("snapshots"),
     scalacOptions ++= Seq(
       "-explain",
       "-indent",
