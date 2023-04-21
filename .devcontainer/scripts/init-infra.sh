@@ -27,7 +27,12 @@ create_buildx_driver() {
         --driver-opt=namespace=buildkit,replicas=3,rootless=true
 }
 
+install_cert_manager() {
+    kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.yaml
+}
+
 reset_minikube
 start_minikube
 set_docker_env
 create_buildx_driver
+install_cert_manager

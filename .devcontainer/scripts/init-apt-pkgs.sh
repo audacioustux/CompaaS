@@ -30,6 +30,11 @@ install_wasm_tools() {
         emscripten
 }
 
+install_postgres_client() {
+    sudo apt-get install -y --no-install-recommends \
+        postgresql-client
+}
+
 cleanup_apt(){
     sudo apt-get autoremove -y
     sudo apt-get clean -y
@@ -38,3 +43,4 @@ cleanup_apt(){
 refresh_apt
 install_common-cli-tools
 install_wasm_tools
+install_postgres_client

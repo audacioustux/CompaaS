@@ -16,3 +16,6 @@ spec:
     - name: jmx
       port: 9010
       targetPort: jmx
+    - name: debugger
+      port: 9020
+      targetPort: debugger

@@ -39,6 +39,9 @@ spec:
             - name: jmx
               containerPort: 9010
               protocol: TCP
+            - name: debugger
+              containerPort: 9020
+              protocol: TCP
           envFrom:
             - configMapRef:
                 name: compaas-cm

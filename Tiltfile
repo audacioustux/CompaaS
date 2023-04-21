@@ -7,11 +7,15 @@ local_resource(
 docker_build(
   "compaas", 
   context="target/universal/stage", 
-  dockerfile="Dockerfile"
+  dockerfile="Dockerfile",
+  build_args={}
 )
 docker_prune_settings(True)
 
-k8s_yaml(kustomize("k8s/compaas/overlays/dev"))
+load('ext://namespace', 'namespace_create', 'namespace_inject')
+namespace_create('compaas-dev')
+
+k8s_yaml(namespace_inject(kustomize("k8s/compaas/overlays/dev"), 'compaas-dev'))
 
 local_resource(
   "minikube-tunnel",
