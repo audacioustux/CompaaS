@@ -12,7 +12,7 @@ object Compaas:
       val component = ctx.spawn(Component("test", "js", "console.log('hello world')"), "test")
 
       component ! Component.Add("test")
-      
+
       Behaviors.receiveSignal { case (_, PostStop) =>
         ctx.log.info("Stopping compaas")
         Behaviors.same

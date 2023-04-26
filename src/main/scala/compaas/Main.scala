@@ -10,25 +10,9 @@ import compaas.core.Compaas
 
 object Main:
   def main(args: Array[String]): Unit =
-    given ActorSystem[?] = ActorSystem(Guardian(), "compaas")
+    given system: ActorSystem[?] = ActorSystem(Behaviors.empty, "compaas")
 
-    startClusterBootstrap
-    startClusterSharding
-
-  private def startClusterBootstrap(using ActorSystem[?]): Unit =
-    AkkaManagement(summon).start()
-    ClusterBootstrap(summon).start()
-    PodDeletionCost(summon).start()
-
-  private def startClusterSharding(using ActorSystem[?]): Unit =
-    val sharding = ClusterSharding(summon)
-
-object Guardian:
-  def startCompaas(using ActorContext[?]): Unit =
-    summon.spawn(Compaas(), "compaas-core")
-
-  def apply() = Behaviors.setup { implicit ctx =>
-    startCompaas
-
-    Behaviors.unhandled
-  }
+    // bootstrap
+    AkkaManagement(system).start()
+    ClusterBootstrap(system).start()
+    PodDeletionCost(system).start()
