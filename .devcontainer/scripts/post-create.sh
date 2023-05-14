@@ -1,45 +1,55 @@
 #!/usr/bin/env bash
 
 set -e
+set -a
 
-reset_minikube() {
-    minikube delete
+install-apt-pkgs() {
+    sudo apt-get install -y --no-install-recommends \
+        wabt \
+        binaryen \
+        emscripten
 }
 
-start_minikube() {
+install-npm-pkgs() {
+    npm install -g concurrently
+}
+
+cleanup(){
+    sudo apt-get autoremove -y
+    sudo apt-get clean -y
+    git clean -Xdf --exclude='!**/*.env'
+}
+
+setup-k8s() {
+    # initialize minikube
+    minikube delete
     minikube start \
         --driver=docker \
         --cpus=4 \
         --memory=8gb \
         --disk-size=16gb \
         --addons=metrics-server,dashboard
-}
 
-set_docker_env() {
+    # use minikube's docker daemon
     echo "eval \$(minikube docker-env)" >> ~/.zshrc
-}
 
-create_buildx_driver() {
+    # create buildx driver
     kubectl create namespace buildkit
     docker buildx create \
         --name=kube \
         --driver=kubernetes \
         --driver-opt=namespace=buildkit,replicas=3,rootless=true
-}
 
-set_default_namespace() {
+    # set default namespace
     kubectl create ns compaas-dev
     kubectl config set-context --current --namespace=compaas-dev
-}
 
-install_cert_manager() {
+    # install cert-manager
     kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.yaml
-}
 
-install_yugabytedb() {
+    # install yugabytedb
     helm repo add yugabytedb https://charts.yugabyte.com
     helm repo update
-    
     helm install yugabyte yugabytedb/yugabyte \
         --version 2.17.3 \
         --set resource.master.requests.cpu=0.5 \
@@ -50,10 +60,29 @@ install_yugabytedb() {
         --set replicas.tserver=1
 }
 
-reset_minikube
-start_minikube
-set_docker_env
-create_buildx_driver
-set_default_namespace
-install_cert_manager
-install_yugabytedb
+install-k9s() {
+    curl -sS https://webi.sh/k9s | sh
+}
+
+install-tilt() {
+    curl -fsSL https://raw.githubusercontent.com/tilt-dev/tilt/master/scripts/install.sh | bash
+}
+
+install-sdks() {
+    source "${SDKMAN_DIR}/bin/sdkman-init.sh"
+
+    sdk env install
+}
+
+parallel --halt now,fail=1 --tag --ungroup ::: \
+    install-apt-pkgs \
+    install-npm-pkgs \
+    install-k9s \
+    install-tilt \
+    install-sdks \
+    setup-k8s
+
+cleanup
+
+set +a
+set +e

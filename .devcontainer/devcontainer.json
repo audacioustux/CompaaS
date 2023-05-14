@@ -16,10 +16,7 @@
                                 "rust-lang.rust-analyzer",
                                 "tamasfe.even-better-toml",
                                 "serayuzgur.crates",
-                                "akamud.vscode-theme-onedark",
                                 "jeff-hykin.better-cpp-syntax",
-                                "PKief.material-icon-theme",
-                                "PKief.material-product-icons",
                                 "dtsvet.vscode-wasm",
                                 "svelte.svelte-vscode",
                                 "redhat.vscode-yaml",
@@ -34,9 +31,6 @@
                                 "files.autoSave": "onFocusChange",
                                 "editor.formatOnSave": true,
                                 "resmon.show.cpufreq": false,
-                                "workbench.productIconTheme": "material-product-icons",
-                                "workbench.iconTheme": "material-icon-theme",
-                                "workbench.colorTheme": "Atom One Dark",
                                 "dev.containers.dockerCredentialHelper": false
                         }
                 }
@@ -49,7 +43,7 @@
         "features": {
                 "ghcr.io/devcontainers/features/node:1": {
                         "nodeGypDependencies": true,
-                        "version": "18"
+                        "version": "latest"
                 },
                 "ghcr.io/devcontainers/features/common-utils:2": {
                         "installZsh": true,
@@ -84,27 +78,12 @@
                         "helm": "latest",
                         "minikube": "latest"
                 },
-                "ghcr.io/devcontainers/features/java:1": {
-                        "installGradle": true,
-                        "installMaven": true,
-                        "version": "17",
-                        "jdkDistro": "oracle",
-                        "gradleVersion": "latest",
-                        "mavenVersion": "latest"
+                "ghcr.io/devcontainers-contrib/features/apt-get-packages:1": {
+                        "packages": "ripgrep,bat,exa,delta,hyperfine,fd-find,zoxide,neovim,python3-neovim,httpie,fzf,socat,ncdu,parallel"
                 }
         },
         "remoteUser": "devcontainer",
-        "postCreateCommand": {
-                "sdks-init": ".devcontainer/scripts/init-sdks.sh",
-                "infra-init": ".devcontainer/scripts/init-infra.sh",
-                "apt-pkgs-init": ".devcontainer/scripts/init-apt-pkgs.sh",
-                "npm-pkgs-init": ".devcontainer/scripts/init-npm-pkgs.sh",
-                "k9s-init": ".devcontainer/scripts/init-k9s.sh",
-                "tilt-init": ".devcontainer/scripts/init-tilt.sh",
-                "clean-up": "git clean -Xdf --exclude='!**/*.env'"
-        },
-        "postStartCommand": {
-                "minikube-start": "minikube status || minikube start"
-        },
+        "postCreateCommand": ".devcontainer/scripts/post-create.sh",
+        "postStartCommand": ".devcontainer/scripts/post-start.sh",
         "postAttachCommand": {}
 }
