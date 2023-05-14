@@ -4,6 +4,7 @@ set -e
 set -a
 
 install-apt-pkgs() {
+    sudo apt update
     sudo apt-get install -y --no-install-recommends \
         wabt \
         binaryen \
@@ -70,12 +71,12 @@ install-tilt() {
 
 install-sdks() {
     curl -s "https://get.sdkman.io" | bash
-    source "${SDKMAN_DIR}/bin/sdkman-init.sh"
+    source "$HOME/.sdkman/bin/sdkman-init.sh"
 
     sdk env install
 }
 
-parallel --halt now,fail=1 --tag --ungroup ::: \
+parallel --halt now,fail=1 -j0 --line-buffer ::: \
     install-apt-pkgs \
     install-npm-pkgs \
     install-k9s \
