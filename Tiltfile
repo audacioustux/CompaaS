@@ -12,10 +12,7 @@ docker_build(
 )
 docker_prune_settings(True)
 
-load('ext://namespace', 'namespace_create', 'namespace_inject')
-namespace_create('compaas-dev')
-
-k8s_yaml(namespace_inject(kustomize("k8s/compaas/overlays/dev"), 'compaas-dev'))
+k8s_yaml(kustomize("k8s/compaas/overlays/dev"))
 
 local_resource(
   "minikube-tunnel",

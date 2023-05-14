@@ -1,18 +1,19 @@
 lazy val versions = new {
-  val scala                = "3.2.0"
-  val Akka                 = "2.8.0"
-  val AkkaProjection       = "1.3.1"
-  val AkkaHttp             = "10.5.0"
-  val GraalSDK             = "22.3.1"
-  val AkkaManagement       = "1.3.0"
-  val AkkaPersistenceR2dbc = "1.0.1"
-  val JsoniterScala        = "2.22.1"
-  val Logback              = "1.4.6"
+  val scala                = "3.2.2"
+  val Akka                 = "2.8.2"
+  val AkkaProjection       = "1.4.0"
+  val AkkaHttp             = "10.5.2"
+  val GraalSDK             = "22.3.2"
+  val AkkaManagement       = "1.4.0"
+  val AkkaPersistenceR2dbc = "1.1.0"
+  val JsoniterScala        = "2.23.0"
+  val Logback              = "1.4.7"
   val Cats                 = "2.9.0"
   val Munit                = "0.7.29"
-  val Scalatest            = "3.2.14"
-  val OpenTelemetry        = "1.25.0"
-}
+  val Scalatest            = "3.2.15"
+  val OpenTelemetry        = "1.26.0"
+  val YugabyteDB           = "4.6.0-yb-11"
+} // updated: May 13 2023
 
 inThisBuild(
   List(
@@ -101,12 +102,14 @@ lazy val `compaas-core` = project
       "ch.qos.logback"                         % "logback-classic"       % versions.Logback,
       "org.graalvm.sdk"                        % "graal-sdk"             % versions.GraalSDK,
       "org.typelevel"                         %% "cats-core"             % versions.Cats,
+      "com.yugabyte"                           % "java-driver-core"      % versions.YugabyteDB,
       "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core"   % versions.JsoniterScala,
       "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % versions.JsoniterScala % "compile-internal",
       // Test
       "org.scalameta" %% "munit"     % versions.Munit     % Test,
       "org.scalatest" %% "scalatest" % versions.Scalatest % Test
-    )
+    ),
+    excludeDependencies ++= Seq(ExclusionRule("com.datastax.oss", "java-driver-core"))
   )
 
 lazy val projects: Seq[ProjectReference] = Seq(`compaas-core`)
