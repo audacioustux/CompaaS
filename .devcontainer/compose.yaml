@@ -1,6 +1,6 @@
 services:
   devcontainer:
-    image: mcr.microsoft.com/devcontainers/base:ubuntu
+    build: .
     volumes:
       - ../..:/workspaces:cached
 
