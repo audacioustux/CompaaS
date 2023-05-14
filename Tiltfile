@@ -4,11 +4,16 @@ local_resource(
     deps=["build.sbt"]
 )
 
+local_resource(
+  "akka-persistence-up",
+  cmd="kubectl exec -it yb-tserver-0 -- ysqlsh -h yb-tserver-service < assets/ddl-scripts/akka-r2dbc_up.sql",
+  deps=["assets/ddl-scripts/akka-r2dbc_up.sql"],
+)
+
 docker_build(
   "compaas", 
   context="target/universal/stage", 
-  dockerfile="Dockerfile",
-  build_args={}
+  dockerfile="Dockerfile"
 )
 docker_prune_settings(True)
 
