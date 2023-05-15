@@ -79,7 +79,7 @@
                         "minikube": "latest"
                 },
                 "ghcr.io/devcontainers-contrib/features/apt-get-packages:1": {
-                        "packages": "ripgrep,bat,exa,delta,hyperfine,fd-find,zoxide,neovim,python3-neovim,httpie,fzf,socat,ncdu,parallel"
+                        "packages": "ripgrep,bat,exa,delta,hyperfine,fd-find,zoxide,neovim,python3-neovim,httpie,fzf,socat,ncdu,parallel,openjdk-17-jdk-headless"
                 }
         },
         "remoteUser": "devcontainer",

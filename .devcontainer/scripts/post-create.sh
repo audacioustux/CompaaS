@@ -29,7 +29,8 @@ setup-k8s() {
         --cpus=4 \
         --memory=8gb \
         --disk-size=16gb \
-        --addons=metrics-server,dashboard
+        --addons=metrics-server,dashboard \
+        --wait=all
 
     # use minikube's docker daemon
     echo "eval \$(minikube docker-env)" >> ~/.zshrc
@@ -76,7 +77,7 @@ install-sdks() {
     sdk env install
 }
 
-parallel --halt now,fail=1 -j0 --line-buffer ::: \
+parallel --halt now,fail=1 -j0 --line-buffer --tag ::: \
     install-apt-pkgs \
     install-npm-pkgs \
     install-k9s \
