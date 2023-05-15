@@ -77,13 +77,15 @@ install-sdks() {
     sdk env install
 }
 
-parallel --halt now,fail=1 -j0 --line-buffer --tag ::: \
-    install-apt-pkgs \
-    install-npm-pkgs \
-    install-k9s \
-    install-tilt \
-    install-sdks \
-    setup-k8s
+parallel --halt now,fail=1 \
+    --linebuffer \
+    -j0 --load 100% ::: \
+        install-apt-pkgs \
+        install-npm-pkgs \
+        install-k9s \
+        install-tilt \
+        install-sdks \
+        setup-k8s
 
 cleanup
 
