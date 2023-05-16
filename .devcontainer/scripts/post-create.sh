@@ -3,7 +3,7 @@
 set -eax
 
 install-apt-pkgs() {
-    sudo apt update
+    sudo apt-get update
     sudo apt-get install -y --no-install-recommends \
         wabt \
         binaryen \
