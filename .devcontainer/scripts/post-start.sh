@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
-set -e
+set -eax
 
-# minikube status || minikube start
+minikube status || minikube start
+
+set +xae

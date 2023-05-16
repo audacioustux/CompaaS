@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
-set -a
+set -eax
 
 install-apt-pkgs() {
     sudo apt update
@@ -12,6 +11,7 @@ install-apt-pkgs() {
 }
 
 install-npm-pkgs() {
+    npm install -g npm@latest
     npm install -g concurrently
 }
 
@@ -31,7 +31,7 @@ setup-k8s() {
         --disk-size=16gb \
         --addons=metrics-server \
         --wait=all \
-        --wait-timeout=20m
+        --wait-timeout=20m \
 
     echo "eval \$(minikube docker-env)" >> ~/.zshrc
 
@@ -53,19 +53,25 @@ setup-k8s() {
 }
 
 install-k9s() {
-    curl -sS https://webi.sh/k9s | sh
+    curl https://webi.sh/k9s | sh
 }
 
 install-tilt() {
-    curl -fsSL https://raw.githubusercontent.com/tilt-dev/tilt/master/scripts/install.sh | bash
+    curl -fL https://raw.githubusercontent.com/tilt-dev/tilt/master/scripts/install.sh | bash
 }
 
 install-sdks() {
-    curl -s "https://get.sdkman.io" | bash
+    curl "https://get.sdkman.io" | bash
     source "$HOME/.sdkman/bin/sdkman-init.sh"
 
     sdk env install
 }
+
+###
+
+export DEBIAN_FRONTEND=noninteractive
+echo "-sS" > ~/.curlrc
+echo "progress=false" > ~/.npmrc
 
 parallel --halt now,fail=1 \
     --linebuffer \
@@ -79,5 +85,6 @@ parallel --halt now,fail=1 \
 
 cleanup
 
-set +a
-set +e
+rm ~/.curlrc ~/.npmrc
+
+set +xae
