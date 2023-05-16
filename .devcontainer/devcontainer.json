@@ -49,7 +49,7 @@
                         "installZsh": true,
                         "configureZshAsDefaultShell": true,
                         "installOhMyZsh": true,
-                        "upgradePackages": true,
+                        "upgradePackages": true
                 },
                 "ghcr.io/devcontainers/features/rust:1": {
                         "version": "latest",
