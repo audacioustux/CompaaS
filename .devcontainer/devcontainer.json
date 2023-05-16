@@ -50,9 +50,6 @@
                         "configureZshAsDefaultShell": true,
                         "installOhMyZsh": true,
                         "upgradePackages": true,
-                        "username": "devcontainer",
-                        "userUid": "automatic",
-                        "userGid": "automatic"
                 },
                 "ghcr.io/devcontainers/features/rust:1": {
                         "version": "latest",
@@ -82,7 +79,6 @@
                         "packages": "ripgrep,bat,exa,delta,hyperfine,fd-find,zoxide,neovim,python3-neovim,httpie,fzf,socat,ncdu,parallel,openjdk-17-jdk-headless"
                 }
         },
-        "remoteUser": "devcontainer",
         "postCreateCommand": ".devcontainer/scripts/post-create.sh",
         "postStartCommand": ".devcontainer/scripts/post-start.sh",
         "postAttachCommand": {}

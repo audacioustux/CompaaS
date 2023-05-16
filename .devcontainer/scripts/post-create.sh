@@ -18,38 +18,27 @@ install-npm-pkgs() {
 cleanup(){
     sudo apt-get autoremove -y
     sudo apt-get clean -y
+
     git clean -Xdf --exclude='!**/*.env'
 }
 
 setup-k8s() {
-    # initialize minikube
     minikube delete
     minikube start \
         --driver=docker \
         --cpus=4 \
         --memory=8gb \
         --disk-size=16gb \
-        --addons=metrics-server,dashboard \
+        --addons=metrics-server \
         --wait=all
 
-    # use minikube's docker daemon
     echo "eval \$(minikube docker-env)" >> ~/.zshrc
 
-    # create buildx driver
-    kubectl create namespace buildkit
-    docker buildx create \
-        --name=kube \
-        --driver=kubernetes \
-        --driver-opt=namespace=buildkit,replicas=3,rootless=true
-
-    # set default namespace
     kubectl create ns compaas-dev
     kubectl config set-context --current --namespace=compaas-dev
 
-    # install cert-manager
     kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.yaml
 
-    # install yugabytedb
     helm repo add yugabytedb https://charts.yugabyte.com
     helm repo update
     helm install yugabyte yugabytedb/yugabyte \
@@ -79,7 +68,7 @@ install-sdks() {
 
 parallel --halt now,fail=1 \
     --linebuffer \
-    -j0 --load 100% ::: \
+    -j0 ::: \
         install-apt-pkgs \
         install-npm-pkgs \
         install-k9s \
