@@ -22,7 +22,6 @@ install-apt-pkgs() {
         wabt \
         binaryen \
         emscripten
-    sudo apt-get clean
 }
 
 install-npm-pkgs() {
