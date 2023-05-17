@@ -31,7 +31,8 @@
                                 "files.autoSave": "onFocusChange",
                                 "editor.formatOnSave": true,
                                 "resmon.show.cpufreq": false,
-                                "dev.containers.dockerCredentialHelper": false
+                                "dev.containers.dockerCredentialHelper": false,
+                                "metals.javaHome": "/home/vscode/.sdkman/candidates/java/current"
                         }
                 }
         },

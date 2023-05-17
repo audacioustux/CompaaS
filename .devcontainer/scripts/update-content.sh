@@ -15,14 +15,7 @@ update-npm-pkgs() {
 install-sdks() {
     source ~/.sdkman/bin/sdkman-init.sh
 
-    while IFS= read -r line; do
-      candidate="${line%\=*}"
-      version="${line#*\=}"
-      sdk install "$candidate" "$version"
-      sdk default "$candidate" "$version"
-    done <".sdkmanrc"
-
-    sdk current
+    sdk env install
 }
 
 ###
