@@ -2,10 +2,6 @@
 
 set -eax
 
-cleanup(){
-    git clean -Xdf --exclude='!**/*.env'
-}
-
 setup-k8s() {
     minikube delete
     minikube start \
@@ -50,8 +46,7 @@ parallel --halt now,fail=1 \
         install-cert-manager \
         install-yugabyte
 
-cleanup
-
+git clean -Xdf --exclude='!**/*.env'
 rm ~/.curlrc ~/.npmrc
 
 set +eax

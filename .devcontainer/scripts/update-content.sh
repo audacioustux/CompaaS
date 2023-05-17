@@ -5,6 +5,7 @@ set -eax
 update-apt-pkgs() {
     sudo apt-get update
     sudo apt-get upgrade -y
+    sudo apt-get clean
 }
 
 update-npm-pkgs() {
@@ -17,11 +18,6 @@ install-sdks() {
     sdk env install
 }
 
-cleanup(){
-    sudo apt-get autoremove -y
-    sudo apt-get clean -y
-}
-
 ###
 
 parallel --halt now,fail=1 \
@@ -30,7 +26,5 @@ parallel --halt now,fail=1 \
         update-apt-pkgs \
         update-npm-pkgs \
         install-sdks
-
-cleanup
 
 set +eax
