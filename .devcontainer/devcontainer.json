@@ -42,42 +42,20 @@
         "shutdownAction": "none",
         "features": {
                 "ghcr.io/devcontainers/features/node:1": {
-                        "nodeGypDependencies": true,
-                        "version": "latest"
+                        "version": "18"
                 },
                 "ghcr.io/devcontainers/features/common-utils:2": {
-                        "installZsh": true,
-                        "configureZshAsDefaultShell": true,
-                        "installOhMyZsh": true,
-                        "upgradePackages": true
+                        "configureZshAsDefaultShell": true
                 },
                 "ghcr.io/devcontainers/features/rust:1": {
-                        "version": "latest",
                         "profile": "complete"
                 },
                 "ghcr.io/devcontainers/features/docker-in-docker:2": {
-                        "moby": true,
-                        "azureDnsAutoDetection": true,
-                        "installDockerBuildx": true,
-                        "version": "latest",
                         "dockerDashComposeVersion": "v2"
                 },
-                "ghcr.io/devcontainers/features/github-cli:1": {
-                        "installDirectlyFromGitHubRelease": true,
-                        "version": "latest"
-                },
-                "ghcr.io/devcontainers/features/git:1": {
-                        "ppa": true,
-                        "version": "latest"
-                },
-                "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
-                        "version": "latest",
-                        "helm": "latest",
-                        "minikube": "latest"
-                },
-                "ghcr.io/devcontainers-contrib/features/apt-get-packages:1": {
-                        "packages": "ripgrep,bat,exa,delta,hyperfine,fd-find,zoxide,neovim,python3-neovim,httpie,fzf,socat,ncdu,parallel,openjdk-17-jdk-headless"
-                }
+                "ghcr.io/devcontainers/features/github-cli:1": {},
+                "ghcr.io/devcontainers/features/git:1": {},
+                "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {}
         },
         "postCreateCommand": ".devcontainer/scripts/post-create.sh",
         "postStartCommand": ".devcontainer/scripts/post-start.sh",

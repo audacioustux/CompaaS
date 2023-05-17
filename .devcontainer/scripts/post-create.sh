@@ -69,7 +69,6 @@ install-sdks() {
 
 ###
 
-export DEBIAN_FRONTEND=noninteractive
 echo "-sS" > ~/.curlrc
 echo "progress=false" > ~/.npmrc
 
