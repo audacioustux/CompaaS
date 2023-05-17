@@ -59,5 +59,7 @@
         },
         "postCreateCommand": ".devcontainer/scripts/post-create.sh",
         "postStartCommand": ".devcontainer/scripts/post-start.sh",
+        "onCreateCommand": ".devcontainer/scripts/on-create.sh",
+        "updateContentCommand": ".devcontainer/scripts/update-content.sh",
         "postAttachCommand": {}
 }

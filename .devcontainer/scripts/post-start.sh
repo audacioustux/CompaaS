@@ -4,4 +4,4 @@ set -eax
 
 minikube status || minikube start
 
-set +xae
+set +eax
