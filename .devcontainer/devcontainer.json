@@ -1,6 +1,6 @@
 {
         "name": "CompaaS Dev Container",
-        "dockerComposeFile": "compose.yaml",
+        "dockerComposeFile": "Compose.yml",
         "service": "devcontainer",
         "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
         "customizations": {
@@ -31,7 +31,8 @@
                                 "files.autoSave": "onFocusChange",
                                 "editor.formatOnSave": true,
                                 "resmon.show.cpufreq": false,
-                                "dev.containers.dockerCredentialHelper": false
+                                "dev.containers.dockerCredentialHelper": false,
+                                "metals.javaHome": "/opt/graalvm"
                         }
                 }
         },
@@ -57,6 +58,7 @@
                 "ghcr.io/devcontainers/features/git:1": {},
                 "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {}
         },
+        "initializeCommand": "touch .devcontainer/.env",
         "postCreateCommand": ".devcontainer/scripts/post-create.sh",
         "postStartCommand": ".devcontainer/scripts/post-start.sh",
         "onCreateCommand": ".devcontainer/scripts/on-create.sh",

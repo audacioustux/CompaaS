@@ -5,11 +5,8 @@ set -eax
 setup-k8s() {
     minikube delete
     minikube start \
-        --driver=docker \
-        --cpus=4 \
-        --memory=8gb \
-        --disk-size=16gb \
-        --addons=metrics-server 
+        --cpus=3 \
+        --memory=6gb 
 
     echo "eval \$(minikube docker-env)" >> ~/.zshrc
 
