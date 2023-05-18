@@ -9,9 +9,7 @@ setup-k8s() {
         --cpus=4 \
         --memory=8gb \
         --disk-size=16gb \
-        --addons=metrics-server \
-        --wait=all \
-        --wait-timeout=20m \
+        --addons=metrics-server 
 
     echo "eval \$(minikube docker-env)" >> ~/.zshrc
 
