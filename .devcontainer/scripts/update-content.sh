@@ -11,10 +11,18 @@ update-npm-pkgs() {
     npm update -g
 }
 
-install-sdks() {
+install-k9s() {
+    curl https://webi.sh/k9s | sh
+}
+
+install-tilt() {
+    curl https://raw.githubusercontent.com/tilt-dev/tilt/master/scripts/install.sh | bash
+}
+
+install-sbt() {
     source ~/.sdkman/bin/sdkman-init.sh
 
-    sdk env install
+    sdk install sbt
 }
 
 ###
@@ -24,6 +32,8 @@ parallel --halt now,fail=1 \
     -j0 ::: \
         update-apt-pkgs \
         update-npm-pkgs \
-        install-sdks
+        install-k9s \
+        install-tilt \
+        install-sbt
 
 set +eax
