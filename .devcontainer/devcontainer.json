@@ -40,7 +40,6 @@
                 "cpus": 4,
                 "memory": "8gb"
         },
-        "shutdownAction": "none",
         "features": {
                 "ghcr.io/devcontainers/features/node:1": {
                         "version": "18"
@@ -56,7 +55,8 @@
                 },
                 "ghcr.io/devcontainers/features/github-cli:1": {},
                 "ghcr.io/devcontainers/features/git:1": {},
-                "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {}
+                "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
+                "ghcr.io/audacioustux/devcontainer-features/hello:1": {}
         },
         "initializeCommand": "touch .devcontainer/.env",
         "postCreateCommand": ".devcontainer/scripts/post-create.sh",

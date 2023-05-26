@@ -3,43 +3,49 @@
 set -eax
 
 setup-k8s() {
-    minikube delete
-    minikube start \
-        --cpus=3 \
-        --memory=6gb 
+    k3d cluster create --config k3d-dev.yaml
+}
 
-    echo "eval \$(minikube docker-env)" >> ~/.zshrc
-
-    kubectl create ns compaas-dev
-    kubectl config set-context --current --namespace=compaas-dev
+add-helm-repos() {
+    helm repo add cnpg https://cloudnative-pg.github.io/charts
+    helm repo add jetstack https://charts.jetstack.io
+    helm repo add kubevela https://charts.kubevela.net/core
+    helm repo update
 }
 
 install-cert-manager() {
-    kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.yaml
+    helm install cert-manager jetstack/cert-manager \
+        --namespace cert-manager \
+        --create-namespace \
+        --set installCRDs=true
 }
 
-install-yugabyte() {
-    helm repo add yugabytedb https://charts.yugabyte.com
-    helm repo update
-    helm install yugabyte yugabytedb/yugabyte \
-        --version 2.17.3 \
-        --set resource.master.requests.cpu=0.5 \
-        --set resource.master.requests.memory=0.5Gi \
-        --set resource.tserver.requests.cpu=0.5 \
-        --set resource.tserver.requests.memory=0.5Gi \
-        --set replicas.master=1 \
-        --set replicas.tserver=1
+install-postgres() {
+    helm install cnpg cnpg/cloudnative-pg \
+        --namespace cnpg-system \
+        --create-namespace
+}
+
+install-kubevla() {
+    helm install kubevela kubevela/vela-core \
+        --namespace vela-system \
+        --create-namespace
 }
 
 ###
 
-setup-k8s
+parallel --halt now,fail=1 \
+    --linebuffer \
+    -j0 ::: \
+        setup-k8s \
+        add-helm-repos
 
 parallel --halt now,fail=1 \
     --linebuffer \
     -j0 ::: \
         install-cert-manager \
-        install-yugabyte
+        install-postgres \
+        install-kubevela
 
 git clean -Xdf --exclude='!**/*.env'
 rm ~/.curlrc ~/.npmrc

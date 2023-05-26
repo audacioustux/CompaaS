@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/base:ubuntu
+FROM ubuntu
 
 # make `apt-get` commands non-interactive
 ENV DEBIAN_FRONTEND=noninteractive
