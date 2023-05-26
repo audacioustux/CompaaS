@@ -1,0 +1,11 @@
+{
+    "id": "graalvm",
+    "name": "GraalVM JDK",
+    "installsAfter": [
+        "./extra-utils"
+    ],
+    "containerEnv": {
+        "JAVA_HOME": "/opt/graalvm",
+        "PATH": "${PATH}:${JAVA_HOME}/bin"
+    }
+}

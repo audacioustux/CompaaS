@@ -2,4 +2,4 @@
 
 set -eax
 
-set +eax
+sbt stage

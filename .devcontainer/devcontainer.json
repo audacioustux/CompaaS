@@ -30,9 +30,7 @@
                                 "git.autofetch": true,
                                 "files.autoSave": "onFocusChange",
                                 "editor.formatOnSave": true,
-                                "resmon.show.cpufreq": false,
-                                "dev.containers.dockerCredentialHelper": false,
-                                "metals.javaHome": "/opt/graalvm"
+                                "resmon.show.cpufreq": false
                         }
                 }
         },
@@ -42,7 +40,7 @@
         },
         "features": {
                 "ghcr.io/devcontainers/features/node:1": {
-                        "version": "18"
+                        "version": "20"
                 },
                 "ghcr.io/devcontainers/features/common-utils:2": {
                         "configureZshAsDefaultShell": true
@@ -53,13 +51,12 @@
                 "ghcr.io/devcontainers/features/docker-in-docker:2": {
                         "dockerDashComposeVersion": "v2"
                 },
-                "ghcr.io/devcontainers/features/github-cli:1": {},
-                "ghcr.io/devcontainers/features/git:1": {}
+                "ghcr.io/devcontainers/features/git:1": {},
+                "./local-features/extra-utils": {},
+                "./local-features/local-devenv": {},
+                "./local-features/graalvm": {},
+                "./local-features/scala-toolchain": {}
         },
-        "initializeCommand": "touch .devcontainer/.env",
-        "postCreateCommand": ".devcontainer/scripts/post-create.sh",
-        "postStartCommand": ".devcontainer/scripts/post-start.sh",
-        "onCreateCommand": ".devcontainer/scripts/on-create.sh",
-        "updateContentCommand": ".devcontainer/scripts/update-content.sh",
-        "postAttachCommand": {}
+        "updateContentCommand": ".devcontainer/scripts/update.sh",
+        "postCreateCommand": ".devcontainer/scripts/post-create.sh"
 }

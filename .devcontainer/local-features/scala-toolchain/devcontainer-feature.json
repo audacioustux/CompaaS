@@ -1,0 +1,11 @@
+{
+    "id": "scala-toolchain",
+    "name": "Scala Toolchain",
+    "installsAfter": [
+        "./graalvm"
+    ],
+    "containerEnv": {
+        "COURSIER_BIN_DIR": "/usr/local/share/coursier/bin",
+        "PATH": "${COURSIER_BIN_DIR}:${PATH}"
+    }
+}

@@ -32,13 +32,18 @@ install-kubevla() {
         --create-namespace
 }
 
+cleanup() {
+    git clean -Xdf --exclude='!**/*.env'
+}
+
 ###
 
 parallel --halt now,fail=1 \
     --linebuffer \
     -j0 ::: \
         setup-k8s \
-        add-helm-repos
+        add-helm-repos \
+        cleanup
 
 parallel --halt now,fail=1 \
     --linebuffer \
@@ -46,8 +51,3 @@ parallel --halt now,fail=1 \
         install-cert-manager \
         install-postgres \
         install-kubevela
-
-git clean -Xdf --exclude='!**/*.env'
-rm ~/.curlrc ~/.npmrc
-
-set +eax
