@@ -1,8 +1,0 @@
-services:
-  devcontainer:
-    build: .
-    env_file: .env
-    volumes:
-      - ../..:/workspaces:cached
-
-    command: sleep infinity

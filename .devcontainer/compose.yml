@@ -1,0 +1,9 @@
+services:
+  devcontainer:
+    image: mcr.microsoft.com/devcontainers/base:ubuntu
+    environment:
+      - GRAAL_EE_DOWNLOAD_TOKEN
+    volumes:
+      - ../..:/workspaces:cached
+
+    command: sleep infinity

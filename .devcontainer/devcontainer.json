@@ -1,6 +1,6 @@
 {
         "name": "CompaaS Dev Container",
-        "dockerComposeFile": "Compose.yml",
+        "dockerComposeFile": "compose.yml",
         "service": "devcontainer",
         "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
         "customizations": {
@@ -54,9 +54,7 @@
                         "dockerDashComposeVersion": "v2"
                 },
                 "ghcr.io/devcontainers/features/github-cli:1": {},
-                "ghcr.io/devcontainers/features/git:1": {},
-                "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
-                "ghcr.io/audacioustux/devcontainer-features/hello:1": {}
+                "ghcr.io/devcontainers/features/git:1": {}
         },
         "initializeCommand": "touch .devcontainer/.env",
         "postCreateCommand": ".devcontainer/scripts/post-create.sh",
