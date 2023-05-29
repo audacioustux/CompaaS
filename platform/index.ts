@@ -56,4 +56,4 @@ const kubevela = new k8s.helm.v3.Release("kubevela", {
             },
         },
     },
-});
+}, { dependsOn: [certManager] });
