@@ -1,6 +1,6 @@
 services:
   devcontainer:
-    image: mcr.microsoft.com/devcontainers/base:ubuntu
+    image: mcr.microsoft.com/devcontainers/base:ubuntu-22.04
     environment:
       - GRAAL_EE_DOWNLOAD_TOKEN
     volumes:

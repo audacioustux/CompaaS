@@ -7,4 +7,4 @@ git clean -Xdf --exclude='!**/*.env'
 
 k3d cluster create --config k3d-dev.yaml
 
-pulumi up --yes --stack dev --suppress-outputs --cwd Platform
+pulumi up --yes --stack dev --suppress-outputs --cwd platform
