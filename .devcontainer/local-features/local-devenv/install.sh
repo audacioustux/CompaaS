@@ -2,8 +2,12 @@
 
 set -eax
 
+install-k9s() {
+    curl -sS https://webinstall.dev/k9s | bash
+}
+
 install-tilt() {
-    curl https://raw.githubusercontent.com/tilt-dev/tilt/master/scripts/install.sh | bash
+    curl -fsSL https://raw.githubusercontent.com/tilt-dev/tilt/master/scripts/install.sh | bash
 }
 
 install-k3d() {
@@ -33,6 +37,7 @@ install-apt-pkgs() {
 parallel --halt now,fail=1 \
     --linebuffer \
     -j0 ::: \
+        install-k9s \
         install-tilt \
         install-k3d \
         install-kubectl \

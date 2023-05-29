@@ -53,9 +53,9 @@
                 },
                 "ghcr.io/devcontainers/features/git:1": {},
                 "./local-features/extra-utils": {},
-                "./local-features/local-devenv": {},
                 "./local-features/graalvm": {},
-                "./local-features/scala-toolchain": {}
+                "./local-features/scala-toolchain": {},
+                "./local-features/local-devenv": {}
         },
         "updateContentCommand": ".devcontainer/scripts/update.sh",
         "postCreateCommand": ".devcontainer/scripts/post-create.sh"
