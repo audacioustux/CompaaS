@@ -1,7 +1,0 @@
-{
-    "id": "scala-toolchain",
-    "name": "Scala Toolchain",
-    "installsAfter": [
-        "./graalvm"
-    ]
-}

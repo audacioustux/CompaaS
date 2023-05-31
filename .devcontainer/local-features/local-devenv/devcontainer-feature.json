@@ -1,7 +1,0 @@
-{
-    "id": "local-devenv",
-    "name": "Local Development Environment (LDE)",
-    "installsAfter": [
-        "./extra-utils"
-    ]
-}

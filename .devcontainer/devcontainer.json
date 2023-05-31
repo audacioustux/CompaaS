@@ -6,27 +6,27 @@
         "customizations": {
                 "vscode": {
                         "extensions": [
-							"sleistner.vscode-fileutils",
-							"bierner.markdown-mermaid",
-							"DavidAnson.vscode-markdownlint",
-							"GitHub.copilot",
-							"scalameta.metals@prerelease",
-							"vadimcn.vscode-lldb",
-							"mutantdino.resourcemonitor",
-							"rust-lang.rust-analyzer",
-							"tamasfe.even-better-toml",
-							"serayuzgur.crates",
-							"jeff-hykin.better-cpp-syntax",
-							"dtsvet.vscode-wasm",
-							"svelte.svelte-vscode",
-							"redhat.vscode-yaml",
-							"ms-azuretools.vscode-docker",
-							"EditorConfig.EditorConfig",
-							"mhutchie.git-graph",
-							"tilt-dev.Tiltfile",
-							"oracle-labs-graalvm.graalvm-pack",
-							"Gruntfuggly.todo-tree"
-						],
+                                "sleistner.vscode-fileutils",
+                                "bierner.markdown-mermaid",
+                                "DavidAnson.vscode-markdownlint",
+                                "GitHub.copilot",
+                                "scalameta.metals@prerelease",
+                                "vadimcn.vscode-lldb",
+                                "mutantdino.resourcemonitor",
+                                "rust-lang.rust-analyzer",
+                                "tamasfe.even-better-toml",
+                                "serayuzgur.crates",
+                                "jeff-hykin.better-cpp-syntax",
+                                "dtsvet.vscode-wasm",
+                                "svelte.svelte-vscode",
+                                "redhat.vscode-yaml",
+                                "ms-azuretools.vscode-docker",
+                                "EditorConfig.EditorConfig",
+                                "mhutchie.git-graph",
+                                "tilt-dev.Tiltfile",
+                                "oracle-labs-graalvm.graalvm-pack",
+                                "Gruntfuggly.todo-tree"
+                        ],
                         "settings": {
                                 "git.autofetch": true,
                                 "files.autoSave": "onFocusChange",
@@ -53,11 +53,20 @@
                         "dockerDashComposeVersion": "v2"
                 },
                 "ghcr.io/devcontainers/features/git:1": {},
-                "./local-features/extra-utils": {},
+                "./local-features/common-utils-extras": {},
                 "./local-features/graalvm": {},
-                "./local-features/scala-toolchain": {},
-                "./local-features/local-devenv": {}
+                "./local-features/helm": {},
+                "./local-features/k3d": {},
+                "./local-features/k9s": {},
+                "./local-features/kubectl": {},
+                "./local-features/pulumi": {},
+                "./local-features/sbt": {},
+                "./local-features/tilt": {},
+                "./local-features/webassembly-tools": {}
         },
+        "overrideFeatureInstallOrder": [
+                "./local-features/common-utils-extras"
+        ],
         "updateContentCommand": ".devcontainer/scripts/update.sh",
         "postCreateCommand": ".devcontainer/scripts/post-create.sh"
 }

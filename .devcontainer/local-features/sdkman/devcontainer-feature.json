@@ -1,0 +1,8 @@
+{
+    "id": "sdkman",
+    "name": "SDKMAN! (Software Development Kit Manager)",
+    "containerEnv": {
+    "SDKMAN_DIR": "/usr/local/sdkman",
+    "PATH": "/usr/local/sdkman/bin:${PATH}"
+  }
+}

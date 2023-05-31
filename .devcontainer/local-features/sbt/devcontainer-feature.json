@@ -1,0 +1,14 @@
+{
+    "id": "sbt",
+    "name": "SBT (Scala Build Tool)",
+    "options": {
+        "version": {
+            "type": "string",
+            "default": "latest",
+            "description": "Select sbt version"
+        }
+    },
+    "installsAfter": [
+        "./graalvm"
+    ]
+}

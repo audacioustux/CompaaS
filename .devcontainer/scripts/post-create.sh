@@ -25,15 +25,10 @@ if [ -n "$PULUMI_DEFAULT_ORG" ]; then
     pulumi org set-default $PULUMI_DEFAULT_ORG
 fi
 
-# set / re-set stack name to devcontainer if backend is local
-if [ $PULUMI_BACKEND_URL == "--local" ]; then
+# set stack name to dev if not set
+if [ -z "$PULUMI_STACK_NAME" ]; then
     export PULUMI_STACK_NAME="devcontainer"
 fi
 
-# set stack name to dev if not set
-if [ -z "$PULUMI_STACK_NAME" ]; then
-    export PULUMI_STACK_NAME="dev"
-fi
-
 pulumi stack select -s $PULUMI_STACK_NAME --create -C platform
-pulumi up -y -s $PULUMI_STACK_NAME --suppress-outputs -C platform
+pulumi up -y -r -s $PULUMI_STACK_NAME --suppress-outputs -C platform
