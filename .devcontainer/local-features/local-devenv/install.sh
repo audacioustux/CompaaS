@@ -2,10 +2,6 @@
 
 set -eax
 
-install-k9s() {
-    curl -sS https://webinstall.dev/k9s | bash
-}
-
 install-tilt() {
     curl -fsSL https://raw.githubusercontent.com/tilt-dev/tilt/master/scripts/install.sh | bash
 }
@@ -18,9 +14,8 @@ install-kubectl() {
     local ARCH=$(uname -m | sed 's/x86_64/amd64/g')
     local KUBECTL_VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt)
 
-    curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl"
+    curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl" 
     install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-    rm kubectl
 }
 
 install-helm() {
@@ -34,6 +29,18 @@ install-apt-pkgs() {
         emscripten
 }
 
+install-pulumi() {
+sudo -iu $_REMOTE_USER <<EOF
+    curl -fsSL https://get.pulumi.com | sh
+EOF
+}
+
+install-k9s() {
+sudo -iu $_REMOTE_USER <<EOF
+    curl -sS https://webinstall.dev/k9s | bash
+EOF
+}
+
 parallel --halt now,fail=1 \
     --linebuffer \
     -j0 ::: \
@@ -42,4 +49,5 @@ parallel --halt now,fail=1 \
         install-k3d \
         install-kubectl \
         install-helm \
-        install-apt-pkgs
+        install-apt-pkgs \
+        install-pulumi

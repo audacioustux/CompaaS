@@ -6,6 +6,7 @@
     ],
     "containerEnv": {
         "JAVA_HOME": "/opt/graalvm",
-        "PATH": "${PATH}:${JAVA_HOME}/bin"
+        "GRAALVM_HOME": "${JAVA_HOME}",
+        "PATH": "${PATH}:${GRAALVM_HOME}/bin"
     }
 }
