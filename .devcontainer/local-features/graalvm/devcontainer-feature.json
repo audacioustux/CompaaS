@@ -1,7 +1,28 @@
 {
     "id": "graalvm",
     "name": "GraalVM JDK",
+    "options": {
+        "version": {
+            "type": "string",
+            "default": "22.3.1"
+        },
+        "java": {
+            "type": "string",
+            "enum": [
+                "11",
+                "17"
+            ],
+            "default": "17",
+            "description": "Java version to install. Valid values are 11, 17"
+        },
+        "components": {
+            "type": "string",
+            "default": "native-image,js,nodejs,python,wasm"
+        }
+    },
     "containerEnv": {
+        // NOTE: https://github.com/devcontainers/spec/issues/164
+        "GRAALVM_HOME": "/opt/graalvm",
         "JAVA_HOME": "/opt/graalvm",
         "PATH": "/opt/graalvm/bin:$PATH"
     }

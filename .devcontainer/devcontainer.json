@@ -54,15 +54,15 @@
                 },
                 "ghcr.io/devcontainers/features/git:1": {},
                 "./local-features/common-utils-extras": {},
-                "./local-features/graalvm": {},
                 "./local-features/helm": {},
                 "./local-features/k3d": {},
                 "./local-features/k9s": {},
                 "./local-features/kubectl": {},
                 "./local-features/pulumi": {},
-                "./local-features/sbt": {},
                 "./local-features/tilt": {},
-                "./local-features/webassembly-tools": {}
+                "./local-features/webassembly-tools": {},
+                "./local-features/graalvm": {},
+                "./local-features/sbt": {}
         },
         "overrideFeatureInstallOrder": [
                 "./local-features/common-utils-extras"

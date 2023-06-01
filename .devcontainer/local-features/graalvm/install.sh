@@ -2,15 +2,12 @@
 
 set -eax
 
-[[ -n "$GRAAL_EE_DOWNLOAD_TOKEN" ]] && GRAAL_EDITION="ee" || GRAAL_EDITION="ce"
-: ${JAVA_VERSION:=17}
-: ${GRAAL_VERSION:=22.3.1}
-: ${GRAAL_COMPONENTS:="native-image,js,wasm"}
+[[ -n "$GRAAL_EE_DOWNLOAD_TOKEN" ]] && EDITION="ee" || EDITION="ce"
 
-GRAAL_RELEASE="graalvm-${GRAAL_EDITION}-java${JAVA_VERSION}-${GRAAL_VERSION}"
+RELEASE="graalvm-${EDITION}-java${JAVA}-${VERSION}"
 
-curl -sL https://get.graalvm.org/jdk | bash -s -- $GRAAL_RELEASE \
+curl -sL https://get.graalvm.org/jdk | bash -s -- $RELEASE \
     --to /tmp \
-    -c $GRAAL_COMPONENTS
+    -c $COMPONENTS
 
-mv /tmp/$GRAAL_RELEASE $JAVA_HOME
+mv /tmp/$RELEASE $GRAALVM_HOME
