@@ -1,18 +1,6 @@
 {
     "id": "graalvm",
     "name": "GraalVM JDK",
-    "options": {
-        "version": {
-            "type": "string",
-            "default": "22.3.1",
-            "description": "The version of GraalVM to use"
-        },
-        "components": {
-            "type": "string",
-            "default": "native-image,wasm,js",
-            "description": "The components to install"
-        }
-    },
     "containerEnv": {
         "JAVA_HOME": "/opt/graalvm",
         "PATH": "/opt/graalvm/bin:$PATH"
