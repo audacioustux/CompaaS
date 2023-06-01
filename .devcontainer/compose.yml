@@ -1,8 +1,9 @@
 services:
   devcontainer:
-    build: .
+    build:
+      args:
+        - GRAAL_EE_DOWNLOAD_TOKEN
     environment:
-      - GRAAL_EE_DOWNLOAD_TOKEN
       - PULUMI_ACCESS_TOKEN
       - PULUMI_BACKEND_URL
       - PULUMI_CONFIG_PASSPHRASE

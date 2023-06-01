@@ -65,7 +65,8 @@
                 "./local-features/webassembly-tools": {}
         },
         "overrideFeatureInstallOrder": [
-                "./local-features/common-utils-extras"
+                "./local-features/common-utils-extras",
+                "./local-features/graalvm"
         ],
         "updateContentCommand": ".devcontainer/scripts/update.sh",
         "postCreateCommand": ".devcontainer/scripts/post-create.sh"
