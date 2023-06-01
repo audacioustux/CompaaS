@@ -2,6 +2,7 @@
     "id": "graalvm",
     "name": "GraalVM JDK",
     "containerEnv": {
+        "GRAAL_EE_DOWNLOAD_TOKEN": "${localEnv:GRAAL_EE_DOWNLOAD_TOKEN}",
         "JAVA_HOME": "/opt/graalvm",
         "PATH": "/opt/graalvm/bin:$PATH"
     }
