@@ -1,6 +1,7 @@
 services:
   devcontainer:
     build:
+      context: .
       args:
         - GRAAL_EE_DOWNLOAD_TOKEN
     environment:
