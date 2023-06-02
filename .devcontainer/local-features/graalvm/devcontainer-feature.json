@@ -20,8 +20,23 @@
             "default": "native-image,js,nodejs,python,wasm"
         }
     },
+    // TODO: refactor repetition of /opt/graalvm in settings and containerEnv
+    // https://github.com/devcontainers/spec/issues/164
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "oracle-labs-graalvm.graalvm-pack"
+            ],
+            "settings": {
+                "graalvm.home": "/opt/graalvm",
+                "graalvm.installations": [
+                    "/opt/graalvm"
+                ],
+                "netbeans.jdkhome": "/opt/graalvm"
+            }
+        }
+    },
     "containerEnv": {
-        // NOTE: https://github.com/devcontainers/spec/issues/164
         "GRAALVM_HOME": "/opt/graalvm",
         "JAVA_HOME": "/opt/graalvm",
         "PATH": "/opt/graalvm/bin:$PATH"

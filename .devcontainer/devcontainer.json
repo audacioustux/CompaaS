@@ -24,7 +24,6 @@
                                 "EditorConfig.EditorConfig",
                                 "mhutchie.git-graph",
                                 "tilt-dev.Tiltfile",
-                                "oracle-labs-graalvm.graalvm-pack",
                                 "Gruntfuggly.todo-tree"
                         ],
                         "settings": {
