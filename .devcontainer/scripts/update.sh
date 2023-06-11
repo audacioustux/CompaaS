@@ -2,8 +2,6 @@
 
 set -eax
 
-# clean up
-k3d cluster delete --all
 git clean -Xdf --exclude='!**/*.env'
 
 build-project() {

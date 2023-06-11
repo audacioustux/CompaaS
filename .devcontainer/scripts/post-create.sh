@@ -2,6 +2,7 @@
 
 set -eax
 
+k3d cluster delete --all
 k3d cluster create --config k3d-dev.yaml
 
 # if no backend url is specified

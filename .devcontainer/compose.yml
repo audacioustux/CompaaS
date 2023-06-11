@@ -10,7 +10,7 @@ services:
       - PULUMI_CONFIG_PASSPHRASE
       - PULUMI_DEFAULT_ORG
     volumes:
-      - ../..:/workspaces:cached
+      - ../..:/workspaces:rw,cached
     init: true
 
     command: sleep infinity
