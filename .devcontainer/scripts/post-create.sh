@@ -2,8 +2,14 @@
 
 set -eax
 
-k3d cluster delete --all
-k3d cluster create --config k3d-dev.yaml
+# clean up any untracked files
+minikube delete
+# start minikube with all available resources
+minikube start \
+    --cpus=$(nproc) \
+    --memory=$(free -m | awk '/^Mem:/{print $2}')
+# use minikube's docker daemon
+echo "eval \$(minikube docker-env)" >> ~/.zshrc
 
 # if no backend url is specified
 if [[ -z "$PULUMI_BACKEND_URL" ]]; then
