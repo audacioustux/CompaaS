@@ -4,10 +4,12 @@ set -eax
 
 # clean up any untracked files
 minikube delete
-# start minikube with all available resources
+# start minikube
+CPU_COUNT=$(expr $(nproc) - 1) # leave one core for the host
+MEMORY=$(expr $CPU_COUNT \* 2)g # 2GB per core
 minikube start \
-    --cpus=$(nproc) \
-    --memory=$(free -m | awk '/^Mem:/{print $2}')
+    --cpus=$CPU_COUNT \
+    --memory=$MEMORY
 # use minikube's docker daemon
 echo "eval \$(minikube docker-env)" >> ~/.zshrc
 
@@ -38,4 +40,4 @@ if [[ -z "$PULUMI_STACK_NAME" ]]; then
 fi
 
 pulumi stack select -s $PULUMI_STACK_NAME --create -C platform
-pulumi up -y -r -s $PULUMI_STACK_NAME --suppress-outputs -C platform
+pulumi up -y --refresh -s $PULUMI_STACK_NAME --suppress-outputs -C platform
