@@ -65,5 +65,5 @@
         ],
         "updateContentCommand": ".devcontainer/scripts/update.sh",
         "postCreateCommand": ".devcontainer/scripts/post-create.sh",
-        "postStartCommand": ".devcontainer/scripts/post-start.sh"
+        "postStartCommand": "minikube status || minikube start"
 }
