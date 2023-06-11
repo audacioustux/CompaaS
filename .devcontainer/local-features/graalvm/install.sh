@@ -8,6 +8,6 @@ RELEASE="graalvm-${EDITION}-java${JAVA}-${VERSION}"
 
 curl -sL https://get.graalvm.org/jdk | bash -s -- $RELEASE \
     --to /tmp \
-    -c $COMPONENTS
+    $([[ -n "$COMPONENTS" ]] && echo "-c $COMPONENTS")
 
 mv /tmp/$RELEASE $GRAALVM_HOME
