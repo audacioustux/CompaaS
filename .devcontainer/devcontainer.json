@@ -58,7 +58,8 @@
                 "./local-features/tilt": {},
                 "./local-features/webassembly-tools": {},
                 "./local-features/graalvm": {},
-                "./local-features/sbt": {}
+                "./local-features/sbt": {},
+                "./local-features/swap": {}
         },
         "overrideFeatureInstallOrder": [
                 "./local-features/common-utils-extras"
