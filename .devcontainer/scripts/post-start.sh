@@ -6,15 +6,18 @@ enable-swap() {
     LOCATION=/tmp/swapfile
     SIZE=1G
 
-    fallocate -l $SIZE $LOCATION
-    chmod 600 $LOCATION
-    mkswap $LOCATION
-    swapon $LOCATION
+    # Create swapfile
+    sudo fallocate -l $SIZE $LOCATION
+    sudo chmod 600 $LOCATION
+    sudo mkswap $LOCATION
+    sudo swapon $LOCATION
 
-    echo 1 > /sys/module/zswap/parameters/enabled
+    # Enable zswap
+    echo 1 | sudo tee /sys/module/zswap/parameters/enabled
 }
 
 start-minikube() {
+    # Start minikube if it's not already running
     minikube status || minikube start
 }
 
