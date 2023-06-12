@@ -17,7 +17,7 @@
         },
         "components": {
             "type": "string",
-            "default": "native-image,js,nodejs,python,wasm"
+            "default": "native-image js nodejs python wasm"
         }
     },
     // TODO: refactor repetition of /opt/graalvm in settings and containerEnv

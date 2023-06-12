@@ -4,9 +4,9 @@ set -eax
 
 # clean up any untracked files
 minikube delete
-# start minikube
-CPU_COUNT=$(expr $(nproc) - 1) # leave one core for the host
-MEMORY=$(expr $CPU_COUNT \* 2)g # 2GB per core
+# start minikube, using half the available cpus and memory
+CPU_COUNT=$(expr $(nproc) / 2)
+MEMORY=$(expr $(free -m | awk '/^Mem:/{print $2}') / 2)
 minikube start \
     --cpus=$CPU_COUNT \
     --memory=$MEMORY

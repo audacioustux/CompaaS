@@ -6,8 +6,10 @@ set -eax
 
 RELEASE="graalvm-${EDITION}-java${JAVA}-${VERSION}"
 
-curl -sL https://get.graalvm.org/jdk | bash -s -- $RELEASE \
-    --to /tmp \
-    $([[ -n "$COMPONENTS" ]] && echo "-c $COMPONENTS")
+curl -sL https://get.graalvm.org/jdk | bash -s -- $RELEASE --to /opt
 
-mv /tmp/$RELEASE $GRAALVM_HOME
+ln -s /opt/$RELEASE $GRAALVM_HOME
+
+if [[ -n "$COMPONENTS" ]]; then
+    gu install $COMPONENTS
+fi
