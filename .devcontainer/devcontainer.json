@@ -6,25 +6,26 @@
         "customizations": {
                 "vscode": {
                         "extensions": [
-                                "sleistner.vscode-fileutils",
-                                "bierner.markdown-mermaid",
-                                "DavidAnson.vscode-markdownlint",
-                                "GitHub.copilot",
-                                "scalameta.metals@prerelease",
-                                "vadimcn.vscode-lldb",
-                                "mutantdino.resourcemonitor",
-                                "rust-lang.rust-analyzer",
-                                "tamasfe.even-better-toml",
-                                "serayuzgur.crates",
-                                "jeff-hykin.better-cpp-syntax",
-                                "dtsvet.vscode-wasm",
-                                "svelte.svelte-vscode",
-                                "redhat.vscode-yaml",
-                                "ms-azuretools.vscode-docker",
-                                "EditorConfig.EditorConfig",
-                                "mhutchie.git-graph",
-                                "tilt-dev.Tiltfile"
-                        ],
+							"sleistner.vscode-fileutils",
+							"bierner.markdown-mermaid",
+							"DavidAnson.vscode-markdownlint",
+							"GitHub.copilot",
+							"scalameta.metals@prerelease",
+							"vadimcn.vscode-lldb",
+							"mutantdino.resourcemonitor",
+							"rust-lang.rust-analyzer",
+							"tamasfe.even-better-toml",
+							"serayuzgur.crates",
+							"jeff-hykin.better-cpp-syntax",
+							"dtsvet.vscode-wasm",
+							"svelte.svelte-vscode",
+							"redhat.vscode-yaml",
+							"ms-azuretools.vscode-docker",
+							"EditorConfig.EditorConfig",
+							"mhutchie.git-graph",
+							"tilt-dev.Tiltfile",
+							"tomoki1207.pdf"
+						],
                         "settings": {
                                 "git.autofetch": true,
                                 "files.autoSave": "onFocusChange",
@@ -58,7 +59,8 @@
                 "./local-features/tilt": {},
                 "./local-features/webassembly-tools": {},
                 "./local-features/graalvm": {},
-                "./local-features/sbt": {}
+                "./local-features/sbt": {},
+                "./local-features/gum": {}
         },
         "overrideFeatureInstallOrder": [
                 "./local-features/common-utils-extras"

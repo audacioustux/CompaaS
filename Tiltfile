@@ -10,7 +10,5 @@ docker_build(
   dockerfile="Dockerfile"
 )
 
-# k8s_yaml(kustomize("k8s/compaas/overlays/dev"))
-
 docker_prune_settings(True)
 analytics_settings(enable=False)
