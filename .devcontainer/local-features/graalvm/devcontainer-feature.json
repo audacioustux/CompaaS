@@ -39,6 +39,6 @@
     "containerEnv": {
         "GRAALVM_HOME": "/opt/graalvm",
         "JAVA_HOME": "/opt/graalvm",
-        "PATH": "/opt/graalvm/bin:$PATH"
+        "PATH": "$PATH:/opt/graalvm/bin"
     }
 }
