@@ -50,7 +50,7 @@
       "dockerDashComposeVersion": "v2"
     },
     "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/devcontainers/kubectl-helm-minikube": "latest",
+    "ghcr.io/devcontainers/kubectl-helm-minikube": {},
     "./local-features/common-utils-extras": {},
     "./local-features/k9s": {},
     "./local-features/pulumi": {},
