@@ -6,7 +6,7 @@ set -eax
 
 RELEASE="graalvm-${EDITION}-java${JAVA}-${VERSION}"
 
-curl -sL https://get.graalvm.org/jdk | bash -s -- $RELEASE --to /opt
+curl -sL https://get.graalvm.org/jdk | bash -s -- $RELEASE --to /opt --no-progress
 
 ln -s /opt/$RELEASE $GRAALVM_HOME
 

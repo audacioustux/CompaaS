@@ -9,7 +9,7 @@ build-project() {
 }
 
 build-platform() {
-    npm install --prefix platform
+    npm install -q --prefix platform
 }
 
 parallel --halt now,fail=1 \

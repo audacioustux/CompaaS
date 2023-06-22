@@ -2,8 +2,8 @@
 
 set -eax
 
-apt-get update
-apt-get install -y --no-install-recommends \
+apt-get update -qq
+apt-get install -yqq --no-install-recommends \
     wabt \
     binaryen \
     emscripten
