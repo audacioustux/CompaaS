@@ -2,5 +2,5 @@
   "id": "webassembly-tools",
   "name": "WebAssembly Tools",
   "description": "Tools for working with WebAssembly (e.g., wabt, binaryen, emscripten)",
-  "installsAfter": ["common-utils-extras"]
+  "installsAfter": ["./features/common-utils-extras"]
 }

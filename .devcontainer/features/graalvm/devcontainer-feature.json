@@ -31,5 +31,5 @@
     "JAVA_HOME": "${localEnv:GRAALVM_HOME}",
     "PATH": "$PATH:${localEnv:GRAALVM_HOME}/bin"
   },
-  "installsAfter": ["common-utils-extras"]
+  "installsAfter": ["./features/common-utils-extras"]
 }

@@ -1,5 +1,5 @@
 {
   "id": "pulumi",
   "name": "Pulumi",
-  "installsAfter": ["common-utils-extras"]
+  "installsAfter": ["./features/common-utils-extras"]
 }

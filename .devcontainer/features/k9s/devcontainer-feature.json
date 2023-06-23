@@ -1,5 +1,5 @@
 {
   "id": "k9s",
   "name": "K9s (Kubernetes CLI To Manage Your Clusters In Style!)",
-  "installsAfter": ["common-utils-extras"]
+  "installsAfter": ["./features/common-utils-extras"]
 }
