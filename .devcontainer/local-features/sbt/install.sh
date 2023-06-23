@@ -15,6 +15,6 @@ fi
 chmod +x cs
 install -o root -g root -m 0755 cs /usr/local/bin/cs
 
-sudo -Eiu $_REMOTE_USER <<EOF
+sudo -Eu $_REMOTE_USER bash <<EOF
     cs setup -y -q 
 EOF
