@@ -2,6 +2,5 @@
   "id": "gum",
   "name": "Gum",
   "description": "A tool for glamorous shell scripts",
-  "installsAfter": ["common-utils-extras"]
+  "installsAfter": ["common-utils"]
 }
-
