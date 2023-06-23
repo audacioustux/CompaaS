@@ -39,20 +39,20 @@
     "memory": "8gb"
   },
   "features": {
-    "common-utils:2": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
       "configureZshAsDefaultShell": true
     },
-    "node:1": {
+    "ghcr.io/devcontainers/features/node:1": {
       "version": "latest"
     },
-    "rust:1": {
+    "ghcr.io/devcontainers/features/rust:1": {
       "profile": "complete"
     },
-    "docker-in-docker:2": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
       "dockerDashComposeVersion": "v2"
     },
-    "git:1": {},
-    "kubectl-helm-minikube:1": {},
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
     "./features/common-utils-extras": {},
     "./features/k9s": {},
     "./features/pulumi": {},
