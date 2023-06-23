@@ -21,16 +21,15 @@
     "vscode": {
       "extensions": ["oracle-labs-graalvm.graalvm-pack"],
       "settings": {
-        "graalvm.home": "/opt/graalvm",
-        "graalvm.installations": ["/opt/graalvm"],
-        "netbeans.jdkhome": "/opt/graalvm"
+        "graalvm.home": "${env:GRAALVM_HOME}",
+        "graalvm.installations": ["${env:GRAALVM_HOME}"],
+        "netbeans.jdkhome": "${env:GRAALVM_HOME}"
       }
     }
   },
   "containerEnv": {
-    "GRAALVM_HOME": "/opt/graalvm",
-    "JAVA_HOME": "/opt/graalvm",
-    "PATH": "$PATH:/opt/graalvm/bin"
+    "JAVA_HOME": "${localEnv:GRAALVM_HOME}",
+    "PATH": "$PATH:${localEnv:GRAALVM_HOME}/bin"
   },
-  "installsAfter": ["./common-utils-extras"]
+  "installsAfter": ["common-utils-extras"]
 }

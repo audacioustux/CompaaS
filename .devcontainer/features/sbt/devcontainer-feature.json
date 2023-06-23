@@ -8,5 +8,5 @@
       "description": "Select sbt version"
     }
   },
-  "installsAfter": ["./graalvm"]
+  "installsAfter": ["graalvm"]
 }

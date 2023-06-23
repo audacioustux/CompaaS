@@ -1,5 +1,5 @@
 {
   "id": "tilt",
   "name": "Tilt (Local Kubernetes Development)",
-  "installsAfter": ["./common-utils-extras"]
+  "installsAfter": ["common-utils-extras"]
 }
