@@ -14,8 +14,7 @@
     },
     "components": {
       "type": "string",
-      // "default": "native-image js nodejs python wasm"
-      "default": ""
+      "default": "native-image js nodejs python wasm"
     }
   },
   "customizations": {
@@ -29,9 +28,8 @@
     }
   },
   "containerEnv": {
-    "GRAALVM_HOME": "${GRAALVM_HOME?}",
-    "JAVA_HOME": "${GRAALVM_HOME}",
-    "PATH": "$PATH:${GRAALVM_HOME}/bin"
+    "JAVA_HOME": "$GRAALVM_HOME",
+    "PATH": "$PATH:$GRAALVM_HOME/bin"
   },
   "installsAfter": ["./features/common-utils-extras"]
 }
