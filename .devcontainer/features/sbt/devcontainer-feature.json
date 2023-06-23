@@ -8,5 +8,9 @@
       "description": "Select sbt version"
     }
   },
+  "containerEnv": {
+    "JAVA_HOME": "$GRAALVM_HOME",
+    "PATH": "$PATH:$GRAALVM_HOME/bin"
+  },
   "installsAfter": ["./features/graalvm"]
 }

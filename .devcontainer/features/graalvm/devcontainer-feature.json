@@ -28,8 +28,7 @@
     }
   },
   "containerEnv": {
-    "JAVA_HOME": "$GRAALVM_HOME",
-    "PATH": "$PATH:$GRAALVM_HOME/bin"
+    "GRAALVM_HOME": "${GRAALVM_HOME:-/opt/graalvm}"
   },
   "installsAfter": ["./features/common-utils-extras"]
 }

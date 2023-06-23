@@ -4,7 +4,6 @@ services:
       context: .
       args:
         - GRAAL_EE_DOWNLOAD_TOKEN
-        - GRAAL_HOME
     environment:
       - PULUMI_ACCESS_TOKEN
       - PULUMI_BACKEND_URL
