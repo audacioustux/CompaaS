@@ -18,7 +18,7 @@ if [[ -z "$PULUMI_BACKEND_URL" ]]; then
     # pulumi cloud is the default, but if no access token is specified
     if [[ -z "$PULUMI_ACCESS_TOKEN" ]]; then
         # use local backend
-        export PULUMI_BACKEND_URL="--local"
+        export PULUMI_BACKEND_URL="file://~"
         # if no passphrase is specified
         if [[ -z "$PULUMI_CONFIG_PASSPHRASE" ]]; then
             # use default passphrase

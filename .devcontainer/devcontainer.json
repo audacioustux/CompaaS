@@ -45,22 +45,22 @@
     "ghcr.io/devcontainers/features/node:1": {
 	    "version": "18"
     },
-    "ghcr.io/devcontainers/features/rust:1": {
-      "profile": "complete"
-    },
+    // "ghcr.io/devcontainers/features/rust:1": {
+    //   "profile": "complete"
+    // },
     "ghcr.io/devcontainers/features/docker-in-docker:2": {
       "dockerDashComposeVersion": "v2"
     },
     "ghcr.io/devcontainers/features/git:1": {},
     "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
     "./features/common-utils-extras": {},
-    "./features/k9s": {},
+    // "./features/k9s": {},
     "./features/pulumi": {},
-    "./features/tilt": {},
-    "./features/webassembly-tools": {},
+    // "./features/tilt": {},
+    // "./features/webassembly-tools": {},
+    // "./features/gum": {}
     "./features/graalvm": {},
-    "./features/sbt": {},
-    "./features/gum": {}
+    "./features/sbt": {}
   },
   "updateContentCommand": ".devcontainer/scripts/update.sh",
   "postCreateCommand": ".devcontainer/scripts/post-create.sh",
