@@ -8,7 +8,7 @@ build-project() {
     sbt stage
 }
 
-build-platform() {
+install-platform-deps() {
     npm install -q --prefix platform
 }
 
@@ -16,4 +16,4 @@ parallel --halt now,fail=1 \
     --linebuffer \
     -j0 ::: \
         build-project \
-        build-platform
+        install-platform-deps

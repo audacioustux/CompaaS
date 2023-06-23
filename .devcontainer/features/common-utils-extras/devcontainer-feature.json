@@ -2,9 +2,8 @@
   "id": "common-utils-extras",
   "name": "Common Utilities Extras",
   "description": "More Common utilities for development containers",
-  "installsAfter": ["common-utils"],
+  "installsAfter": ["ghcr.io/devcontainers/features/common-utils"],
   "containerEnv": {
     "DEBIAN_FRONTEND": "noninteractive"
   }
 }
-
