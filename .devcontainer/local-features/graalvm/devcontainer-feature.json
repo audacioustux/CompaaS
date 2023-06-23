@@ -1,44 +1,37 @@
 {
-    "id": "graalvm",
-    "name": "GraalVM JDK",
-    "options": {
-        "version": {
-            "type": "string",
-            "default": "22.3.1"
-        },
-        "java": {
-            "type": "string",
-            "enum": [
-                "11",
-                "17"
-            ],
-            "default": "17",
-            "description": "Java version to install. Valid values are 11, 17"
-        },
-        "components": {
-            "type": "string",
-            "default": "native-image js nodejs python wasm"
-        }
+  "id": "graalvm",
+  "name": "GraalVM JDK",
+  "options": {
+    "version": {
+      "type": "string",
+      "default": "22.3.1"
     },
-    // TODO: refactor repetition of /opt/graalvm in settings and containerEnv
-    // https://github.com/devcontainers/spec/issues/164
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "oracle-labs-graalvm.graalvm-pack"
-            ],
-            "settings": {
-                "graalvm.home": "/opt/graalvm",
-                "graalvm.installations": [
-                    "/opt/graalvm"
-                ],
-                "netbeans.jdkhome": "/opt/graalvm"
-            }
-        }
+    "java": {
+      "type": "string",
+      "enum": ["11", "17"],
+      "default": "17",
+      "description": "Java version to install. Valid values are 11, 17"
     },
-    "containerEnv": {
-        "GRAALVM_HOME": "/opt/graalvm",
-        "JAVA_HOME": "/opt/graalvm",
-        "PATH": "$PATH:/opt/graalvm/bin"
+    "components": {
+      "type": "string",
+      "default": "native-image js nodejs python wasm"
     }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["oracle-labs-graalvm.graalvm-pack"],
+      "settings": {
+        "graalvm.home": "/opt/graalvm",
+        "graalvm.installations": ["/opt/graalvm"],
+        "netbeans.jdkhome": "/opt/graalvm"
+      }
+    }
+  },
+  "containerEnv": {
+    "GRAALVM_HOME": "/opt/graalvm",
+    "JAVA_HOME": "/opt/graalvm",
+    "PATH": "$PATH:/opt/graalvm/bin"
+  },
+  "installsAfter": ["common-utils-extras"]
 }
+
