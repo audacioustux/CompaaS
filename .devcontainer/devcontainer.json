@@ -39,28 +39,28 @@
     "memory": "8gb"
   },
   "features": {
-    "ghcr.io/devcontainers/features/common-utils:2": {
+    "common-utils:2": {
       "configureZshAsDefaultShell": true
     },
-    "ghcr.io/devcontainers/features/node:1": {
+    "node:1": {
       "version": "latest"
     },
-    "ghcr.io/devcontainers/features/rust:1": {
+    "rust:1": {
       "profile": "complete"
     },
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+    "docker-in-docker:2": {
       "dockerDashComposeVersion": "v2"
     },
-    "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
-    "./local-features/common-utils-extras": {},
-    "./local-features/k9s": {},
-    "./local-features/pulumi": {},
-    "./local-features/tilt": {},
-    "./local-features/webassembly-tools": {},
-    "./local-features/graalvm": {},
-    "./local-features/sbt": {},
-    "./local-features/gum": {}
+    "git:1": {},
+    "kubectl-helm-minikube:1": {},
+    "./features/common-utils-extras": {},
+    "./features/k9s": {},
+    "./features/pulumi": {},
+    "./features/tilt": {},
+    "./features/webassembly-tools": {},
+    "./features/graalvm": {},
+    "./features/sbt": {},
+    "./features/gum": {}
   },
   "updateContentCommand": ".devcontainer/scripts/update.sh",
   "postCreateCommand": ".devcontainer/scripts/post-create.sh",
