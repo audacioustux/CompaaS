@@ -15,6 +15,7 @@ fi
 chmod +x cs
 install -o root -g root -m 0755 cs /usr/local/bin/cs
 
-sudo -Eu $_REMOTE_USER bash <<EOF
+sudo -iu $_REMOTE_USER <<EOF
+    echo "GRAALVM HOME: $GRAALVM_HOME"
     cs setup -y -q 
 EOF
