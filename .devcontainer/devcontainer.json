@@ -47,7 +47,7 @@
       "version": "18"
     },
     "ghcr.io/devcontainers/features/rust:1": {
-      "profile": "defualt"
+      "profile": "default"
     },
     "ghcr.io/devcontainers/features/docker-in-docker:2": {
       "dockerDashComposeVersion": "v2"
