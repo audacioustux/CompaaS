@@ -27,16 +27,16 @@
         "asf.apache-netbeans-java"
       ],
       "settings": {
-        "graalvm.home": "/usr/java/current",
+        "graalvm.home": "/usr/java/graalvm",
         "graalvm.installations": [
-          "/usr/java/current"
+          "/usr/java/graalvm"
         ],
-        "netbeans.jdkhome": "/usr/java/current"
+        "netbeans.jdkhome": "/usr/java/graalvm"
       }
     }
   },
   "containerEnv": {
-    "GRAALVM_HOME": "/usr/java/current",
+    "GRAALVM_HOME": "/usr/java/graalvm",
     "JAVA_HOME": "${GRAALVM_HOME?}",
     "PATH": "$PATH:${JAVA_HOME?}/bin"
   },
