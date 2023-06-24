@@ -30,6 +30,7 @@
         "git.autofetch": true,
         "files.autoSave": "onFocusChange",
         "editor.formatOnSave": true,
+        "editor.formatOnPaste": true,
         "resmon.show.cpufreq": false
       }
     }
@@ -43,7 +44,7 @@
       "configureZshAsDefaultShell": true
     },
     "ghcr.io/devcontainers/features/node:1": {
-	    "version": "18"
+      "version": "18"
     },
     "ghcr.io/devcontainers/features/rust:1": {
       "profile": "complete"
@@ -59,7 +60,9 @@
     "./features/tilt": {},
     "./features/webassembly-tools": {},
     "./features/gum": {},
-    "./features/graalvm": {},
+    "./features/graalvm": {
+      "components": "native-image js nodejs python wasm"
+    },
     "./features/sbt": {}
   },
   "updateContentCommand": ".devcontainer/scripts/update.sh",
