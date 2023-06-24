@@ -11,5 +11,5 @@ curl -sL https://get.graalvm.org/jdk | bash -s -- $RELEASE --to /tmp --no-progre
 mv /tmp/$RELEASE $GRAALVM_HOME
 
 if [[ -n "$COMPONENTS" ]]; then
-    $GRAALVM_HOME/bin/gu install $COMPONENTS
+    gu install $COMPONENTS
 fi

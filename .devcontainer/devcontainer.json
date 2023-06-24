@@ -65,6 +65,9 @@
     },
     "./features/sbt": {}
   },
+  "containerEnv": {
+    "GRAALVM_HOME": "/opt/graalvm"
+  },
   "updateContentCommand": ".devcontainer/scripts/update.sh",
   "postCreateCommand": ".devcontainer/scripts/post-create.sh",
   "postStartCommand": "minikube status || minikube start"
