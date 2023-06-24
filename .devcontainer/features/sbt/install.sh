@@ -15,4 +15,6 @@ fi
 chmod +x cs
 install -o root -g root -m 0755 cs /usr/local/bin/cs
 
-cs setup -y -q --user-home $_REMOTE_USER_HOME
+sudo -E -u vscode bash <<EOF
+    cs setup -y -q
+EOF

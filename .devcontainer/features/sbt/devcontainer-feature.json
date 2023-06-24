@@ -7,6 +7,5 @@
       "default": "latest",
       "description": "Select sbt version"
     }
-  },
-  "installsAfter": ["./features/graalvm"]
+  }
 }
