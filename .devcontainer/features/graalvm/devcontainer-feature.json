@@ -4,16 +4,13 @@
   "options": {
     "version": {
       "type": "string",
-      "default": "22.3.1",
-      "enum": [
-        "22.3.1"
-      ]
+      "default": "latest"
     },
     "java": {
       "type": "string",
       "enum": [
-        "11",
-        "17"
+        "17",
+        "20"
       ],
       "default": "17",
       "description": "Java version to install. Valid values are 11, 17"
@@ -26,21 +23,22 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "oracle-labs-graalvm.graalvm-pack"
+        "oracle-labs-graalvm.graalvm",
+        "asf.apache-netbeans-java"
       ],
       "settings": {
-        "graalvm.home": "/opt/graalvm",
+        "graalvm.home": "/usr/java/current",
         "graalvm.installations": [
-          "/opt/graalvm"
+          "/usr/java/current"
         ],
-        "netbeans.jdkhome": "/opt/graalvm"
+        "netbeans.jdkhome": "/usr/java/current"
       }
     }
   },
   "containerEnv": {
-    "GRAALVM_HOME": "/opt/graalvm",
+    "GRAALVM_HOME": "/usr/java/current",
     "JAVA_HOME": "${GRAALVM_HOME?}",
-    "PATH": "$PATH:$GRAALVM_HOME/bin"
+    "PATH": "$PATH:${JAVA_HOME?}/bin"
   },
   "installsAfter": [
     "./features/common-utils-extras"

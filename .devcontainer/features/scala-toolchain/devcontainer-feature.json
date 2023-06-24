@@ -1,11 +1,12 @@
 {
-  "id": "sbt",
-  "name": "SBT (Scala Build Tool)",
+  "id": "scala-toolchain",
+  "name": "Scala Toolchain",
   "options": {
     "version": {
       "type": "string",
       "default": "latest",
       "description": "Select sbt version"
     }
-  }
+  },
+  "installsAfter": ["./features/graalvm"]
 }

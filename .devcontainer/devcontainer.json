@@ -61,9 +61,9 @@
     "./features/webassembly-tools": {},
     "./features/gum": {},
     "./features/graalvm": {
-      "components": "native-image js nodejs python wasm"
+      "components": "native-image nodejs"
     },
-    "./features/sbt": {}
+    "./features/scala-toolchain": {}
   },
   "updateContentCommand": ".devcontainer/scripts/update.sh",
   "postCreateCommand": ".devcontainer/scripts/post-create.sh",
