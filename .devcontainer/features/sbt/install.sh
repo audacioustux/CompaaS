@@ -15,6 +15,4 @@ fi
 chmod +x cs
 install -o root -g root -m 0755 cs /usr/local/bin/cs
 
-sudo -iu $_REMOTE_USER <<EOF
-    cs setup -y -q
-EOF
+cs setup -y -q --user-home $_REMOTE_USER_HOME

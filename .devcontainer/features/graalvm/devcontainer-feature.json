@@ -29,11 +29,11 @@
         "oracle-labs-graalvm.graalvm-pack"
       ],
       "settings": {
-        "graalvm.home": "${env:GRAALVM_HOME}",
+        "graalvm.home": "/opt/graalvm",
         "graalvm.installations": [
-          "${env:GRAALVM_HOME}"
+          "/opt/graalvm"
         ],
-        "netbeans.jdkhome": "${env:GRAALVM_HOME}"
+        "netbeans.jdkhome": "/opt/graalvm"
       }
     }
   },
