@@ -36,9 +36,8 @@
     }
   },
   "containerEnv": {
-    "GRAALVM_HOME": "/usr/java/graalvm",
-    "JAVA_HOME": "${GRAALVM_HOME?}",
-    "PATH": "$PATH:${JAVA_HOME?}/bin"
+    "JAVA_HOME": "/usr/java/graalvm",
+    "PATH": "$PATH:/usr/java/graalvm/bin"
   },
   "installsAfter": [
     "./features/common-utils-extras"

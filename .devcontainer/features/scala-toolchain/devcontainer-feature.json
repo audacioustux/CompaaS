@@ -8,5 +8,14 @@
       "description": "Select sbt version"
     }
   },
-  "installsAfter": ["./features/graalvm"]
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "scalameta.metals"
+      ]
+    }
+  },
+  "installsAfter": [
+    "./features/graalvm"
+  ]
 }

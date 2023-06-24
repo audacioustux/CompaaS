@@ -17,3 +17,9 @@ apt-get install -yqq --no-install-recommends \
     fzf \
     socat \
     parallel 
+
+sudo -iu $_REMOTE_USER <<EOF
+    mkdir -p ~/.local/bin
+    ln -s $(which batcat) ~/.local/bin/bat
+    ln -s $(which fdfind) ~/.local/bin/fd
+EOF
