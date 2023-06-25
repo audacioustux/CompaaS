@@ -4,6 +4,7 @@ const argocd_ns = new k8s.core.v1.Namespace("argocd", {
     metadata: { name: "argocd" },
 });
 
+// TODO: manage argocd with argocd
 const argo_cd = new k8s.yaml.ConfigFile("argocd", {
     file: "https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/install.yaml",
     transformations: [
@@ -15,6 +16,7 @@ const argo_cd = new k8s.yaml.ConfigFile("argocd", {
     ],
 });
 
+// TODO: use ApplicationSet
 // apply all yaml files in apps directory
 const apps = new k8s.yaml.ConfigGroup("apps", {
     files: "apps/*.yaml",
