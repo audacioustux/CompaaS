@@ -30,6 +30,7 @@ if [[ -z "$PULUMI_BACKEND_URL" ]]; then
         if [[ -z "$PULUMI_CONFIG_PASSPHRASE" ]]; then
             # use default passphrase
             export PULUMI_CONFIG_PASSPHRASE="pulumi"
+            echo "export PULUMI_CONFIG_PASSPHRASE=$PULUMI_CONFIG_PASSPHRASE" >> ~/.zshrc
         fi
     fi
 fi

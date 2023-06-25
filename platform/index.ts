@@ -4,8 +4,8 @@ const argocd_ns = new k8s.core.v1.Namespace("argocd", {
     metadata: { name: "argocd" },
 });
 
-const argocd = new k8s.yaml.ConfigFile("argocd", {
-    file: "https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/ha/install.yaml",
+const argo_cd = new k8s.yaml.ConfigFile("argocd", {
+    file: "https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/install.yaml",
     transformations: [
         (obj: any) => {
             if (obj.metadata) {
@@ -14,3 +14,15 @@ const argocd = new k8s.yaml.ConfigFile("argocd", {
         }
     ],
 });
+
+// apply all yaml files in apps directory
+const apps = new k8s.yaml.ConfigGroup("apps", {
+    files: "apps/*.yaml",
+    transformations: [
+        (obj: any) => {
+            if (obj.metadata) {
+                obj.metadata.namespace = argocd_ns.metadata.name;
+            }
+        }
+    ],
+}, { dependsOn: argo_cd });
