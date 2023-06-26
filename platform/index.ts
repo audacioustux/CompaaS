@@ -1,30 +1,24 @@
 import * as k8s from "@pulumi/kubernetes";
+import { Namespace } from "@pulumi/kubernetes/core/v1";
 
-const argocd_ns = new k8s.core.v1.Namespace("argocd", {
-    metadata: { name: "argocd" },
+const argocd_ns = new k8s.core.v1.Namespace("argo-cd-ns", {
+    metadata: { name: "argo-cd" },
 });
 
-// TODO: manage argocd with argocd
-const argo_cd = new k8s.yaml.ConfigFile("argocd", {
-    file: "https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/install.yaml",
-    transformations: [
-        (obj: any) => {
-            if (obj.metadata) {
-                obj.metadata.namespace = argocd_ns.metadata.name;
-            }
-        }
-    ],
+const argo_cd = new k8s.kustomize.Directory("argo-cd", {
+    directory: "argo-cd",
+    transformations: [useNamespace(argocd_ns)],
 });
 
-// TODO: use ApplicationSet
-// apply all yaml files in apps directory
 const apps = new k8s.yaml.ConfigGroup("apps", {
     files: "apps/*.yaml",
-    transformations: [
-        (obj: any) => {
-            if (obj.metadata) {
-                obj.metadata.namespace = argocd_ns.metadata.name;
-            }
+    transformations: [useNamespace(argocd_ns)],
+});
+
+function useNamespace(namespace: Namespace) {
+    return (obj: any) => {
+        if (obj.metadata) {
+            obj.metadata.namespace = namespace;
         }
-    ],
-}, { dependsOn: argo_cd });
+    };
+}
