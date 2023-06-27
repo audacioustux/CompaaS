@@ -10,6 +10,7 @@ spec:
   source:
     chart: traefik
     repoURL: https://traefik.github.io/charts
+    targetRevision: v23.1.0
   syncPolicy:
     automated:
       prune: true
