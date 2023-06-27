@@ -2,13 +2,6 @@
 
 set -eax
 
-# TODO: remove this hack when https://github.com/microsoft/vscode/issues/179907 is fixed
-RG_EXECUTABLES=$(fd -g "rg" ~/.vscode-server*/)
-for RG_EXECUTABLE in $RG_EXECUTABLES; do
-    rm $RG_EXECUTABLE
-    ln -s $(which rg) $RG_EXECUTABLE
-done
-
 # clean up any untracked files
 minikube delete
 # start minikube
