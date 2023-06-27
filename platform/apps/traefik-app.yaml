@@ -8,9 +8,8 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: platform/cert-manager
-    repoURL: https://github.com/audacioustux/CompaaS
-    targetRevision: HEAD
+    repoURL: https://traefik.github.io/charts
+    chart: traefik
   syncPolicy:
     automated:
       prune: true
