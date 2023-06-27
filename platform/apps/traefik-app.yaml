@@ -8,8 +8,8 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    repoURL: https://traefik.github.io/charts
     chart: traefik
+    repoURL: https://traefik.github.io/charts
   syncPolicy:
     automated:
       prune: true

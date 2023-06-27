@@ -8,12 +8,12 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    repoURL: https://charts.jetstack.io
     chart: cert-manager
+    repoURL: https://charts.jetstack.io
     helm:
-      releaseName: cert-manager
-      values: |
-        installCRDs: true
+      parameters:
+        - name: installCRDs
+          value: "true"
   syncPolicy:
     automated:
       prune: true
