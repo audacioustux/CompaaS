@@ -61,5 +61,5 @@
   },
   "updateContentCommand": ".devcontainer/scripts/update.sh",
   "postCreateCommand": ".devcontainer/scripts/post-create.sh",
-  "postStartCommand": "nohup .devcontainer/scripts/post-start.sh > /tmp/post-start.log 2>&1 &"
+  "postStartCommand": "nohup bash -c 'minikube status || minikube start && minikube tunnel --bind-address 0.0.0.0 &' > /tmp/post-start.log 2>&1"
 }
