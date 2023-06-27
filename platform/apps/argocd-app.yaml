@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argo-cd
+  name: argocd
 spec:
   destination:
-    namespace: argo-cd
+    namespace: argocd
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: platform/argo-cd/apps/argo-cd
+    path: platform/argo-cd/apps/argocd
     repoURL: https://github.com/audacioustux/CompaaS
     targetRevision: HEAD
   syncPolicy:

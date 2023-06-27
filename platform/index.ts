@@ -9,16 +9,16 @@ function useNamespace(namespace: Namespace) {
     };
 }
 
-const argocd_ns = new k8s.core.v1.Namespace("argo-cd-ns", {
-    metadata: { name: "argo-cd" },
+const argocd_ns = new k8s.core.v1.Namespace("argocd-ns", {
+    metadata: { name: "argocd" },
 });
 
-const argo_cd = new k8s.kustomize.Directory("argo-cd", {
-    directory: "argo-cd",
+const argocd = new k8s.kustomize.Directory("argocd", {
+    directory: "apps/argocd",
     transformations: [useNamespace(argocd_ns)],
 });
 
 const apps = new k8s.yaml.ConfigGroup("apps", {
     files: "apps/*.yaml",
     transformations: [useNamespace(argocd_ns)],
-});
+}, { dependsOn: argocd });
