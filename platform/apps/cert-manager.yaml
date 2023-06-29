@@ -7,7 +7,7 @@ spec:
     namespace: cert-manager
     server: https://kubernetes.default.svc
   project: default
-  sources:
+  source:
     path: platform/apps/cert-manager
     repoURL: https://github.com/audacioustux/CompaaS
     targetRevision: HEAD
