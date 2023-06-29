@@ -6,7 +6,7 @@ set -eax
 minikube delete
 # start minikube
 CPU_COUNT=4
-MEMORY=8192
+MEMORY=6144
 minikube start \
     --cpus=$CPU_COUNT \
     --memory=$MEMORY

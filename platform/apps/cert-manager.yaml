@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: traefik
+  name: cert-manager
 spec:
   destination:
-    namespace: traefik
+    namespace: cert-manager
     server: https://kubernetes.default.svc
   project: default
-  source:
-    chart: traefik
-    repoURL: https://traefik.github.io/charts
-    targetRevision: v23.1.0
+  sources:
+    path: platform/apps/cert-manager
+    repoURL: https://github.com/audacioustux/CompaaS
+    targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true

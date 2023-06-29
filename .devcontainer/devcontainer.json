@@ -16,9 +16,10 @@
         "svelte.svelte-vscode",
         "redhat.vscode-yaml",
         "EditorConfig.EditorConfig",
-        "mhutchie.git-graph",
         "tomoki1207.pdf",
-        "Gruntfuggly.todo-tree"
+        "Gruntfuggly.todo-tree",
+        "eamodio.gitlens",
+        "mechatroner.rainbow-csv"
       ],
       "settings": {
         "git.autofetch": true,

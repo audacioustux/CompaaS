@@ -1,13 +1,5 @@
 import * as k8s from "@pulumi/kubernetes";
-import { Namespace } from "@pulumi/kubernetes/core/v1";
-
-function useNamespace(namespace: Namespace) {
-    return (obj: any) => {
-        if (obj.metadata) {
-            obj.metadata.namespace = namespace;
-        }
-    };
-}
+import { useNamespace } from "./utils";
 
 const argocd_ns = new k8s.core.v1.Namespace("argocd-ns", {
     metadata: { name: "argocd" },
