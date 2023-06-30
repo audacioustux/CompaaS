@@ -11,6 +11,12 @@ spec:
     chart: vela-core
     repoURL: https://kubevela.github.io/charts/
     targetRevision: v1.9.2
+    helm:
+      values: |
+        image:
+          repository: tanjim/vela-core
+          tag: latest
+          pullPolicy: Always
   syncPolicy:
     automated:
       prune: true
