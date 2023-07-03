@@ -32,7 +32,8 @@
   },
   "hostRequirements": {
     "cpus": 4,
-    "memory": "8gb"
+    "memory": "8gb",
+    "storage": "32gb"
   },
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {
@@ -63,5 +64,7 @@
   },
   "updateContentCommand": ".devcontainer/scripts/update.sh",
   "postCreateCommand": ".devcontainer/scripts/post-create.sh",
-  "postStartCommand": "nohup bash -c 'minikube status || minikube start && minikube tunnel --bind-address 0.0.0.0 &' > /tmp/post-start.log 2>&1"
+  "postStartCommand": {
+    "minikube": "nohup bash -c 'minikube status || minikube start && minikube tunnel --bind-address 0.0.0.0 &' > /tmp/minikube.log 2>&1"
+  }
 }
