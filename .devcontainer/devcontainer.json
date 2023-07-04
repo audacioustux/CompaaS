@@ -51,6 +51,7 @@
     "ghcr.io/devcontainers/features/git:1": {},
     "ghcr.io/devcontainers/features/github-cli": {},
     "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
+    "ghcr.io/devcontainers/features/go:1": {},
     "./features/common-utils-extras": {},
     "./features/k9s": {},
     "./features/pulumi": {},

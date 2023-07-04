@@ -9,7 +9,7 @@ CPU_COUNT=4
 MEMORY=6144
 minikube start \
     --cpus=$CPU_COUNT \
-    --memory=$MEMORY
+    --memory=$MEMORY 
 # use minikube's docker daemon
 echo "eval \$(minikube docker-env)" >> ~/.zshrc
 
