@@ -30,11 +30,11 @@
       }
     }
   },
-  // "hostRequirements": {
-  //   "cpus": 4,
-  //   "memory": "8gb",
-  //   "storage": "32gb"
-  // },
+  "hostRequirements": {
+    "cpus": 4,
+    "memory": "8gb",
+    "storage": "32gb"
+  },
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {
       "configureZshAsDefaultShell": true
@@ -69,4 +69,3 @@
     "minikube": "nohup bash -c 'minikube status || minikube start && minikube tunnel --bind-address 0.0.0.0 &' > /tmp/minikube.log 2>&1"
   }
 }
-
