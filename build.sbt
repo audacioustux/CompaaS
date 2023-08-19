@@ -1,6 +1,6 @@
 lazy val versions = new {
-  val scala                = "3.2.2"
-  val Akka                 = "2.8.2"
+  val scala                = "3.3.0"
+  val Akka                 = "2.8.4"
   val AkkaProjection       = "1.4.0"
   val AkkaHttp             = "10.5.2"
   val GraalSDK             = "22.3.1"

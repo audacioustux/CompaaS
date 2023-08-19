@@ -52,20 +52,17 @@
     "ghcr.io/devcontainers/features/github-cli": {},
     "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
     "ghcr.io/devcontainers/features/go:1": {},
-    "./features/common-utils-extras": {},
-    "./features/k9s": {},
-    "./features/pulumi": {},
-    "./features/tilt": {},
-    "./features/webassembly-tools": {},
-    "./features/gum": {},
-    "./features/graalvm": {
-      "components": "native-image nodejs"
-    },
-    "./features/scala-toolchain": {}
+    "ghcr.io/audacioustux/devcontainers/common-utils-extras:1": {},
+    "ghcr.io/audacioustux/devcontainers/pulumi:1": {},
+    "ghcr.io/audacioustux/devcontainers/k9s:1": {},
+    "ghcr.io/audacioustux/devcontainers/cilium:1": {},
+    "ghcr.io/audacioustux/devcontainers/taskfile:1": {},
+    "ghcr.io/audacioustux/devcontainers/tilt:1": {},
+    "ghcr.io/audacioustux/devcontainers/graalvm:1": {},
+    "ghcr.io/audacioustux/devcontainers/scala-toolchain:1": {},
+    "ghcr.io/audacioustux/devcontainers/wasm-toolchain:1": {}
   },
   "updateContentCommand": ".devcontainer/scripts/update.sh",
   "postCreateCommand": ".devcontainer/scripts/post-create.sh",
-  "postStartCommand": {
-    "minikube": "nohup bash -c 'minikube status || minikube start && minikube tunnel --bind-address 0.0.0.0 &' > /tmp/minikube.log 2>&1"
-  }
+  "postStartCommand": "nohup bash -c '.devcontainer/scripts/post-start.sh &' > /tmp/post-start.log 2>&1"
 }
