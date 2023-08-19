@@ -1,30 +1,28 @@
 lazy val versions = new {
   val scala                = "3.3.0"
   val Akka                 = "2.8.4"
-  val AkkaProjection       = "1.4.0"
+  val AkkaProjection       = "1.4.2"
   val AkkaHttp             = "10.5.2"
-  val GraalSDK             = "22.3.1"
-  val AkkaManagement       = "1.4.0"
-  val AkkaPersistenceR2dbc = "1.1.0"
-  val JsoniterScala        = "2.23.0"
-  val Logback              = "1.4.7"
-  val Cats                 = "2.9.0"
+  val GraalSDK             = "23.0.1"
+  val AkkaManagement       = "1.4.1"
+  val AkkaPersistenceR2dbc = "1.1.1"
+  val JsoniterScala        = "2.23.2"
+  val Logback              = "1.4.11"
+  val Cats                 = "2.10.0"
   val Munit                = "0.7.29"
-  val Scalatest            = "3.2.15"
-  val OpenTelemetry        = "1.26.0"
-  val YugabyteDB           = "4.6.0-yb-11"
-} // updated: May 13 2023
+  val Scalatest            = "3.2.16"
+  val OpenTelemetry        = "1.29.0"
+  val YugabyteDB           = "4.15.0-yb-1"
+} // updated: 8 / 19 / 23
 
 inThisBuild(
   List(
-    organization                                   := "com.audacioustux",
-    scalaVersion                                   := versions.scala,
-    scalafixOnCompile                              := true,
-    semanticdbEnabled                              := true,
-    semanticdbVersion                              := scalafixSemanticdb.revision,
-    scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0",
-    run / fork                                     := true,
-    Global / cancelable                            := false,
+    organization        := "com.audacioustux",
+    scalaVersion        := versions.scala,
+    scalafixOnCompile   := true,
+    semanticdbEnabled   := true,
+    run / fork          := true,
+    Global / cancelable := false,
     scalacOptions ++= Seq(
       "-explain",
       "-indent",
@@ -35,6 +33,7 @@ inThisBuild(
       "-feature",
       "-unchecked",
       "-Ykind-projector",
+      "-Wunused:all",
       "-Xfatal-warnings",
       "-Xmigration"
     )

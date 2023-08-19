@@ -2,7 +2,6 @@ package compaas.core
 
 import akka.actor.typed.*
 import akka.actor.typed.scaladsl.Behaviors
-import org.graalvm.polyglot.*
 
 object Compaas:
   def apply(): Behavior[Unit] =

@@ -6,7 +6,7 @@ import akka.persistence.typed.PersistenceId
 import akka.persistence.typed.scaladsl.*
 
 import java.util.UUID
-import scala.collection.mutable.{HashMap, HashSet}
+import scala.collection.mutable.{HashSet}
 
 case class Module(name: String, language: String, code: String)
 
