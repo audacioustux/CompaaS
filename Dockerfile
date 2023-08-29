@@ -1,4 +1,4 @@
-FROM ghcr.io/graalvm/graalvm-ce:22.3.1
+FROM ghcr.io/graalvm/graalvm-community:20
 
 RUN gu install native-image js wasm
 

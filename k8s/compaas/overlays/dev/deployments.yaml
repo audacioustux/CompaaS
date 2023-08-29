@@ -3,8 +3,4 @@ apiVersion: apps/v1
 metadata:
   name: compaas
 spec:
-  strategy:
-    rollingUpdate:
-      maxSurge: 0
-      maxUnavailable: 3
-      timeoutSeconds: 60
+  replicas: 1

@@ -3,12 +3,6 @@ apiVersion: apps/v1
 metadata:
   name: compaas
 spec:
-  replicas: 3
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 0
-    type: RollingUpdate
   template:
     spec:
       containers:

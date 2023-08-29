@@ -19,7 +19,8 @@
         "tomoki1207.pdf",
         "Gruntfuggly.todo-tree",
         "eamodio.gitlens",
-        "mechatroner.rainbow-csv"
+        "mechatroner.rainbow-csv",
+        "tilt-dev.tiltfile"
       ],
       "settings": {
         "git.autofetch": true,
