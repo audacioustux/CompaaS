@@ -2,5 +2,7 @@
 
 set -eax
 
-minikube status -p sdp || minikube start -p sdp
-minikube tunnel -p sdp --bind-address "0.0.0.0"
+minikube status || minikube start 
+minikube tunnel --bind-address "0.0.0.0" &
+
+tilt up --stream=false

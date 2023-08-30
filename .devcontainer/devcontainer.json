@@ -61,7 +61,8 @@
     "ghcr.io/audacioustux/devcontainers/tilt:1": {},
     "ghcr.io/audacioustux/devcontainers/graalvm:1": {},
     "ghcr.io/audacioustux/devcontainers/scala-toolchain:1": {},
-    "ghcr.io/audacioustux/devcontainers/wasm-toolchain:1": {}
+    "ghcr.io/audacioustux/devcontainers/wasm-toolchain:1": {},
+    "ghcr.io/audacioustux/devcontainers/kustomize:1": {}
   },
   "updateContentCommand": ".devcontainer/scripts/update.sh",
   "postCreateCommand": ".devcontainer/scripts/post-create.sh",
