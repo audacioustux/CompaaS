@@ -7,4 +7,5 @@ object Compaas:
   def apply(): Behavior[Unit] =
     Behaviors.setup { ctx =>
       Behaviors.empty
+
     }
