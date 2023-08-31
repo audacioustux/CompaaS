@@ -5,6 +5,7 @@ def watch_kustomize(pathToDir, **kwargs):
   return kustomize(pathToDir, **kwargs)
 
 def deploy_yugabyte():
+  namespace = "yugabyte"
   helm_repo(
     'yugabyte', 
     resource_name='yugabyte-repo',
@@ -13,11 +14,11 @@ def deploy_yugabyte():
   helm_resource(
     'yugabyte', 
     chart='yugabyte/yugabyte', 
-    namespace='yugabyte', 
+    namespace=namespace,
     flags=['--values=k8s/yugabyte/values.yaml', '--create-namespace'],
     resource_deps=["yugabyte-repo"]
   )
-  ysqlsh = "kubectl exec -n yugabyte -it yb-tserver-0 -- ysqlsh"
+  ysqlsh = "kubectl exec -n {namespace} -it yb-tserver-0 -- ysqlsh".format(namespace=namespace)
   local_resource(
     "wait-for-yugabyte",
     dir="scripts",
