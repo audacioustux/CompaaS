@@ -66,5 +66,13 @@
   },
   "updateContentCommand": ".devcontainer/scripts/update.sh",
   "postCreateCommand": ".devcontainer/scripts/post-create.sh",
-  "postStartCommand": "nohup bash -c '.devcontainer/scripts/post-start.sh &' > /tmp/post-start.log 2>&1"
+  "postStartCommand": "nohup bash -c '.devcontainer/scripts/post-start.sh &' > /tmp/post-start.log 2>&1",
+  "forwardPorts": [
+    10350
+  ],
+  "portsAttributes": {
+    "10350": {
+      "label": "Tilt UI"
+    }
+  }
 }

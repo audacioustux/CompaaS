@@ -5,6 +5,7 @@ import akka.actor.typed.scaladsl.*
 import akka.management.cluster.bootstrap.ClusterBootstrap
 import akka.management.scaladsl.AkkaManagement
 import akka.rollingupdate.kubernetes.PodDeletionCost
+
 import compaas.core.Compaas
 
 object Main:
