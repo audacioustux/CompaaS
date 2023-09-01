@@ -1,20 +1,25 @@
 package compaas.benchmarks.graal.polyglot.akka
-import compaas.benchmarks.graal.polyglot.common.Graal
-import akka.Done
-import akka.actor.typed.scaladsl.AskPattern.*
-import akka.actor.typed.scaladsl.Behaviors
-import akka.actor.typed.{ ActorRef, ActorSystem, PostStop }
-import akka.util.Timeout
-import com.typesafe.config.ConfigFactory
-import org.graalvm.polyglot.io.ByteSequence
+
 import org.graalvm.polyglot.{ Context, Source, Value }
+import org.graalvm.polyglot.io.ByteSequence
 import org.openjdk.jmh.annotations.*
 import org.openjdk.jmh.infra.Blackhole
+
 import java.util.concurrent.TimeUnit
 import scala.concurrent.Await
-import concurrent.duration.DurationInt
+import scala.concurrent.duration.DurationInt
+
+import akka.Done
+import akka.actor.typed.{ ActorRef, ActorSystem, PostStop }
+import akka.actor.typed.scaladsl.AskPattern.*
+import akka.actor.typed.scaladsl.Behaviors
+import akka.util.Timeout
+import com.typesafe.config.ConfigFactory
+
+import compaas.benchmarks.graal.polyglot.common.Graal
 
 object NthPrimeBenchmark:
+
   val modules = Map(
     "js" ->
       Source
@@ -81,6 +86,7 @@ class NthPrimeBenchmark:
   def shutdown(): Unit =
     system.terminate()
     Await.ready(system.whenTerminated, 15.seconds)
+
 end NthPrimeBenchmark
 
 object NthPrimeBenchmarkActors:
@@ -155,4 +161,5 @@ object NthPrimeBenchmarkActors:
         Behaviors.same
       }
   }
+
 end NthPrimeBenchmarkActors

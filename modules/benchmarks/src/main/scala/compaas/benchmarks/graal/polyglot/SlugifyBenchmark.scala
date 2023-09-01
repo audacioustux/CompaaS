@@ -1,10 +1,10 @@
 package compaas.benchmarks.graal.polyglot
 
 import common.Graal
-import org.graalvm.polyglot.io.ByteSequence
-import org.graalvm.polyglot.{ Context, Engine, Source, Value }
-import org.openjdk.jmh.annotations.*
 import java.util.concurrent.TimeUnit
+import org.graalvm.polyglot.{ Context, Engine, Source, Value }
+import org.graalvm.polyglot.io.ByteSequence
+import org.openjdk.jmh.annotations.*
 
 object SlugifyBenchmark:
   final val opPerInvoke = 30
@@ -26,6 +26,8 @@ object SlugifyBenchmark:
         .build(),
   )
 
+end SlugifyBenchmark
+
 @State(Scope.Thread)
 @BenchmarkMode(Array(Mode.AverageTime))
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -35,16 +37,13 @@ object SlugifyBenchmark:
 @Measurement(iterations = 5)
 class SlugifyBenchmark:
   import SlugifyBenchmark.*
-
   var engine: Engine = _
 
   @Param(Array("js", "wasm"))
-  var module: String = _
+  var module: String    = _
 
-  var source: Source = _
-
-  var context: Context = _
-
+  var source: Source    = _
+  var context: Context  = _
   var executable: Value = _
 
   @Setup(Level.Trial)
@@ -72,13 +71,15 @@ class SlugifyBenchmark:
           context.eval(source)
           context.getBindings("wasm").getMember("main").getMember("slugify")
 
+  end setup
+
   @TearDown(Level.Iteration)
   def closeContext(): Unit = context.close()
 
   @TearDown(Level.Trial)
   def closeEngine(): Unit = engine.close()
 
-  private val n = Value.asValue(20)
+  private val n           = Value.asValue(20)
 
   @Benchmark
   def invoke(): Value = executable.execute(n)

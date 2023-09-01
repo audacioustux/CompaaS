@@ -7,7 +7,7 @@ lazy val versions =
     val GraalSDK             = "23.0.1"
     val AkkaManagement       = "1.4.1"
     val AkkaPersistenceR2dbc = "1.1.1"
-    val JsoniterScala        = "2.23.2"
+    val JsoniterScala        = "2.23.3"
     val Logback              = "1.4.11"
     val Cats                 = "2.10.0"
     val Munit                = "0.7.29"
@@ -65,7 +65,7 @@ lazy val `compaas-bench` = project
           wasmFiles.map { wasmFile =>
             val targetFile = wasmDir / wasmFile.getName
             IO.copyFile(wasmFile, targetFile)
-            s"wasm-strip ${ targetFile }".!
+            s"wasm-strip ${ targetFile }" !
 
             targetFile
           }

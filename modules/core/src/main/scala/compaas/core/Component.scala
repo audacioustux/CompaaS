@@ -1,12 +1,12 @@
 package compaas.core
 
-import akka.persistence.typed.scaladsl.*
+import java.util.UUID
+import scala.collection.mutable.HashMap
+
 import akka.actor.typed.*
 import akka.actor.typed.scaladsl.*
 import akka.persistence.typed.*
-
-import java.util.UUID
-import scala.collection.mutable.HashMap
+import akka.persistence.typed.scaladsl.*
 
 object Component:
   sealed trait Command                                extends Serializable

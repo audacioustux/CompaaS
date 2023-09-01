@@ -1,9 +1,10 @@
 package compaas.benchmarks.graal.polyglot
 
-import org.graalvm.polyglot.*
 import common.Graal
+import org.graalvm.polyglot.*
 
 object NthPrimeMem:
+
   val modules = Map(
     "js" ->
       Source
@@ -56,3 +57,7 @@ object NthPrimeMem:
     val random     = scala.util.Random
     val randomFunc = funcs(random.nextInt(funcs.length))
     println(randomFunc.execute(10))
+
+  end main
+
+end NthPrimeMem

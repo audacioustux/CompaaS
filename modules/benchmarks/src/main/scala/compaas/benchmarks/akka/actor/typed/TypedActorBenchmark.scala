@@ -1,12 +1,15 @@
 package compaas.benchmarks.akka.actor.typed
-import akka.actor.typed.ActorSystem
-import akka.actor.typed.scaladsl.AskPattern.*
-import com.typesafe.config.ConfigFactory
+
 import org.openjdk.jmh.annotations.*
 
 import java.util.concurrent.TimeUnit
 import scala.concurrent.Await
 import scala.concurrent.duration.*
+
+import akka.actor.typed.ActorSystem
+import akka.actor.typed.scaladsl.AskPattern.*
+import com.typesafe.config.ConfigFactory
+
 object TypedActorBenchmark:
   // Constants because they are used in annotations
   final val threads                 = 4       // update according to cpu
@@ -23,6 +26,7 @@ object TypedActorBenchmark:
 @Warmup(iterations = 10, time = 5, timeUnit = TimeUnit.SECONDS, batchSize = 1)
 @Measurement(iterations = 10, time = 15, timeUnit = TimeUnit.SECONDS, batchSize = 1)
 class TypedActorBenchmark:
+
   import TypedActorBenchmark.*
   import TypedBenchmarkActors.*
 
@@ -46,18 +50,16 @@ class TypedActorBenchmark:
 
   implicit val askTimeout: akka.util.Timeout = akka.util.Timeout(timeout)
 
-  def requireRightNumberOfCores(numCores: Int): Unit =
-    require(
-      Runtime.getRuntime.availableProcessors == numCores,
-      s"Update the cores constant to ${Runtime.getRuntime.availableProcessors}"
-    )
+  def requireRightNumberOfCores(numCores: Int): Unit = require(
+    Runtime.getRuntime.availableProcessors == numCores,
+    s"Update the cores constant to ${ Runtime.getRuntime.availableProcessors }",
+  )
 
   @Setup(Level.Trial)
   def setup(): Unit =
     requireRightNumberOfCores(threads)
     system = ActorSystem(
-      TypedBenchmarkActors
-        .echoActorsSupervisor(numMessagesPerActorPair, numActors, dispatcher, batchSize),
+      TypedBenchmarkActors.echoActorsSupervisor(numMessagesPerActorPair, numActors, dispatcher, batchSize),
       "TypedActorBenchmark",
       ConfigFactory.parseString(s"""
        akka.actor {
@@ -88,8 +90,10 @@ class TypedActorBenchmark:
             mailbox-type = "$mailbox"
          }
        }
-      """)
+      """),
     )
+
+  end setup
 
   @TearDown(Level.Trial)
   def shutdown(): Unit =
@@ -98,5 +102,6 @@ class TypedActorBenchmark:
 
   @Benchmark
   @OperationsPerInvocation(totalMessages)
-  def echo(): Unit =
-    Await.result(system.ask(Start(_)), timeout)
+  def echo(): Unit = Await.result(system.ask(Start(_)), timeout)
+
+end TypedActorBenchmark

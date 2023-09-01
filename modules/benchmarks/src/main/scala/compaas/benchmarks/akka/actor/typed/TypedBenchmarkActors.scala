@@ -1,10 +1,11 @@
 package compaas.benchmarks.akka.actor.typed
 
-import akka.Done
-import akka.actor.typed.scaladsl.{ ActorContext, Behaviors }
-import akka.actor.typed.{ ActorRef, Behavior, Props }
 import java.util.concurrent.CountDownLatch
 import scala.concurrent.duration.*
+
+import akka.Done
+import akka.actor.typed.{ ActorRef, Behavior, Props }
+import akka.actor.typed.scaladsl.{ ActorContext, Behaviors }
 
 object TypedBenchmarkActors:
   // to avoid benchmark to be dominated by allocations of message

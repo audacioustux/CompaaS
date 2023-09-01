@@ -1,12 +1,13 @@
 package compaas.benchmarks.graal.polyglot
 
 import common.Graal
-import org.graalvm.polyglot.io.ByteSequence
-import org.graalvm.polyglot.{ Context, Engine, Source, Value }
-import org.openjdk.jmh.annotations.*
 import java.util.concurrent.TimeUnit
+import org.graalvm.polyglot.{ Context, Engine, Source, Value }
+import org.graalvm.polyglot.io.ByteSequence
+import org.openjdk.jmh.annotations.*
 
 object NthPrimeBenchmark:
+
   val modules = Map(
     "js" ->
       Source
@@ -23,6 +24,8 @@ object NthPrimeBenchmark:
         )
         .build(),
   )
+
+end NthPrimeBenchmark
 
 @State(Scope.Thread)
 @BenchmarkMode(Array(Mode.AverageTime))
@@ -69,6 +72,7 @@ class NthPrimeBenchmark:
         case "wasm" =>
           context.eval(source)
           context.getBindings("wasm").getMember("main").getMember("nth_prime")
+  end setup
 
   @TearDown(Level.Iteration)
   def closeContext(): Unit = context.close()
@@ -80,3 +84,5 @@ class NthPrimeBenchmark:
 
   @Benchmark
   def invoke(): Value = executable.execute(n)
+
+end NthPrimeBenchmark
