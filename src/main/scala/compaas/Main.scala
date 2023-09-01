@@ -8,6 +8,7 @@ import akka.rollingupdate.kubernetes.PodDeletionCost
 import compaas.core.Compaas
 
 object Main:
+
   def main(args: Array[String]): Unit =
     given system: ActorSystem[?] = ActorSystem(Guardian(), "compaas")
 
@@ -17,9 +18,9 @@ object Main:
     PodDeletionCost(system).start()
 
 object Guardian:
-  def apply(): Behavior[?] =
-    Behaviors.setup { context =>
-      context.spawn(Compaas(), "compaas")
 
-      Behaviors.empty
-    }
+  def apply(): Behavior[?] = Behaviors.setup { context =>
+    context.spawn(Compaas(), "compaas")
+
+    Behaviors.empty
+  }
