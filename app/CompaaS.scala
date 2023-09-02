@@ -6,9 +6,7 @@ import akka.management.cluster.bootstrap.ClusterBootstrap
 import akka.management.scaladsl.AkkaManagement
 import akka.rollingupdate.kubernetes.PodDeletionCost
 
-import compaas.core.Compaas
-
-object Main:
+object CompaaS:
 
   def main(args: Array[String]): Unit =
     given system: ActorSystem[?] = ActorSystem(Guardian(), "compaas")
@@ -21,7 +19,5 @@ object Main:
 object Guardian:
 
   def apply(): Behavior[?] = Behaviors.setup { context =>
-    context.spawn(Compaas(), "compaas")
-
     Behaviors.empty
   }

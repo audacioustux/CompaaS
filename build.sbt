@@ -18,10 +18,11 @@ lazy val versions =
 
 inThisBuild(
   List(
-    organization        := "com.audacioustux",
-    scalaVersion        := versions.scala,
-    run / fork          := true,
-    Global / cancelable := false,
+    organization              := "com.audacioustux",
+    scalaVersion              := versions.scala,
+    run / fork                := true,
+    Compile / sourceDirectory := baseDirectory.value / "app",
+    Global / cancelable       := false,
     scalacOptions ++=
       Seq(
         "-explain",
@@ -73,8 +74,8 @@ lazy val `compaas-bench` = project
         .taskValue,
   )
 
-lazy val `compaas-core` = project
-  .in(file("modules/core"))
+lazy val core = project
+  .in(file("core"))
   .settings(
     libraryDependencies ++=
       Seq(
@@ -117,10 +118,9 @@ lazy val `compaas-core` = project
     excludeDependencies ++= Seq(ExclusionRule("com.datastax.oss", "java-driver-core")),
   )
 
-lazy val projects: Seq[ProjectReference] = Seq(`compaas-core`)
+lazy val projects: Seq[ProjectReference] = Seq(core)
 
-lazy val root = project
-  .in(file("."))
+lazy val root = Project("compaas", file("."))
   .settings(name := "compaas")
   .aggregate(projects*)
   .dependsOn(projects.map(_ % "compile->compile")*)
