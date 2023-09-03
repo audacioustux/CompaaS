@@ -6,6 +6,8 @@ def watch_kustomize(pathToDir, **kwargs):
 
 def deploy_yugabyte():
   namespace = "yugabyte"
+  ysqlsh = "kubectl exec -n {namespace} -it yb-tserver-0 -- ysqlsh".format(namespace=namespace)
+
   helm_repo(
     'yugabyte', 
     resource_name='yugabyte-repo',
@@ -18,11 +20,9 @@ def deploy_yugabyte():
     flags=['--values=k8s/yugabyte/values.yaml', '--create-namespace'],
     resource_deps=["yugabyte-repo"]
   )
-  ysqlsh = "kubectl exec -n {namespace} -it yb-tserver-0 -- ysqlsh".format(namespace=namespace)
   local_resource(
     "wait-for-yugabyte",
-    dir="scripts",
-    cmd="./ebort.sh -- {ysqlsh} -c 'select 1;' >> /dev/null 2>&1 && echo 'Yugabyte is ready'".format(ysqlsh=ysqlsh),
+    cmd="ebort -- {ysqlsh} -c 'select 1;' >> /dev/null 2>&1 && echo 'Yugabyte is ready'".format(ysqlsh=ysqlsh),
     resource_deps=["yugabyte"]
   )
   local_resource(
@@ -36,7 +36,7 @@ def deploy_compaas():
   local_resource(
     "sbt", 
     serve_cmd='sbt -J-Xmx2G "~stage"', 
-    deps=["build.sbt"]
+    deps=["build.sbt", "project/*"]
   )
   docker_build(
     "compaas", 

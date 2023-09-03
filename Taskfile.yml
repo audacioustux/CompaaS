@@ -1,0 +1,11 @@
+version: "3"
+
+tasks:
+  default:
+    cmd: task -l --sort none
+    silent: true
+  up:
+    desc: Starts Change-Build-Deploy loop (tilt up), and cleans up on exit (tilt down)
+    cmds:
+      - ebort -- tilt up --stream
+      - tilt down

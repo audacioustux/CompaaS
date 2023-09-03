@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+    <import class="ch.qos.logback.classic.AsyncAppender" />
+    <import class="ch.qos.logback.core.ConsoleAppender" />
+
+    <appender name="STDOUT" target="System.out" class="ConsoleAppender">
+        <encoder>
+            <pattern>[%date{ISO8601}] [%level] [%logger] [%X{akkaAddress}] [%marker] [%thread] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNC_STDOUT" class="AsyncAppender">
+        <queueSize>8192</queueSize>
+        <neverBlock>true</neverBlock>
+        <appender-ref ref="STDOUT" />
+    </appender>
+
+    <!-- DEBUG logs a lot of stuff, so enable it only when need it -->
+    <root level="INFO">
+        <appender-ref ref="ASYNC_STDOUT" />
+    </root>
+</configuration>

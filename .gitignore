@@ -1,38 +1,26 @@
 # macOS
 .DS_Store
 
-# sbt specific
-dist/*
-target/
-lib_managed/
-src_managed/
-project/boot/
-project/plugins/project/
-project/local-plugins.sbt
-.history
-.ensime
-.ensime_cache/
-.sbt-scripted/
-local.sbt
-
-# Bloop
+# bloop and metals
+.bloop
+.metals
 .bsp
+project/metals.sbt
 
-# VS Code
-.vscode/
+# sbt
+project/target/
+project/project/
+target/
 
-# Metals
-.bloop/
-.metals/
-metals.sbt
-
-# IDEA
+# intellij
 .idea
-.idea_modules
-/.worksheet/
+# vscode
+.vscode
 
 # .env files
 **/*.env
 
+# logs
+*.log
 # core dump files
 core.*
