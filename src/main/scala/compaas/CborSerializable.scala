@@ -1,3 +1,0 @@
-package compaas
-
-trait CborSerializable

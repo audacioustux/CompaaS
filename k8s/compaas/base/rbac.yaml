@@ -1,11 +1,11 @@
----
+--- # for basic Akka Clustering
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: pod-reader
 rules:
-  - apiGroups: ["apps", ""]
-    resources: ["pods", "replicasets"]
+  - apiGroups: [""]
+    resources: ["pods"]
     verbs: ["get", "watch", "list"]
 ---
 kind: RoleBinding
@@ -19,8 +19,7 @@ roleRef:
   kind: Role
   name: pod-reader
   apiGroup: rbac.authorization.k8s.io
-
----
+--- # for PodDeletionCost annotation
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:

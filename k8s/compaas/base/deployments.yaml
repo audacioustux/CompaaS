@@ -1,12 +1,21 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: compaas
+  name: &name compaas
+  labels:
+    app: *name
 spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: *name
   template:
+    metadata:
+      labels:
+        app: *name
     spec:
       containers:
-        - name: compaas
+        - name: *name
           image: compaas:latest
           imagePullPolicy: Never
           readinessProbe:
