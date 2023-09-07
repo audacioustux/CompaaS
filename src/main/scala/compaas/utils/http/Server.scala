@@ -13,12 +13,12 @@ import akka.http.scaladsl.server.Route
 object Server:
   case class ServerBindingFailure(ex: Throwable) extends CoordinatedShutdown.Reason
 
-  def apply(interface: String, port: Int, service: Route)(using system: ActorSystem[?]) =
+  def apply(interface: String, port: Int, route: Route)(using system: ActorSystem[?]) =
     given ec: ExecutionContext = system.executionContext
 
     Http()
       .newServerAt(interface, port)
-      .bind(service)
+      .bind(route)
       .map(_.addToCoordinatedShutdown(10.seconds))
       .onComplete:
         case Success(binding) =>

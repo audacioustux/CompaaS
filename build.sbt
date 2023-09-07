@@ -18,7 +18,6 @@ inThisBuild(
         "-feature",
         "-unchecked",
         "-Ykind-projector",
-        "-Yimports",
         "-Wvalue-discard",
         "-Wunused:all",
         "-Xmigration",
