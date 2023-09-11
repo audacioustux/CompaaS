@@ -1,5 +1,7 @@
 package compaas
 
+import com.typesafe.config.{ Config, ConfigFactory }
+
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.*
 import akka.management.cluster.bootstrap.ClusterBootstrap
@@ -8,21 +10,17 @@ import akka.rollingupdate.kubernetes.PodDeletionCost
 
 object Main:
 
-  def apply() = Behaviors.setup[Nothing] { implicit ctx =>
-    val config = ctx.system.settings.config.getConfig("compaas")
-
+  def apply(config: Config) = Behaviors.setup[Nothing] { implicit ctx =>
     IslandFactory(config.getConfig("island-factory"))
 
     Behaviors.empty
   }
 
-  end apply
-
   def main(args: Array[String]): Unit =
-    val system = ActorSystem(Main(), "compaas")
+    val config = ConfigFactory.load()
+
+    val system = ActorSystem(Main(config.getConfig("compaas")), "compaas")
 
     AkkaManagement(system).start()
     ClusterBootstrap(system).start()
     PodDeletionCost(system).start()
-
-end Main

@@ -30,4 +30,3 @@ object Server:
         case Failure(ex) =>
           CoordinatedShutdown(system).run(ServerBindingFailure(ex))
 
-end Server

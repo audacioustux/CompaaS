@@ -32,4 +32,3 @@ object WebsocketRoute:
         .map[Message](TextMessage(_))
     )
 
-end WebsocketRoute
