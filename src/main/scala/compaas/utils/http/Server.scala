@@ -13,13 +13,16 @@ import akka.http.scaladsl.server.Route
 object Server:
   case class ServerBindingFailure(ex: Throwable) extends CoordinatedShutdown.Reason
 
+  // how long to wait for the server to stop gracefully
+  val gracefulShutdownTimeout = 10.seconds
+
   def apply(interface: String, port: Int, route: Route)(using system: ActorSystem[?]) =
     given ec: ExecutionContext = system.executionContext
 
     Http()
       .newServerAt(interface, port)
       .bind(route)
-      .map(_.addToCoordinatedShutdown(10.seconds))
+      .map(_.addToCoordinatedShutdown(gracefulShutdownTimeout))
       .onComplete:
         case Success(binding) =>
           val address = binding.localAddress

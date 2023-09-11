@@ -8,8 +8,10 @@ import akka.rollingupdate.kubernetes.PodDeletionCost
 
 object Main:
 
-  def apply() = Behaviors.setup[Nothing] { ctx =>
-    Islands(ctx)
+  def apply() = Behaviors.setup[Nothing] { implicit ctx =>
+    val config = ctx.system.settings.config.getConfig("compaas")
+
+    IslandFactory(config.getConfig("island-factory"))
 
     Behaviors.empty
   }
