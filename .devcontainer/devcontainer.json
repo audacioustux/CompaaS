@@ -27,7 +27,9 @@
         "files.autoSave": "onFocusChange",
         "editor.formatOnSave": true,
         "editor.formatOnPaste": true,
-        "resmon.show.cpufreq": false
+        "resmon.show.cpufreq": false,
+        "metals.showInferredType": "true",
+        "metals.enableIndentOnPaste": true
       }
     }
   },
@@ -68,11 +70,15 @@
   "postCreateCommand": ".devcontainer/scripts/post-create.sh",
   "postStartCommand": "nohup bash -c '.devcontainer/scripts/post-start.sh &' > /tmp/post-start.log 2>&1",
   "forwardPorts": [
-    10350
+    10350,
+    8080
   ],
   "portsAttributes": {
     "10350": {
       "label": "Tilt UI"
+    },
+    "8080": {
+      "label": "CompaaS HttpBridge"
     }
   }
 }

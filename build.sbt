@@ -4,7 +4,7 @@
 inThisBuild(
   Seq(
     organization              := "com.audacioustux",
-    scalaVersion              := "3.3.0",
+    scalaVersion              := "3.3.1",
     fork                      := true,
     Test / testForkedParallel := true,
     scalacOptions ++=
