@@ -19,8 +19,9 @@ object IslandFactory:
     given ExecutionContext = ctx.executionContext
 
     val interface = config.getString("interface")
+    val port      = config.getInt("port")
 
-    val port = config.getInt("port")
     val route = pathEndOrSingleSlash:
       WebsocketRoute(Source.tick(1.second, 1.second, "Hello, World!"), Sink.foreach(println))
+
     Server(interface, port, route)
