@@ -31,4 +31,3 @@ object WebsocketRoute:
         .via(Flow.fromSinkAndSource(sink, source))
         .map[Message](TextMessage(_))
     )
-
