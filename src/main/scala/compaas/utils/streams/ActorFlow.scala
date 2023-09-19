@@ -22,7 +22,7 @@ object ActorFlow:
       context: ActorContext[?],
       bufferSize: Int = 16,
       overflowStrategy: OverflowStrategy = OverflowStrategy.dropHead,
-  )(implicit materializer: Materializer): Flow[In, Out, ?] =
+  )(using materializer: Materializer): Flow[In, Out, ?] =
     val (outActor, publisher) = ActorSource
       .actorRef[Out](
         {
