@@ -2,11 +2,6 @@ services:
   devcontainer:
     build:
       context: .
-    environment:
-      - PULUMI_ACCESS_TOKEN
-      - PULUMI_BACKEND_URL
-      - PULUMI_CONFIG_PASSPHRASE
-      - PULUMI_DEFAULT_ORG
     volumes:
       - ../..:/workspaces:rw,cached
     init: true
