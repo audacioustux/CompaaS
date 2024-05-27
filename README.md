@@ -6,8 +6,7 @@
 
 ## Notes
 
-- [Thesis Report - Undergrad](https://github.com/audacioustux/CompaaS/blob/main/misc/CompaaS%20-%20High%20Performance%2C%20Polyglot%20Component-as-a-Service%20-%20revised.pdf)
-- It's WIP, being re-written from scratch
+- It's WIP in private, being re-written from scratch
 
 ## Contributors
 
